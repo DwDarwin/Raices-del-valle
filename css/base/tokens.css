@@ -1,10 +1,10 @@
 :root {
-  --color-primary: #173e2d;
-  --color-secondary: #102e22;
-  --color-accent: #e6a73d;
-  --color-terracotta: #a85736;
+  --color-brand-dark: #173e2d;
+  --color-brand-primary: #102e22;
+  --color-brand-accent: #e6a73d;
+  --color-brand-earth: #a85736;
 
-  --color-bg-light: #f6f1e7;
+  --color-surface-light: #f6f1e7;
   --color-white: #ffffff;
 
   --max-width: 1400px;

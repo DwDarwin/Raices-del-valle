@@ -6,7 +6,7 @@
 
 body {
   font-family: var(--font-main);
-  background-color: var(--color-bg-light);
+  background-color: var(--color-surface-light);
 }
 
 a {
@@ -14,7 +14,8 @@ a {
   color: inherit;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -24,13 +25,21 @@ img {
   display: block;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
   font-size: inherit;
   border: none;
   background: none;
 }
 
-main, section, header, footer, article, aside {
+main,
+section,
+header,
+footer,
+article,
+aside {
   display: block;
 }
