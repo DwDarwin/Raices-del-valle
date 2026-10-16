@@ -15,7 +15,9 @@
 
 .hero-wrapper {
   position: relative;
-  width: 100%;
+  width: 90%;
+  max-width: var(--max-width);
+  margin: 0 auto;
   padding-top: 150px;
   display: flex;
   flex-direction: column;
@@ -251,41 +253,86 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
-@media (max-width: 992px) {
+@media (width < 1360px) {
+  .hero-badge {
+    min-width: 500px;
+    bottom: 160px;
+  }
+  .about-grid {
+    gap: 40px;
+  }
+}
+
+@media (width < 1024px) {
+  .hero-badge {
+    min-width: 440px;
+    bottom: 120px;
+    padding: 12px 20px;
+  }
+  .section-title {
+    font-size: 36px;
+  }
+}
+
+@media (width < 768px) {
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+    margin-top: 16px;
+    align-items: center;
+  }
+  .hero-wrapper {
+    padding-top: 120px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    position: static;
+    min-width: 100%;
+    margin-top: 20px;
+    border-radius: 4px;
+  }
+
   .features-grid {
     flex-direction: column;
-    align-items: flex-start;
+    align-items:center;
     gap: 20px;
   }
-
   .feature-item {
     width: 100%;
+    justify-content: flex-start;
+    padding-left: 45px;
+    gap: 20px;
   }
-
   .feature-item:not(:last-child) {
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    padding-right: 0;
     padding-bottom: 20px;
   }
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-
+  .about-content {
+    max-width: 100%;
+    padding: 0;
+  }
   .section-title {
     font-size: 32px;
   }
 
   .metrics-title {
     font-size: 28px;
+    margin-bottom: 40px;
   }
-
   .metrics-grid {
     flex-direction: column;
     gap: 40px;
   }
-
   .metric-item:not(:last-child) {
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
