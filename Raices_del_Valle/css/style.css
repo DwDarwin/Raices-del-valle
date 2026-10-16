@@ -1,0 +1,18 @@
+:root {
+    /* Fondos */
+    --color-fondo-crema: #F6F1E7; /*SI*/  
+
+    /* Marca */    
+    --color-verde-principal: #102E22;  /*SI*/
+    --color-verde-secundario: #173E2D; /*SI*/
+    
+    --color-marron-principal: #A85736; /*SI*/ 
+
+    /* Acentos */    
+    --color-naranja-titulo: #E6A73D; /*SI*/
+    
+
+    /* Textos */   
+    --color-texto-black: #0A0A0A;/*SI*/
+    --color-text-white: #FFFFFF; /*SI*/
+}
