@@ -16,10 +16,10 @@ async function initializeApp() {
   if (document.getElementById("products-grid-container")) {
     renderizarCatalogoHome();
   }
-  
+
   await Promise.all([
-    loadComponent("header-container", "./components/header.html"),
-    loadComponent("footer-container", "./components/footer.html"),
+    loadComponent("header-container", "./view/header.html"),
+    loadComponent("footer-container", "./view/footer.html"),
   ]);
 }
 
