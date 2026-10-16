@@ -3,7 +3,7 @@
   width: 100%;
   min-height: 95vh;
   background-image:
-    var(--bg-hero-overlay), url("../assets/home/hero-banner.svg");
+    var(--bg-hero-overlay), url("../assets/home/hero-valle-tamabioy.webp");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -23,17 +23,7 @@
 }
 
 .hero-subtitle {
-  text-transform: uppercase;
-  font-size: 15px;
   color: var(--color-accent);
-  letter-spacing: 2px;
-  font-weight: 600;
-}
-
-.hero-title {
-  font-weight: 600;
-  font-size: 64px;
-  line-height: 1;
 }
 
 .hero-highlight {
@@ -63,9 +53,6 @@
 
 .badge-title {
   display: block;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
   color: var(--color-accent);
   margin-bottom: 6px;
 }
@@ -201,10 +188,7 @@
 }
 
 .section-title {
-  font-size: 42px;
-  font-weight: 700;
   color: var(--color-secondary);
-  line-height: 1.2;
   margin-bottom: 24px;
 }
 
