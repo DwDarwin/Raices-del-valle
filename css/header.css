@@ -1,0 +1,344 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: white;
+    color: black;
+}
+
+/* Contenedor general flexible que ocupa el 100% 
+con un margen lateral cómodo */
+.container,
+.container-fluid {
+    width: 100%;
+    max-width: 1300px;
+    /*Límite pantallas grandes*/
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- NAVBAR --- */
+.header {
+    background-color: var(--color-surface-light);
+    width: 100%;
+    border-bottom: 1px solid #eae5d8;
+}
+
+.nav-container {
+    width: 100%;
+    max-width: 100%;
+    height: 90px;
+    margin: 0 auto;
+    padding: 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 12px;
+}
+
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 25px;
+    background-color: #ffffff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-box:focus-within {
+    border-color: #4a8f55;
+    box-shadow: 0 0 3px rgba(74, 143, 85, 0.25);
+}
+
+.search-box input {
+    outline: none;
+    border: none;
+    background: transparent;
+    padding: 4px 2px;
+    font-size: 13px;
+    width: 180px;
+}
+
+.search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--color-brand-dark);
+    padding: 2px;
+}
+
+.search-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+.search-button:hover {
+    color: var(--color-brand-dark);
+}
+
+.logo-txt {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-txt.light .brand-title,
+.logo-txt.light .brand-sub {
+    color: var(--color-surface-light);
+}
+
+.brand-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--color-brand-primary);
+    line-height: 1;
+}
+
+.brand-sub {
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--color-brand-primary);
+    font-weight: 600;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--color-brand-primary);
+    font-size: 14px;
+    font-weight: 400;
+    position: relative;
+    padding-bottom: 4px;
+    transition: color 0.3s ease;
+
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: var(--color-brand-primary);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-brand-primary);
+}
+
+
+/* Botón del carrito con círculo verde y badge naranja */
+.cart-btn {
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-brand-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background-color: var(--color-brand-accent);
+    color: var(--color-white);
+    font-size: 10px;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Acciones / Iconos de la derecha */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.action-btn {
+    text-decoration: none;
+    color: #2c2c2c;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+/*  RESPONSIVE DESIGN    */
+@media (max-width: 1024px) {
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .container,
+    .nav-container,
+    .hero {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .nav-menu {
+        display: none;
+    }
+
+    .hero-box {
+        height: 350px;
+        padding: 30px;
+    }
+
+    .hero-title {
+        font-size: 28px;
+    }
+
+    .tech-grid,
+    .code-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .code-grid {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .img-main {
+        width: 280px;
+        height: 280px;
+    }
+
+    .code-features {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-bottom-content {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 900px) {
+
+    .nav-container {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    /* Centramos el logo */
+    .logo {
+        justify-content: center;
+    }
+
+    /* Permitimos que el menú de enlaces se vea en vertical y centrado */
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding-top: 10px;
+        border-top: 1px solid #eae5d8;
+        border-bottom: 1px solid #eae5d8;
+        padding-bottom: 10px;
+    }
+
+    .nav-link {
+        font-size: 16px;
+    }
+
+    .nav-link.active::after {
+        display: none;
+    }
+
+    .nav-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .search-box {
+        max-width: 100%;
+    }
+
+    /* Adaptación fluida de las imágenes en móvil  */
+    .tech-images-stack,
+    .code-images-stack {
+        width: 100%;
+        height: 320px;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .img-small,
+    .img-main1 {
+        width: 130px;
+        height: 130px;
+        top: 0;
+        left: 10%;
+    }
+
+    .img-large,
+    .img-main {
+        width: 250px;
+        height: 250px;
+        bottom: 0;
+        right: 10%;
+    }
+}
