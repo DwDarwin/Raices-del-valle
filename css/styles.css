@@ -1,84 +1,16 @@
-:root {
-  --color-primary: #173e2d;
-  --color-secondary: #102e22;
-  --color-accent: #e6a73d;
-  --color-terracotta: #a85736;
+@import url("base/tokens.css");
+@import url("base/reset.css");
+@import url("base/typography.css");
 
-  --color-bg-light: #f6f1e7;
-  --color-white: #ffffff;
+@import url("components/buttons.css");
 
-  --max-width: 1400px;
+@import url("./home.css");
 
-  --bg-hero-overlay: linear-gradient(
-    90deg,
-    rgba(16, 46, 34, 0.85) 0%,
-    rgba(16, 46, 34, 0.6) 40%,
-    rgba(16, 46, 34, 0) 100%
-  );
 
-  --font-main: "Poppins", sans-serif;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: var(--font-main);
-  background-color: var(--color-bg-light);
-}
 
 .container {
   width: 100%;
   max-width: var(--max-width);
   margin-left: auto;
   margin-right: auto;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: var(--color-accent);
-  color: var(--color-secondary);
-  border: 1px solid var(--color-accent);
-}
-
-.btn-primary:hover {
-  background-color: #d19430;
-  border-color: #d19430;
-}
-
-.btn-secondary {
-  backdrop-filter: blur(5px);
-  color: var(--color-white);
-  border: 1px solid var(--color-white);
-}
-
-.btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-}
-
-.btn-tertiary {
-  backdrop-filter: blur(5px);
-  color: var(--color-secondary);
-  border: 1.5px solid var(--color-secondary);
-}
-
-.btn-tertiary:hover {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-white);
 }

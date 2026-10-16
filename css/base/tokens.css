@@ -1,0 +1,20 @@
+:root {
+  --color-primary: #173e2d;
+  --color-secondary: #102e22;
+  --color-accent: #e6a73d;
+  --color-terracotta: #a85736;
+
+  --color-bg-light: #f6f1e7;
+  --color-white: #ffffff;
+
+  --max-width: 1400px;
+
+  --bg-hero-overlay: linear-gradient(
+    90deg,
+    rgba(16, 46, 34, 0.85) 0%,
+    rgba(16, 46, 34, 0.6) 40%,
+    rgba(16, 46, 34, 0) 100%
+  );
+
+  --font-main: "Poppins", sans-serif;
+}
