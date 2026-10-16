@@ -43,3 +43,11 @@
   border-color: var(--color-brand-dark);
   color: var(--color-white);
 }
+
+@media (width < 768px) {
+  .btn {
+    padding: 12px 20px;
+    font-size: 15px;
+    width: 90%;
+  }
+}
