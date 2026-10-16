@@ -15,7 +15,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/styles.css">
-    <script src="./js/main.js" type="module" defer></script>
+    <script type="module" src="./js/app.js"></script>
 </head>
 
 <body>
@@ -124,14 +124,24 @@
 
         </section>
 
-        <section id="products-container"></section>
+        <section class="products-section">
+            <div class="products-header">
+                <div class="products-text">
+                    <span class="products-subtitle subtitle">Lo mejor de nuestra tierra</span>
+                    <h2 class="products-title title">La cosecha de hoy</h2>
+                </div>
+                <a href="#" class="btn btn-tertiary">Ver todos los productos &rarr;</a>
+            </div>
+
+            <div id="products-grid-container" class="products-grid"></div>
+        </section>
 
         <section class="about-section">
             <div class=" about-grid">
 
                 <div class="about-image-wrapper">
-                    <img src="./assets/home/familia-jacanamejoy-cosecha.webp" alt="Familia Jacanamejoy en el cultivo de maíz"
-                        class="about-img">
+                    <img src="./assets/home/familia-jacanamejoy-cosecha.webp"
+                        alt="Familia Jacanamejoy en el cultivo de maíz" class="about-img">
 
                     <div class="about-badge">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -165,26 +175,26 @@
             <div class="container metrics-wrapper">
 
                 <h4 class="metrics-subtitle subtitle">TU COMPRA DEJA HUELLA</span>
-                <h2 class="metrics-title title">Cuando eliges local, el campo florece.</h2>
+                    <h2 class="metrics-title title">Cuando eliges local, el campo florece.</h2>
 
-                <div class="metrics-grid">
+                    <div class="metrics-grid">
 
-                    <div class="metric-item">
-                        <span class="metric-number">100%</span>
-                        <p class="metric-description">de pago justo<br>para la familia</p>
+                        <div class="metric-item">
+                            <span class="metric-number">100%</span>
+                            <p class="metric-description">de pago justo<br>para la familia</p>
+                        </div>
+
+                        <div class="metric-item">
+                            <span class="metric-number">0</span>
+                            <p class="metric-description">intermediarios<br>en el proceso</p>
+                        </div>
+
+                        <div class="metric-item">
+                            <span class="metric-number">12 km</span>
+                            <p class="metric-description">de recorrido<br>hasta el acopio</p>
+                        </div>
+
                     </div>
-
-                    <div class="metric-item">
-                        <span class="metric-number">0</span>
-                        <p class="metric-description">intermediarios<br>en el proceso</p>
-                    </div>
-
-                    <div class="metric-item">
-                        <span class="metric-number">12 km</span>
-                        <p class="metric-description">de recorrido<br>hasta el acopio</p>
-                    </div>
-
-                </div>
 
             </div>
         </section>
