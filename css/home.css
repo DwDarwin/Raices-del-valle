@@ -253,6 +253,40 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+.products-section {
+  width: 90%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 220px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Products */
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+}
+
+.products-subtitle {
+  color: var(--color-brand-earth);
+}
+
+.products-title {
+  color: var(--color-brand-primary);
+  font-style: italic;
+  margin-top: 20px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
 @media (width < 1360px) {
   .hero-badge {
     min-width: 500px;
@@ -260,6 +294,13 @@
   }
   .about-grid {
     gap: 40px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .mercado-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -272,10 +313,16 @@
   .section-title {
     font-size: 36px;
   }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mercado-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (width < 768px) {
-
   .hero-actions {
     display: flex;
     flex-direction: column;
@@ -298,7 +345,7 @@
 
   .features-grid {
     flex-direction: column;
-    align-items:center;
+    align-items: center;
     gap: 20px;
   }
   .feature-item {
@@ -337,5 +384,11 @@
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     padding-bottom: 30px;
+  }
+
+  .products-grid,
+  .mercado-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 }
