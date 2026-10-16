@@ -21,6 +21,14 @@ con un margen lateral cómodo */
     padding: 0 40px;
 }
 
+.brand-sub {
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--color-verde-principal);
+    font-weight: 600;
+}
+
 
 
 .footer {
@@ -46,6 +54,35 @@ con un margen lateral cómodo */
     justify-content: center;
     color: var(--color-white);
 }
+
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 12px;
+}
+
+
+.logo-txt {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title,
+.brand-sub {
+    color: var(--color-fondo-crema);
+}
+
+.brand-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--color-verde-principal);
+    line-height: 1;
+}
+
 
 .footer-desc {
     font-size: 13px;
