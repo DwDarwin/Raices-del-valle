@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    
 }
 
 body {
@@ -31,7 +31,7 @@ con un margen lateral cómodo */
 .nav-container {
     width: 100%;
     max-width: 100%;
-    height: 90px;
+    height: 70px;
     margin: 0 auto;
     padding: 0 50px;
     display: flex;
@@ -39,12 +39,28 @@ con un margen lateral cómodo */
     justify-content: space-between;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    gap: 12px;
+.brand-mark.light { background: var(--color-surface-light); color: var(--color-brand-primary); }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-brand-primary);
 }
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-brand-primary);
+  color: var(--color-surface-light);
+  flex-shrink: 0;
+}
+
+
 
 
 .search-box {
@@ -92,31 +108,7 @@ con un margen lateral cómodo */
     color: var(--color-brand-dark);
 }
 
-.logo-txt {
-    display: flex;
-    flex-direction: column;
-}
 
-.logo-txt.light .brand-title,
-.logo-txt.light .brand-sub {
-    color: var(--color-surface-light);
-}
-
-.brand-title {
-    font-family: "Poppins", sans-serif;
-    font-size: 22px;
-    font-weight: bold;
-    color: var(--color-brand-primary);
-    line-height: 1;
-}
-
-.brand-sub {
-    font-family: "Poppins", sans-serif;
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: var(--color-brand-primary);
-    font-weight: 600;
-}
 
 .nav-menu {
     display: flex;
@@ -163,6 +155,7 @@ con un margen lateral cómodo */
     text-decoration: none;
     color: #fff;
     font-size: 16px;
+    
 }
 
 .cart-badge {
@@ -185,7 +178,8 @@ con un margen lateral cómodo */
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 10px;
+    transform: translateX(15px);
 }
 
 .action-btn {
