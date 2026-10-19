@@ -1,226 +1,30 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
-
-body {
-    background-color: white;
-    color: black;
-}
-
-
-.container,
-.container-fluid {
+.team-container{
+    background-color: var(--color-white);
     width: 100%;
-    max-width: 1300px;
-    
-    margin: 0 auto;
-    padding: 0 40px;
-}
-
-
-.header {
-    background-color: var(--color-surface-light);
-    width: 100%;
-    border-bottom: 1px solid #eae5d8;
-}
-
-.nav-container {
-    width: 100%;
-    max-width: 100%;
-    height: 90px;
-    margin: 0 auto;
-    padding: 0 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    gap: 12px;
-}
-
-
-.search-box {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 3px 10px;
-    border: 1px solid #dcdcdc;
-    border-radius: 25px;
-    background-color: #ffffff;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.search-box:focus-within {
-    border-color: #4a8f55;
-    box-shadow: 0 0 3px rgba(74, 143, 85, 0.25);
-}
-
-.search-box input {
-    outline: none;
-    border: none;
-    background: transparent;
-    padding: 4px 2px;
-    font-size: 13px;
-    width: 180px;
-}
-
-.search-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    color: var(--color-brand-primary);
-    padding: 2px;
-}
-
-.search-button svg {
-    width: 18px;
-    height: 18px;
-}
-
-.search-button:hover {
-    color: var(--color-brand-primary);
-}
-
-.logo-txt {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-txt.light .brand-title,
-.logo-txt.light .brand-sub {
-    color: var(--color-surface-light);
-}
-
-.brand-title {
-    font-family: "Poppins", sans-serif;
-    font-size: 22px;
-    font-weight: bold;
-    color: var(--color-brand-primary);
-    line-height: 1;
-}
-
-.brand-sub {
-    font-family: "Poppins", sans-serif;
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: var(--color-brand-primary);
-    font-weight: 600;
-}
-
-.nav-menu {
-    display: flex;
-    gap: 40px;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--color-brand-primary);
-    font-size: 14px;
-    font-weight: 400;
-    position: relative;
-    padding-bottom: 4px;
-    transition: color 0.3s ease;
-
-}
-
-.nav-link.active,
-.nav-link:hover {
-    color: var(--color-brand-primary);
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -16px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--color-brand-primary);
-}
-
-
-
-.cart-btn {
-    width: 40px;
-    height: 40px;
-    background-color: var(--color-brand-primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    text-decoration: none;
-    color: #fff;
-    font-size: 16px;
-}
-
-.cart-badge {
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    background-color: var(--color-brand-accent);
-    color: var(--color-white);
-    font-size: 10px;
-    font-weight: bold;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Acciones / Iconos de la derecha */
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-}
-
-.action-btn {
-    text-decoration: none;
-    color: #2c2c2c;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /* HERO */
-.hero {
-    padding: 0px 0px;
-    background-color: #fff;
+.hero-team{
+    height: 650px;
+    width: 100%;
 }
 
 .hero-box {
-    width: 100%;
-    max-width: 100%;
     margin: 0 auto;
-    height: 480px;
     border-radius: 0px;
+    height: 100%;
     display: flex;
-    align-items: flex-end;
-    padding: 50px;
     position: relative;
+    align-items: center;
     overflow: hidden;
+    width: 100%;
 }
 
-
 .hero-content {
-    position: relative;
     z-index: 3;
-    padding: 0 3rem;
-    color: #ffffff;
+    color: var(--color-white);
+    margin-left: 100px;
+    margin-top: 180px;
 }
 
 .hero-bg {
@@ -259,17 +63,23 @@ body {
 
 .hero-title {
     font-size: 74px;
-    font-family: "Poppins", sans-serif;
     line-height: 1.2;
 }
 
 .hero-title span {
-    font-style: "Poppins", sans-serif;
     font-style: italic;
     color: var(--color-brand-accent);
 }
 
+.team-body{
+  width: 70%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
 
+.container-fluid{
+    margin-top: 100px;
+}
 .tech-section {
     padding: 60px 0;
 }
@@ -277,35 +87,30 @@ body {
 .tech-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: 60px;
     align-items: center;
 }
 
 .sec-tag {
-    font-size: 11px;
-    letter-spacing: 2px;
     font-weight: bold;
-    color: #6b8e23;
+    color: var(--color-brand-earth);
     margin-bottom: 15px;
     display: block;
 }
 
 .tech-text h2,
 .code-content h2 {
-    font-size: 42px;
-    font-family: "Poppins", sans-serif;
     color: var(--color-brand-dark);
-    line-height: 1.1;
-    margin-bottom: 20px;
+    margin-bottom: 42px;
 }
 
 .tech-text p,
 .code-desc {
     color: var(--color-brand-dark);
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 16px;
+    line-height: 1.8;
+    width: 80%;
 }
-
 
 
 .tech-images-stack {
@@ -333,17 +138,17 @@ body {
 
 
 .img-small {
-    width: 170px;
-    height: 170px;
-    top: 10px;
-    left: 30px;
+    width: 270px;
+    height: 270px;
+    bottom: 130px;
+    right: 290px;
     z-index: 2;
 }
 
 .img-large {
-    width: 340px;
-    height: 340px;
-    bottom: 0;
+    width: 420px;
+    height: 420px;
+    top: 90px;
     right: 20px;
     z-index: 1;
 }
@@ -356,7 +161,7 @@ body {
 .code-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: 60px;
     align-items: center;
 }
 
@@ -370,17 +175,16 @@ body {
 
 
 .img-main1 {
-    width: 180px;
-    height: 180px;
-    top: 10px;
-    left: 20px;
+    width: 270px;
+    height: 270px;
+    top: 250px;
+    right: 300px;
     z-index: 2;
 }
 
 .img-main {
-    width: 390px;
-    height: 390px;
-    bottom: 0;
+    width: 420px;
+    height: 420px;
     right: 20px;
     z-index: 1;
 }
@@ -438,7 +242,10 @@ body {
 
 .team-section {
     background-color: white;
-    padding: 80px 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .team-header {
@@ -465,13 +272,12 @@ body {
 .team-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
+    gap: 90px;
 }
 
 .team-card {
     background: #fff;
-    padding: 35px 25px;
-    border-radius: 12px;
+    padding: 65px 45px;
     text-align: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
@@ -501,7 +307,6 @@ body {
     font-size: 16px;
     color: black;
     margin-bottom: 4px;
-    border: 1px solid #334155;
     border-radius: 12px;      
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
@@ -518,6 +323,7 @@ body {
     color: var(--color-brand-dark);
     display: block;
     margin-bottom: 12px;
+    font-style: italic;
 }
 
 .member-bio {
@@ -543,52 +349,6 @@ body {
 
 @media (max-width: 900px) {
 
-    .nav-container {
-        flex-direction: column;
-        height: auto;
-        padding: 20px;
-        gap: 20px;
-    }
-
-    
-    .logo {
-        justify-content: center;
-    }
-
-    /* Permitimos que el menú de enlaces se vea en vertical y centrado */
-    .nav-menu {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-        width: 100%;
-        padding-top: 10px;
-        border-top: 1px solid #eae5d8;
-        border-bottom: 1px solid #eae5d8;
-        padding-bottom: 10px;
-    }
-
-    .nav-link {
-        font-size: 16px;
-    }
-
-    .nav-link.active::after {
-        display: none;
-    }
-
-    .nav-actions {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-        width: 100%;
-    }
-
-    .search-box {
-        max-width: 100%;
-    }
-
-    
     .tech-images-stack,
     .code-images-stack {
         width: 100%;
