@@ -1,4 +1,5 @@
 import { renderizarCatalogoHome } from "./home.js";
+import { inicializarMenuMobile } from "./components/menuMobile.js";
 
 async function loadComponent(containerId, fileName) {
   const container = document.getElementById(containerId);
@@ -17,14 +18,20 @@ async function loadComponent(containerId, fileName) {
 }
 
 async function initializeApp() {
-  if (document.getElementById("products-grid-container")) {
-    renderizarCatalogoHome();
-  }
+  try {
+    await Promise.all([
+      loadComponent("header-container", "header.html"),
+      loadComponent("footer-container", "footer.html"),
+    ]);
 
-  await Promise.all([
-    loadComponent("header-container", "header.html"),
-    loadComponent("footer-container", "footer.html"),
-  ]);
+    inicializarMenuMobile();
+
+    if (document.getElementById("products-grid-container")) {
+      renderizarCatalogoHome();
+    }
+  } catch (error) {
+    console.error("Fallo al inicializar", error);
+  }
 }
 
 initializeApp();
