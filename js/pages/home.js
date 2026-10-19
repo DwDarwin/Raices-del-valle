@@ -1,5 +1,5 @@
-import { PRODUCTOS_COSECHA } from "./data.js";
-import { crearProductCard } from "./components/productCard.js";
+import { PRODUCTOS_COSECHA } from "../data.js";
+import { crearProductCard } from "../components/productCard.js";
 
 export function renderizarCatalogoHome() {
   const gridContainer = document.getElementById("products-grid-container");

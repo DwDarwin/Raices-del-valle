@@ -1,10 +1,10 @@
-import { renderizarCatalogoHome } from "./home.js";
+import { renderizarCatalogoHome } from "./pages/home.js";
 import { inicializarMenuMobile } from "./components/menuMobile.js";
 
 async function loadComponent(containerId, fileName) {
   const container = document.getElementById(containerId);
   if (!container) return;
-  const componentUrl = new URL(`../view/${fileName}`, import.meta.url);
+  const componentUrl = new URL(`../pages/${fileName}`, import.meta.url);
 
   try {
     const response = await fetch(componentUrl);
