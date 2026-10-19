@@ -1,13 +1,31 @@
-<link rel="stylesheet" href="../css/styles.css">
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contáctanos: dudas sobre tu pedido o suma tu finca a la red de Raíces del Valle.">
+    <title>Equipo | Raíces del Valle</title>
+
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23102e22'/%3E%3Cpath d='M10 22c0-7 5-12 12-12 0 7-5 12-12 12zm0 0l7-7' stroke='%23f6f1e7' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <script type="module" src="../js/app.js"></script>
+</head>
 
 <body>
-    
-    
-    <section class="hero">
+    <header id="header-container"></header>
+
+    <main class="team-container">
+    <section class="hero-team">
         <div class="hero-box">
             <img src="../assets/equipo/equi-00.jpg" alt="Hero" class="hero-bg">
-            
+
             <div class="hero-content">
                 <span class="hero-tag">INGENIERÍA Y DESARROLLO</span>
                 <h1 class="hero-title">El equipo detrás de <br><span>Raíces del Valle</span></h1>
@@ -15,14 +33,14 @@
         </div>
     </section>
 
-  
+    <div  class="team-body">
     <section class="tech-section">
         <div class="container-fluid">
             <div class="tech-grid">
 
                 <div class="tech-text">
-                    <span class="sec-tag">PERSPECTIVA TECNOLÓGICA</span>
-                    <h2>Tecnología<br>para el campo real</h2>
+                    <span class="sec-tag subtitle">PERSPECTIVA TECNOLÓGICA</span>
+                    <h2 class="title">Tecnología<br>para el campo real</h2>
                     <p>Las familias agricultoras de Putumayo producen cosechas orgánicas de la más alta calidad, pero
                         carecen de visibilidad digital para competir en el mercado moderno. Nuestra meta fue romper este
                         aislamiento, creando una vitrina digital competitiva para posicionar sus marcas y conectarlas
@@ -31,39 +49,39 @@
 
                 <div class="tech-images-stack">
                     <div class="circle-img img-small">
-                        <img src="../assets/equipo/equi-02.png" alt="Fresas pequeñas">
+                        <img src="../assets/equipo/fresa.webp" alt="Fresas pequeñas">
                     </div>
                     <div class="circle-img img-large">
-                        <img src="../assets/equipo/equi-03.png" alt="Caja de fresas">
+                        <img src="../assets/equipo/cajon-fresas.webp" alt="Caja de fresas">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-  
+
     <section class="code-section">
         <div class="container-fluid">
             <div class="code-grid">
 
                 <div class="code-images-stack">
                     <div class="circle-img img-main1">
-                        <img src="../assets/equipo/equi-04.png" alt="Agricultor secundario">
+                        <img src="../assets/equipo/trabajo-finca.webp" alt="Agricultor secundario">
                     </div>
                     <div class="circle-img img-main">
-                        <img src="../assets/equipo/equi-01.png" alt="Agricultor principal tomates">
+                        <img src="../assets/equipo/cajon-tomates.webp" alt="Agricultor principal tomates">
                     </div>
                 </div>
 
                 <div class="code-content">
-                    <h2>Cómo tradujimos<br>el campo en código</h2>
+                    <h2 class="title">Cómo tradujimos<br>el campo en código</h2>
                     <p class="code-desc">Desarrollamos un e-commerce desacoplado y escalable que funciona como canal de
                         venta directa para restaurantes nacionales y centraliza el primer contacto para exportaciones.
                     </p>
 
 
                     <!-- futura integracion -->
-                     <!-- 
+                    <!-- 
                     <div class="code-features">
                         <div class="feat-item">
                             <ul>
@@ -89,7 +107,7 @@
         </div>
     </section>
 
-    
+
     <section class="team-section">
         <div class="container">
             <div class="team-header">
@@ -175,8 +193,10 @@
             </div>
         </div>
     </section>
+    </div>
+    </main>
 
-    
+    <footer id="footer-container"></footer>
 
 </body>
 
