@@ -2,12 +2,12 @@
 @import url("base/reset.css");
 @import url("base/typography.css");
 
+@import url("components/brand-logo.css");
 @import url("components/buttons.css");
 @import url("components/product-card.css");
 
 @import url("./header.css");
 @import url("./footer.css");
 @import url("./contacto.css");
-@import url("./home.css");
 @import url("./equipo.css");
-
+@import url("./home.css");
