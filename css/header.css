@@ -20,7 +20,7 @@ header {
 .nav-links {
     display: flex;
     gap: 8px;
-    margin: 0 auto;
+    margin-left: 60px;
     list-style: none;
     padding: 0;
     align-items: center;
@@ -40,14 +40,27 @@ header {
     color: var(--color-brand-dark); 
 }
 
-.nav-links a.active::after {
+.nav-links a::after {
     content: "";
     position: absolute;
     left: 14px;
     right: 14px;
-    bottom: 0;
+    bottom: 4px;
     height: 2px;
     background: var(--color-brand-primary);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    transform: scaleX(1);
+}
+
+.nav-links a.active {
+    color: var(--color-brand-primary);
+    font-weight: 500;
 }
 
 .menu-toggle {
@@ -223,7 +236,7 @@ header {
         margin-left: 6px;
     }
 
-    .nav-links a.active::after {
+    .nav-links a::after {
         display: none;
     }
 
