@@ -1,0 +1,184 @@
+/* Raíces del Valle — Página de Contacto
+ */
+
+:root {
+  --contact-border: #e4ddd0;
+  --contact-card: #f1ebdf;
+  --contact-text: #1f2a22;
+  --contact-muted: #6b6f68;
+  --contact-error: #b42318;
+  --contact-success: #2f6b3f;
+}
+
+.sr-only,
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+:focus-visible { outline: 2px solid var(--color-brand-accent); outline-offset: 2px; }
+
+
+/*  Contenido  */
+.contact-section {
+  padding: 95px 0px 95px 0; 
+}
+
+.contact-grid {
+  width: 75%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 84px;
+  align-items: start;
+}
+
+.eyebrow { color: var(--color-brand-earth); margin-bottom: 20px; }
+
+.contact-title {
+  color: var(--color-brand-primary);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.contact-lead {
+  color: var(--contact-muted);
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 28rem;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid var(--contact-border);
+  margin: 32px 0;
+  max-width: 28rem;
+}
+
+.info-list li {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 22px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.info-list svg { color: var(--color-brand-primary); flex-shrink: 0; margin-top: 2px; }
+
+.info-label {
+  display: block;
+  color: var(--color-brand-earth);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+/*  Formulario  */
+.form-card {
+  background: var(--contact-card);
+  padding: 36px;
+  border-radius: 4px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 16px;
+}
+
+.field { min-width: 0; }
+.field-full { grid-column: 1 / -1; }
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: var(--color-white);
+  border: 1px solid var(--contact-border);
+  border-radius: 3px;
+  padding: 12px 14px;
+  font-size: 15px;
+  color: var(--contact-text);
+}
+
+.field input::placeholder,
+.field textarea::placeholder { color: #a3a49e; }
+
+.field select {
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%231f2a22' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.field textarea { resize: vertical; min-height: 120px; }
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-brand-dark);
+  box-shadow: 0 0 0 3px rgba(23, 62, 45, 0.15);
+}
+
+.field .is-invalid { border-color: var(--contact-error); }
+.field .is-valid { border-color: var(--contact-success); }
+
+.field-error {
+  color: var(--contact-error);
+  font-size: 12.5px;
+  margin-top: 6px;
+}
+
+.field-error:empty { display: none; }
+
+.field-foot { display: flex; justify-content: space-between; gap: 12px; }
+.char-counter { margin-left: auto; margin-top: 6px; font-size: 12px; color: var(--contact-muted); }
+.char-counter.limite { color: var(--contact-error); }
+
+.btn-submit { width: 100%; margin-top: 4px; font-weight: 600; }
+.btn-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+
+.form-status { margin-top: 16px; font-size: 14px; border-radius: 3px; }
+.form-status:empty { display: none; }
+.form-status.exito { padding: 12px 16px; background: #e3efe5; color: var(--contact-success); }
+.form-status.error { padding: 12px 16px; background: #fbe9e7; color: var(--contact-error); }
+
+
+/* ---------- Tablet ---------- */
+@media (width < 992px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 40px;
+  width: 85%; }
+  .contact-info{
+    padding: 0 19px;
+    text-align: center;
+  }
+  .contact-info ul{
+    text-align: left;
+  }
+  .contact-lead,
+  .divider { max-width: 36rem; }
+}
+
+/* ---------- Móvil ---------- */
+@media (width < 576px) {
+  .form-card { padding: 24px 18px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .btn-submit { width: 100%; }
+}
