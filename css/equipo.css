@@ -1,0 +1,375 @@
+.team-container{
+    background-color: var(--color-white);
+    width: 100%;
+}
+
+/* HERO */
+.hero-team{
+    height: 650px;
+    width: 100%;
+}
+
+.hero-box {
+    margin: 0 auto;
+    border-radius: 0px;
+    height: 100%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+.hero-content {
+    z-index: 3;
+    color: var(--color-white);
+    margin-left: 100px;
+    margin-top: 180px;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.hero-box::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+
+    background: linear-gradient(to right,
+            rgba(23, 54, 38, 0.85) 0%,
+            rgba(21, 53, 37, 0.5) 45%,
+            rgba(24, 24, 24, 0) 70%);
+}
+
+.hero-tag {
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: var(--color-brand-accent);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.hero-title {
+    font-size: 74px;
+    line-height: 1.2;
+}
+
+.hero-title span {
+    font-style: italic;
+    color: var(--color-brand-accent);
+}
+
+.team-body{
+  width: 70%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.container-fluid{
+    margin-top: 100px;
+}
+.tech-section {
+    padding: 60px 0;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.sec-tag {
+    font-weight: bold;
+    color: var(--color-brand-earth);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.tech-text h2,
+.code-content h2 {
+    color: var(--color-brand-dark);
+    margin-bottom: 42px;
+}
+
+.tech-text p,
+.code-desc {
+    color: var(--color-brand-dark);
+    font-size: 16px;
+    line-height: 1.8;
+    width: 80%;
+}
+
+
+.tech-images-stack {
+    position: relative;
+    width: 500px;
+    height: 380px;
+    margin: 0 auto;
+}
+
+
+.circle-img {
+    border-radius: 50%;
+    overflow: hidden;
+    border: none;
+    position: absolute;
+    background-color: #fff;
+}
+
+.circle-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+.img-small {
+    width: 270px;
+    height: 270px;
+    bottom: 130px;
+    right: 290px;
+    z-index: 2;
+}
+
+.img-large {
+    width: 420px;
+    height: 420px;
+    top: 90px;
+    right: 20px;
+    z-index: 1;
+}
+
+
+.code-section {
+    padding: 40px 0 80px 0;
+}
+
+.code-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+
+.code-images-stack {
+    position: relative;
+    width: 500px;
+    height: 460px;
+    margin: 0 auto;
+}
+
+
+.img-main1 {
+    width: 270px;
+    height: 270px;
+    top: 250px;
+    right: 300px;
+    z-index: 2;
+}
+
+.img-main {
+    width: 420px;
+    height: 420px;
+    right: 20px;
+    z-index: 1;
+}
+
+/* Características y estadísticas (futura integracion) */
+/*
+.code-features {
+    display: flex;
+    gap: 40px;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.feat-item ul {
+    list-style: none;
+    color: #333;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+.feat-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-circle {
+    width: 85px;
+    height: 85px;
+    border: 2px solid #1b3b2b;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+}
+
+.stat-num {
+    font-size: 15px;
+    font-weight: bold;
+    color: #1b3b2b;
+}
+
+.stat-label {
+    font-size: 9px;
+    color: #333;
+    line-height: 1;
+}
+*/
+
+
+.team-section {
+    background-color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+}
+
+.team-header h2 {
+    margin-top: -50px;
+    font-size: 60px;
+}
+
+.team-header p {
+    padding-top: 25px;
+    color: var(--color-brand-dark);
+}
+
+.team-header h2 span {
+    color: var(--color-brand-accent);
+    font-size: 60px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 90px;
+}
+
+.team-card {
+    background: #fff;
+    padding: 65px 45px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.member-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 0 auto 20px auto;
+    background-color: #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.member-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.team-card h3 {
+    font-size: 16px;
+    color: black;
+    margin-bottom: 4px;
+    border-radius: 12px;      
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.team-card:hover {
+    transform: translateY(-8px); 
+    border-color: var(--color-brand-dark);
+    box-shadow: 0 12px 24px rgba(16, 185, 129, 0.15); 
+}
+
+.member-role {
+    font-size: 12px;
+    color: var(--color-brand-dark);
+    display: block;
+    margin-bottom: 12px;
+    font-style: italic;
+}
+
+.member-bio {
+    font-size: 12px;
+    color: var(--color-white);
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.member-socials {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.member-socials a {
+
+    font-size: 14px;
+    text-decoration: none;
+}
+
+
+
+@media (max-width: 900px) {
+
+    .tech-images-stack,
+    .code-images-stack {
+        width: 100%;
+        height: 320px;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .img-small,
+    .img-main1 {
+        width: 130px;
+        height: 130px;
+        top: 0;
+        left: 10%;
+    }
+
+    .img-large,
+    .img-main {
+        width: 250px;
+        height: 250px;
+        bottom: 0;
+        right: 10%;
+    }
+}
