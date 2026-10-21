@@ -1,13 +1,206 @@
-@import url("base/tokens.css");
-@import url("base/reset.css");
-@import url("base/typography.css");
+:root {
+  --color-brand-dark: #173e2d;
+  --color-brand-primary: #102e22;
+  --color-brand-accent: #e6a73d;
+  --color-brand-earth: #a85736;
 
-@import url("components/brand-logo.css");
-@import url("components/buttons.css");
-@import url("components/product-card.css");
+  --color-surface-light: #f6f1e7;
+  --color-white: #ffffff;
 
-@import url("./header.css");
-@import url("./footer.css");
-@import url("./contacto.css");
-@import url("./equipo.css");
-@import url("./home.css");
+  --max-width: 1440px;
+
+  --bg-hero-overlay: linear-gradient(
+    90deg,
+    rgba(16, 46, 34, 0.85) 0%,
+    rgba(16, 46, 34, 0.6) 40%,
+    rgba(16, 46, 34, 0) 100%
+  );
+
+  --font-main: "Poppins", sans-serif;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-surface-light);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+}
+
+main,
+section,
+header,
+footer,
+article,
+aside {
+  display: block;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+  border: 1px solid var(--color-brand-accent);
+}
+
+.btn-primary:hover {
+  background-color: #d19430;
+  border-color: #d19430;
+}
+
+.btn-secondary {
+  backdrop-filter: blur(5px);
+  color: var(--color-white);
+  border: 1px solid var(--color-white);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-tertiary {
+  backdrop-filter: blur(5px);
+  color: var(--color-brand-primary);
+  border: 1.5px solid var(--color-brand-primary);
+}
+
+.btn-tertiary:hover {
+  background-color: var(--color-brand-dark);
+  border-color: var(--color-brand-dark);
+  color: var(--color-white);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-brand-primary);
+}
+
+.brand-mark {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-brand-primary);
+  color: var(--color-surface-light);
+  flex-shrink: 0;
+}
+
+.brand-mark.light {
+  background: var(--color-surface-light);
+  color: var(--color-brand-primary);
+}
+
+.brand-mark svg {
+  width: 28px;
+  height: 28px;
+}
+
+.brand-text {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-text small {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+.brand-text.light {
+  color: var(--color-white);
+}
+
+.banner-title {
+  font-weight: 600;
+  font-size: 64px;
+  line-height: 1;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+@media (width < 768px) {
+  .banner-title {
+    font-size: 34px;
+    line-height: 1.2;
+  }
+
+  .title {
+    font-size: 28px;
+    line-height: 1.25;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    margin-bottom: 12px;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: 15px;
+    width: 90%;
+  }
+}
