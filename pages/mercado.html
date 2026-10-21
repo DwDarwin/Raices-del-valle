@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mercado campesino | Raíces del Valle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/mercado.css">
+</head>
+<body>
+
+  <!-- Aquí se inserta tu cabecera (por ejemplo <site-header></site-header>) -->
+
+  <main>
+    <!-- Portada -->
+    <section class="hero">
+      <div class="hero__inner">
+        <p class="eyebrow">Mercado campesino</p>
+        <h1 class="hero__title">Alimentos con <em>origen.</em></h1>
+        <p class="hero__text">Cosechamos según el ritmo de la tierra. Por eso nuestra disponibilidad cambia cada semana.</p>
+      </div>
+    </section>
+
+    <!-- Catálogo -->
+    <section class="catalog" aria-labelledby="catalog-title">
+      <h2 id="catalog-title" class="sr-only">Productos del mercado</h2>
+
+      <div class="toolbar">
+        <div class="tabs" role="tablist" aria-label="Categorías">
+          <button class="tab is-active" role="tab" aria-selected="true" data-category="todos" type="button">Todos</button>
+          <button class="tab" role="tab" aria-selected="false" data-category="tuberculos" type="button">Tubérculos</button>
+          <button class="tab" role="tab" aria-selected="false" data-category="verduras" type="button">Verduras</button>
+          <button class="tab" role="tab" aria-selected="false" data-category="frutas" type="button">Frutas</button>
+          <button class="tab" role="tab" aria-selected="false" data-category="granos" type="button">Granos</button>
+          <button class="tab" role="tab" aria-selected="false" data-category="granja" type="button">Granja</button>
+          <button class="tab" role="tab" aria-selected="false" data-category="canastas" type="button">Canastas</button>
+        </div>
+
+        <label class="sort" for="sort">
+          <span>Ordenar por:</span>
+          <select id="sort">
+            <option value="recomendados">Recomendados</option>
+            <option value="precio-asc">Menor precio</option>
+            <option value="precio-desc">Mayor precio</option>
+            <option value="nombre">Nombre (A-Z)</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="meta">
+        <p id="count" aria-live="polite">10 productos disponibles</p>
+        <p class="meta__updated"><span class="dot" aria-hidden="true"></span>Actualizado hoy, 7:30 a. m.</p>
+      </div>
+
+      <div id="grid" class="grid"></div>
+    </section>
+  </main>
+
+  <!-- Aquí se inserta tu footer (por ejemplo <site-footer></site-footer>) -->
+
+  <script src="js/mercado.js"></script>
+</body>
+</html>
