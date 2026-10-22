@@ -1,0 +1,88 @@
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contáctanos: dudas sobre tu pedido o suma tu finca a la red de Raíces del Valle.">
+    <title>Mercado | Raíces del Valle</title>
+    
+    <link rel="stylesheet" href="../css/mercado.css">    
+    <script type="module" src="../js/mercado.js"></script>
+</head>
+<body>
+
+   <main class="mercado-section">
+
+       
+        <section class="mercado-banner">
+            <header class="mercado-header">
+                <span class="sec-subtitle">
+                    <span class="subtitle-line"></span>
+                    MERCADO CAMPESINO
+                </span>
+
+                <h1 class="sec-title">
+                    Alimentos con <span>origen</span>
+                </h1>
+
+                <p class="sec-description">
+                    Cosechamos según el ritmo de la tierra.
+                    Por eso nuestra disponibilidad cambia cada semana.
+                </p>
+            </header>
+        </section>
+
+        
+        <section class="container-fixed" aria-label="Catálogo de productos">
+
+            <div class="filter-bar">
+                <div class="category-tabs" id="categoryTabs"
+                     aria-label="Filtrar por categoría">
+
+                    <button class="tab-btn active" data-category="todos"
+                            aria-pressed="true">Todos</button>
+                    <button class="tab-btn" data-category="tuberculos"
+                            aria-pressed="false">Tubérculos</button>
+                    <button class="tab-btn" data-category="frutas"
+                            aria-pressed="false">Frutas</button>
+                    <button class="tab-btn" data-category="granos"
+                            aria-pressed="false">Granos</button>
+                    <button class="tab-btn" data-category="granja"
+                            aria-pressed="false">Granja</button>
+                    <button class="tab-btn" data-category="canastas"
+                            aria-pressed="false">Canastas</button>
+                </div>
+
+                <div class="sort-dropdown">
+                    <label for="sortSelect">Ordenar por:</label>
+                    <select id="sortSelect">
+                        <option value="recomendados">Recomendados</option>
+                        <option value="menor-precio">Menor precio</option>
+                        <option value="mayor-precio">Mayor precio</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="status-bar">
+                <span id="productCounter" aria-live="polite">
+                    0 productos disponibles
+                </span>
+
+                <span class="status-update">
+                    <span class="dot-green"></span>
+                    Actualizado hoy
+                </span>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+            </div>
+
+            <p class="empty-message" id="emptyMessage" hidden>
+                No hay productos disponibles en esta categoría.
+            </p>
+
+        </section>
+    </main>
+
+</body>
+</html>
