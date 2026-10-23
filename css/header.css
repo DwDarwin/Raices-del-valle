@@ -170,7 +170,7 @@ header {
   display: none;
 }
 
-@media (width <= 1024px) {
+@media (max-width: 1024px) {
   .nav-actions {
     gap: 10px;
   }
