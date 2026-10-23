@@ -17,9 +17,9 @@
   );
 
   --bg-hero-mobile-overlay: linear-gradient(
-    180deg,
+    0deg,
     rgba(16, 46, 34, 0.915) 0%,
-    rgba(16, 46, 34, 0.714) 70%,
+    rgba(16, 46, 34, 0.714) 40%,
     rgba(16, 46, 34, 0) 100%
   );
 
