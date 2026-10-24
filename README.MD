@@ -12,7 +12,6 @@ INTEGRANTES:
 
 Raices del valle es un aplicativo web orientado a la inclusion de los territorios y campesinos que tengan productos de valor para ser comercializados, raices del valle busca eliminar los intermediarios creando un enlace directo entre los agricultores y los clientes.
 
-Tambien esta orientado a facilitar las consultas de tareas por medio de un chat potencializado con IA dentro de la aplicacion
 
 2. RESUMEN DEL PROYECTO
 
