@@ -16,9 +16,15 @@
     rgba(16, 46, 34, 0) 100%
   );
 
+  --bg-hero-mobile-overlay: linear-gradient(
+    0deg,
+    rgba(16, 46, 34, 0.915) 0%,
+    rgba(16, 46, 34, 0.714) 40%,
+    rgba(16, 46, 34, 0) 100%
+  );
+
   --font-main: "Poppins", sans-serif;
 }
-
 
 * {
   box-sizing: border-box;
@@ -183,7 +189,7 @@ aside {
 
 @media (width < 768px) {
   .banner-title {
-    font-size: 34px;
+    font-size: 36px;
     line-height: 1.2;
   }
 
