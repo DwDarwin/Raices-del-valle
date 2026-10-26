@@ -160,7 +160,6 @@
 .form-status.exito { padding: 12px 16px; background: #e3efe5; color: var(--contact-success); }
 .form-status.error { padding: 12px 16px; background: #fbe9e7; color: var(--contact-error); }
 
-
 /* ---------- Tablet ---------- */
 @media (width < 992px) {
   .contact-grid { grid-template-columns: 1fr; gap: 40px;

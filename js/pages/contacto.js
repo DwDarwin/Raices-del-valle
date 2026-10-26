@@ -1,6 +1,6 @@
 /*   Raíces del Valle — Validación del formulario de contacto y envío con Formspree*/
 
-"use strict";
+import { enviarContacto } from "../../services/contacto.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const formulario = document.getElementById("formContacto");
@@ -16,15 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     motivo: document.getElementById("motivo"),
     mensaje: document.getElementById("mensaje"),
   };
-
-  /* ---------- Menú móvil ---------- */
-  const botonMenu = document.getElementById("menuToggle");
-  const panelMenu = document.getElementById("menuPrincipal");
-  botonMenu.addEventListener("click", () => {
-    const abierto = panelMenu.classList.toggle("abierto");
-    botonMenu.setAttribute("aria-expanded", String(abierto));
-    botonMenu.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
-  });
 
   const LIMITE_MENSAJE = 500;
   let intentoEnvio = false; // la validación en vivo se activa después del primer intento
@@ -189,13 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // 2. Comprobar que se configuró el ID de Formspree
-    if (formulario.action.includes("TU_ID_FORMSPREE")) {
-      mostrarEstado("Falta configurar el ID de Formspree en el atributo action del formulario.", "error");
-      return;
-    }
-
-    // 3. Enviar los datos (limpios) a Formspree
+    // 2. Enviar los datos (limpios) a Formspree a través del servicio
     const datos = new FormData(formulario);
     datos.set("nombre", campos.nombre.value.trim().replace(/\s+/g, " "));
     datos.set("email", campos.correo.value.trim());
@@ -203,28 +188,14 @@ document.addEventListener("DOMContentLoaded", () => {
     datos.set("mensaje", campos.mensaje.value.trim());
 
     bloquearBoton(true);
+    const resultado = await enviarContacto(datos);
+    bloquearBoton(false);
 
-    try {
-      const respuesta = await fetch(formulario.action, {
-        method: "POST",
-        body: datos,
-        headers: { Accept: "application/json" },
-      });
-
-      if (respuesta.ok) {
-        reiniciarFormulario();
-        mostrarEstado("¡Gracias! Recibimos tu mensaje y te responderemos pronto.", "exito");
-      } else {
-        const resultado = await respuesta.json().catch(() => ({}));
-        const detalle = Array.isArray(resultado.errors)
-          ? resultado.errors.map((e) => e.message).join(" ")
-          : "";
-        mostrarEstado(`No pudimos enviar tu mensaje. ${detalle || "Inténtalo de nuevo en unos minutos."}`, "error");
-      }
-    } catch (error) {
-      mostrarEstado("No hay conexión. Revisa tu internet e inténtalo de nuevo.", "error");
-    } finally {
-      bloquearBoton(false);
+    if (resultado.ok) {
+      reiniciarFormulario();
+      mostrarEstado("¡Gracias! Recibimos tu mensaje y te responderemos pronto.", "exito");
+    } else {
+      mostrarEstado(resultado.mensaje, "error");
     }
   });
 });

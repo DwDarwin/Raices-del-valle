@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de productos | Raíces del Valle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- Menú lateral -->
+    <aside class="sidebar">
+      <a class="brand" href="mercado.html">
+        <span class="brand__mark"></span>
+        <span><strong>Raíces</strong><small>Del valle</small></span>
+      </a>
+
+      <p class="sidebar__label">Administración</p>
+      <nav class="nav">
+        <a href="#">Resumen</a>
+        <a href="admin.html" class="is-active">Productos <span class="badge" id="nav-count">0</span></a>
+        <a href="#">Pedidos <span class="badge badge--gray">12</span></a>
+        <a href="#">Productores</a>
+        <a href="#">Inventario</a>
+      </nav>
+
+      <div class="sidebar__bottom">
+        <a href="mercado.html">Ver el mercado</a>
+        <a href="#">Cerrar sesión</a>
+        <p class="user"><strong>Ana Martínez</strong><small>Administradora</small></p>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <p>Panel administrativo &rsaquo; <strong>Productos</strong></p>
+        <span class="avatar">AM</span>
+      </header>
+
+      <main class="content">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow">Catálogo campesino</p>
+            <h1>Gestión de productos</h1>
+            <p class="lede">Administra los productos que se muestran en el mercado.</p>
+          </div>
+          <button class="btn btn--primary" id="new-btn" type="button">+ Nuevo producto</button>
+        </div>
+
+        <!-- Resumen -->
+        <section class="stats">
+          <article class="stat">
+            <p class="stat__label">Productos totales</p>
+            <p class="stat__value" id="st-total">0</p>
+            <p class="stat__note" id="st-total-note"></p>
+          </article>
+          <article class="stat">
+            <p class="stat__label">Stock bajo</p>
+            <p class="stat__value" id="st-low">0</p>
+            <p class="stat__note">Requieren atención</p>
+          </article>
+          <article class="stat">
+            <p class="stat__label">Agotados</p>
+            <p class="stat__value" id="st-out">0</p>
+            <p class="stat__note">No visibles en tienda</p>
+          </article>
+          <article class="stat">
+            <p class="stat__label">Valor inventario</p>
+            <p class="stat__value" id="st-value">$0</p>
+            <p class="stat__note">Valor aproximado</p>
+          </article>
+        </section>
+
+        <!-- Tabla -->
+        <section class="panel">
+          <div class="panel__head">
+            <h2>Todos los productos</h2>
+            <p id="results"></p>
+          </div>
+
+          <div class="filters">
+            <input id="q" type="search" placeholder="Buscar por producto o productor…" aria-label="Buscar">
+            <select id="f-cat" aria-label="Filtrar por categoría"></select>
+            <select id="f-status" aria-label="Filtrar por estado">
+              <option value="">Todos los estados</option>
+              <option value="publicado">Publicado</option>
+              <option value="borrador">Borrador</option>
+              <option value="agotado">Agotado</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Categoría</th>
+                  <th>Precio</th>
+                  <th>Inventario</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Formulario para crear o editar -->
+  <dialog class="modal" id="modal">
+    <form id="product-form" novalidate>
+      <div class="modal__head">
+        <div>
+          <p class="eyebrow" id="modal-eyebrow">Nuevo en el catálogo</p>
+          <h2 id="modal-title">Crear producto</h2>
+          <p class="lede">Completa la información que verá el cliente.</p>
+        </div>
+        <button class="btn btn--ghost btn--small" type="button" id="modal-close">Cerrar</button>
+      </div>
+
+      <div class="modal__body">
+        <div class="photo">
+          <div class="photo__preview" id="photo-preview">Sin foto</div>
+          <div>
+            <strong>Fotografía del producto</strong>
+            <p>Usa una imagen clara y bien iluminada. Se reduce sola al guardarla.</p>
+            <input type="file" id="photo-input" accept="image/*">
+            <p class="error" id="err-image"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-name">Nombre del producto *</label>
+          <input id="f-name" type="text" placeholder="Ej. Papa criolla seleccionada" maxlength="80">
+          <p class="error" id="err-name"></p>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="f-category">Categoría</label>
+            <select id="f-category"></select>
+          </div>
+          <div class="field">
+            <label for="f-producer">Productor *</label>
+            <input id="f-producer" type="text" placeholder="Nombre de la finca o asociación" maxlength="80">
+            <p class="error" id="err-producer"></p>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="f-price">Precio (COP)</label>
+            <input id="f-price" type="number" min="0" step="100" value="0">
+            <p class="error" id="err-price"></p>
+          </div>
+          <div class="field">
+            <label for="f-unit">Unidad de venta</label>
+            <input id="f-unit" type="text" value="kg" maxlength="30">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="f-stock">Inventario</label>
+            <input id="f-stock" type="number" min="0" step="1" value="0">
+            <p class="error" id="err-stock"></p>
+          </div>
+          <div class="field">
+            <label for="f-status-form">Estado</label>
+            <select id="f-status-form">
+              <option value="borrador">Borrador</option>
+              <option value="publicado">Publicado</option>
+              <option value="agotado">Agotado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-desc">Descripción</label>
+          <textarea id="f-desc" rows="4" placeholder="Cuenta el origen y las cualidades del producto…" maxlength="400"></textarea>
+        </div>
+      </div>
+
+      <div class="modal__foot">
+        <p class="error" id="err-form"></p>
+        <button class="btn btn--ghost" type="button" id="cancel-btn">Cancelar</button>
+        <button class="btn btn--primary" type="submit" id="submit-btn">Crear producto</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="../js/store.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>
