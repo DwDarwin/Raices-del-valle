@@ -45,10 +45,52 @@
             <i class='bx bxs-user bx-sm'></i>
         </button>
 
-        <a href="mercado.html" class="cart-btn" aria-label="Carrito, 0 productos">
-            <i class='bx bx-shopping-bag bx-sm'></i>
-            <span class="cart-badge">0</span>
-        </a>
+        <div class="carrito-contenedor">
+            <button class="cart-btn" id="botonCarrito" type="button" aria-label="Abrir carrito, 0 productos"
+                aria-expanded="false" aria-controls="panelCarrito">
+                <i class="bx bx-shopping-bag bx-sm" aria-hidden="true"></i>
+                <span class="cart-badge" id="contadorCarrito">0</span>
+            </button>
+
+            <section class="carrito-panel" id="panelCarrito" aria-labelledby="tituloCarrito" hidden>
+                <div class="carrito-encabezado">
+                    <div>
+                        <h2 id="tituloCarrito">Mi carrito</h2>
+                        <p id="resumenCarrito">0 productos</p>
+                    </div>
+
+                    <button class="carrito-cerrar" id="cerrarCarrito" type="button" aria-label="Cerrar carrito">
+                        <i class="bx bx-x" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <div class="carrito-lista" id="listaCarrito" aria-live="polite"></div>
+
+                <div class="carrito-vacio" id="carritoVacio">
+                    <i class="bx bx-shopping-bag" aria-hidden="true"></i>
+                    <p>Tu carrito está esperando algo rico.</p>
+                    <span>Explora el mercado campesino y agrega tus productos favoritos.</span>
+                </div>
+
+                <div class="carrito-mensaje" id="mensajeCarrito" role="status" hidden></div>
+
+                <div class="carrito-pie" id="pieCarrito" hidden>
+                    <div class="carrito-total">
+                        <span>Total</span>
+                        <strong id="totalCarrito">$ 0</strong>
+                    </div>
+
+                    <button class="btn btn-tertiary carrito-vaciar" id="vaciarCarrito" type="button">
+                        Vaciar carrito
+                    </button>
+
+                    <button class="btn btn-primary carrito-comprar" id="terminarCompra" type="button">
+                        Terminar compra
+                        <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </section>
+        </div>
 
         <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="menuPrincipal"
             aria-label="Abrir menú">

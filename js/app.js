@@ -1,3 +1,4 @@
+import { inicializarCarrito } from "./carrito.js";
 import { renderizarCatalogoHome } from "./pages/home.js";
 import { inicializarMenuMobile } from "./components/menuMobile.js";
 
@@ -25,6 +26,7 @@ async function initializeApp() {
     ]);
 
     inicializarMenuMobile();
+    inicializarCarrito();
 
     if (document.getElementById("products-grid-container")) {
       renderizarCatalogoHome();
