@@ -81,11 +81,10 @@ export function inicializarCarrito() {
     const carritoVacio = document.getElementById("carritoVacio");
     const pieCarrito = document.getElementById("pieCarrito");
     const totalCarrito = document.getElementById("totalCarrito");
-    const vaciarCarrito = document.getElementById("vaciarCarrito");
     const terminarCompra = document.getElementById("terminarCompra");
     const mensajeCarrito = document.getElementById("mensajeCarrito");
 
-   
+
     if (
         !botonCarrito ||
         !panelCarrito ||
@@ -133,7 +132,7 @@ export function inicializarCarrito() {
 
     function renderizarCarrito() {
         listaCarrito.replaceChildren();
-        
+
         const cantidadTotal = carrito.reduce(
             (total, item) => total + item.cantidad,
             0
@@ -188,6 +187,30 @@ export function inicializarCarrito() {
                 "carrito-item-nombre",
                 item.nombre
             );
+            const encabezado = crearElemento(
+                "div",
+                "carrito-item-encabezado"
+            );
+
+            const botonEliminar = crearElemento(
+                "button",
+                "carrito-eliminar"
+            );
+
+            botonEliminar.type = "button";
+            botonEliminar.dataset.accion = "eliminar";
+            botonEliminar.dataset.id = item.id;
+            botonEliminar.setAttribute(
+                "aria-label",
+                `Eliminar ${item.nombre} del carrito`
+            );
+            botonEliminar.title = "Eliminar producto";
+
+            const iconoEliminar = crearElemento("i", "bx bx-trash");
+            iconoEliminar.setAttribute("aria-hidden", "true");
+
+            botonEliminar.append(iconoEliminar);
+            encabezado.append(nombre, botonEliminar);
 
             const presentacion = crearElemento(
                 "span",
@@ -237,7 +260,7 @@ export function inicializarCarrito() {
             );
 
             final.append(controles, subtotal);
-            contenido.append(nombre);
+            contenido.append(encabezado);
 
             if (item.unidad) {
                 contenido.append(presentacion);
@@ -255,7 +278,7 @@ export function inicializarCarrito() {
         const guardado = guardarCarrito(carrito);
 
         renderizarCarrito();
-        
+
         if (panelEstabaAbierto) {
             panelCarrito.hidden = false;
             botonCarrito.setAttribute("aria-expanded", "true");
@@ -313,7 +336,7 @@ export function inicializarCarrito() {
     });
 
     cerrarCarrito.addEventListener("click", cerrarPanel);
-    
+
     listaCarrito.addEventListener("click", evento => {
         const boton = evento.target.closest("button[data-accion]");
 
@@ -346,14 +369,12 @@ export function inicializarCarrito() {
             }
         }
 
-        actualizarCarrito();
-    });
+        if (accion === "eliminar") {
+            carrito.splice(indice, 1);
+        }
 
-    vaciarCarrito.addEventListener("click", () => {
-        carrito = [];
-        limpiarMensaje();
         actualizarCarrito();
-    });
+    });    
 
     terminarCompra.addEventListener("click", () => {
         mostrarMensaje(
@@ -361,7 +382,7 @@ export function inicializarCarrito() {
             "Tus productos permanecen en el carrito."
         );
     });
-   
+
     document.addEventListener("raices:agregar-carrito", evento => {
         const detalle = evento.detail;
 
@@ -381,7 +402,7 @@ export function inicializarCarrito() {
         }
 
         const objetivo = evento.target;
-   
+
         if (
             objetivo instanceof Element &&
             (
@@ -401,7 +422,7 @@ export function inicializarCarrito() {
             botonCarrito.focus();
         }
     });
-   
+
     window.addEventListener("storage", evento => {
         if (evento.key === CLAVE_CARRITO) {
             carrito = leerCarrito();

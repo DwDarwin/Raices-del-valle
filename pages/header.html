@@ -54,8 +54,13 @@
 
             <section class="carrito-panel" id="panelCarrito" aria-labelledby="tituloCarrito" hidden>
                 <div class="carrito-encabezado">
-                    <div>
-                        <h2 id="tituloCarrito">Mi carrito</h2>
+                    <div class="carrito-titulo">
+                        <span class="sec-subtitle">
+                            <span class="subtitle-line"></span>
+                            TU SELECCIÓN
+                        </span>
+
+                        <h2 id="tituloCarrito">Tu canasta</h2>
                         <p id="resumenCarrito">0 productos</p>
                     </div>
 
@@ -75,19 +80,40 @@
                 <div class="carrito-mensaje" id="mensajeCarrito" role="status" hidden></div>
 
                 <div class="carrito-pie" id="pieCarrito" hidden>
+                    <div class="carrito-entrega">
+                        <i class="bx bxs-truck" aria-hidden="true"></i>
+
+                        <div class="carrito-entrega-texto">
+                            <span>Entrega este viernes</span>
+                            <small>Pedidos hasta el miércoles, 6 pm</small>
+                        </div>
+                    </div>
                     <div class="carrito-total">
-                        <span>Total</span>
+                        <div class="carrito-total-info">
+                            <span>Subtotal</span>
+                            <small>Envío calculado al finalizar</small>
+                        </div>
+
                         <strong id="totalCarrito">$ 0</strong>
                     </div>
-
-                    <button class="btn btn-tertiary carrito-vaciar" id="vaciarCarrito" type="button">
-                        Vaciar carrito
-                    </button>
-
+                                        
                     <button class="btn btn-primary carrito-comprar" id="terminarCompra" type="button">
                         Terminar compra
                         <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
-                    </button>
+                    </button>         
+                    
+
+                    <div class="carrito-ver-completo">
+                        <a href="./mercado.html">
+                            Ver canasta completa
+                            <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
+                    <div class="carrito-seguridad">
+                        <i class="bx bx-check" aria-hidden="true"></i>
+                        <span>Compra segura · Directo de la finca</span>
+                    </div>
                 </div>
             </section>
         </div>
