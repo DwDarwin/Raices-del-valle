@@ -35,6 +35,30 @@
   height: 100%;
   object-fit: cover;
   z-index: 1;
+  object-position: center 60%;
+}
+
+/* Escritorio: la foto se muestra a su tamaño real (sin estirarse) pegada a la derecha,
+   con un fondo desenfocado de la misma foto a los lados y el borde izquierdo difuminado */
+@media (min-width: 993px) {
+  .hero-box::before {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    z-index: 0;
+    background: url("../assets/family/Fam-12.webp") center / cover no-repeat;
+    filter: blur(30px);
+  }
+
+  .hero-bg {
+    left: auto;
+    right: 0;
+    width: auto;
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 22%);
+    mask-image: linear-gradient(to right, transparent, #000 22%);
+  }
 }
 
 .hero-box::after {
@@ -129,6 +153,7 @@
 }
 
 .circle-img {
+  aspect-ratio: 1 / 1; /* mantiene el círculo aunque la foto no sea cuadrada */
   border-radius: 50%;
   overflow: hidden;
   border: none;
