@@ -89,7 +89,7 @@ function renderizarProductor(producto) {
       <div class="producer-text">
         <small>CULTIVADO POR</small>
         <h3>${producto.producer}</h3>
-        <a href="./equipo.html" class="producer-link">Conoce la historia <i class="bx bx-right-arrow-alt"></i></a>
+        <a href="./nosotros.html" class="producer-link">Conoce la historia <i class="bx bx-right-arrow-alt"></i></a>
       </div>
     </div>
   `;
