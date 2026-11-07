@@ -96,7 +96,7 @@ function crearTarjeta(producto) {
     );
 
     const unidad = producto.unidadVenta || "unidades";
-
+    const rutaDetalle = `./detalle-producto.html?id=${producto.id}`;
 
     const imagen = document.createElement("img");
     imagen.className = "product-image";
@@ -112,9 +112,15 @@ function crearTarjeta(producto) {
         }, { once: true });
     }
 
+    const linkImagen = document.createElement("a");
+    linkImagen.href = rutaDetalle;
+    linkImagen.className = "product-link-wrapper";
+    linkImagen.setAttribute("aria-label", `Ver detalle de ${producto.nombre}`);
+    linkImagen.appendChild(imagen);
+
     const imagenContenedor = document.createElement("div");
     imagenContenedor.className = "product-image-container";
-    imagenContenedor.appendChild(imagen);
+    imagenContenedor.appendChild(linkImagen);
 
 
     const etiqueta = document.createElement("span");
@@ -134,7 +140,7 @@ function crearTarjeta(producto) {
         const activo =
             favorito.getAttribute("aria-pressed") !== "true";
 
-        favorito.setAttribute("aria-pressed", String(activo));
+            favorito.setAttribute("aria-pressed", String(activo));
         favorito.textContent = activo ? "♥" : "♡";
         favorito.style.color = activo ? "#eb0e0e" : "";
     });
@@ -150,12 +156,16 @@ function crearTarjeta(producto) {
 
     const categoria = document.createElement("p");
     categoria.className = "product-category";
-    categoria.textContent = String(producto.categoria || "")
-        .replace(/-/g, " ");
+    categoria.textContent = String(producto.categoria || "").replace(/-/g, " ");
+
+    const linkNombre = document.createElement("a");
+    linkNombre.href = rutaDetalle;
+    linkNombre.className = "product-name-link";
+    linkNombre.textContent = producto.nombre || "Producto sin nombre";
 
     const nombre = document.createElement("h2");
     nombre.className = "product-name";
-    nombre.textContent = producto.nombre || "Producto sin nombre";
+    nombre.appendChild(linkNombre);
 
     const presentacion = document.createElement("p");
     presentacion.className = "product-presentation";
@@ -213,7 +223,7 @@ function crearTarjeta(producto) {
         );
     });
 
-    acciones.append(precio, agregar);
+
 
 
     acciones.append(precio, agregar);
