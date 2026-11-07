@@ -72,6 +72,20 @@ function normalizarProducto(producto) {
     };
 }
 
+function obtenerRutaImagenCarrito(rutaImagen) {
+    if (!rutaImagen) {
+        return "";
+    }
+
+    const paginaActual = window.location.pathname;
+    const esPaginaInicio =
+        paginaActual.endsWith("/") || paginaActual.endsWith("/index.html");
+
+    return esPaginaInicio
+        ? rutaImagen.replace("../assets/", "./assets/")
+        : rutaImagen;
+}
+
 export function inicializarCarrito() {
     const botonCarrito = document.getElementById("botonCarrito");
     const panelCarrito = document.getElementById("panelCarrito");
@@ -178,7 +192,7 @@ export function inicializarCarrito() {
             imagen.alt = item.nombre;
 
             if (item.imagen) {
-                imagen.src = item.imagen;
+                imagen.src = obtenerRutaImagenCarrito(item.imagen);
             } else {
                 imagen.hidden = true;
             }
