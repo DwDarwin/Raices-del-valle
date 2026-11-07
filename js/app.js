@@ -19,11 +19,19 @@ async function loadComponent(containerId, fileName) {
 }
 
 function configurarRutasNavegacion(documento) {
-  const raizProyecto = new URL("../", import.meta.url);
+  const raizProyecto = obtenerRaizProyecto();
 
   documento.querySelectorAll("[data-ruta]").forEach((enlace) => {
     enlace.href = new URL(enlace.dataset.ruta, raizProyecto).href;
   });
+}
+
+function obtenerRaizProyecto() {
+  if (window.location.hostname.endsWith("github.io")) {
+    return new URL("/Raices-del-valle/", window.location.origin);
+  }
+
+  return new URL("../", import.meta.url);
 }
 
 async function initializeApp() {
