@@ -1,6 +1,6 @@
 import { inicializarCarrito } from "./carrito.js";
-import { renderizarCatalogoHome } from "./pages/home.js";
-import { inicializarMenuMobile } from "./components/menuMobile.js";
+import { inicializarHome } from "./pages/home/index.js";
+import { inicializarMenuMovil } from "./components/menuMobile.js";
 
 async function loadComponent(containerId, fileName) {
   const container = document.getElementById(containerId);
@@ -25,12 +25,9 @@ async function initializeApp() {
       loadComponent("footer-container", "footer.html"),
     ]);
 
-    inicializarMenuMobile();
+    inicializarMenuMovil(document);
     inicializarCarrito();
-
-    if (document.getElementById("products-grid-container")) {
-      renderizarCatalogoHome();
-    }
+    inicializarHome(document);
   } catch (error) {
     console.error("Fallo al inicializar", error);
   }
