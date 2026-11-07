@@ -18,6 +18,21 @@ async function loadComponent(containerId, fileName) {
   }
 }
 
+function configurarRutasNavegacion(documento) {
+  const rutaActual = window.location.pathname;
+  const posicionPages = rutaActual.indexOf("/pages/");
+  const raizProyecto =
+    posicionPages >= 0
+      ? rutaActual.slice(0, posicionPages + 1)
+      : rutaActual.endsWith("/")
+        ? rutaActual
+        : rutaActual.slice(0, rutaActual.lastIndexOf("/") + 1);
+
+  documento.querySelectorAll("[data-ruta]").forEach((enlace) => {
+    enlace.href = `${raizProyecto}${enlace.dataset.ruta}`;
+  });
+}
+
 async function initializeApp() {
   try {
     await Promise.all([
@@ -25,6 +40,7 @@ async function initializeApp() {
       loadComponent("footer-container", "footer.html"),
     ]);
 
+    configurarRutasNavegacion(document);
     inicializarMenuMovil(document);
     inicializarCarrito();
     inicializarHome(document);
