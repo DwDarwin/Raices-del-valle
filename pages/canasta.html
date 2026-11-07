@@ -1,0 +1,114 @@
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Revisa los productos de tu canasta en Raíces del Valle.">
+    <title>Mi canasta | Raíces del Valle</title>
+
+    
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/canasta.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">   
+   
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <header id="header-container"></header>
+
+    <main class="canasta-pagina">
+        <div class="canasta-contenedor">
+            <section class="canasta-contenido" aria-labelledby="tituloCanasta">
+                <a class="canasta-volver" href="./mercado.html">
+                    <i class="bx bx-arrow-back" aria-hidden="true"></i>
+                    Seguir comprando
+                </a>
+
+                <div class="canasta-subtitulo">
+                    <span class="canasta-linea"></span>
+                    TU SELECCIÓN
+                </div>
+
+                <div class="canasta-titulo-fila">
+                    <h1 id="tituloCanasta">Canasta de compras</h1>
+                    <span id="cantidadProductos" class="canasta-contador">0 productos</span>
+                </div>
+
+                <div id="listaCanasta" class="canasta-lista" aria-live="polite"></div>
+
+                <div id="canastaVacia" class="canasta-vacia" hidden>
+                    <i class="bx bx-shopping-bag" aria-hidden="true"></i>
+                    <h2>Tu canasta está vacía</h2>
+                    <p>Explora nuestro mercado campesino y agrega tus productos favoritos.</p>
+                    <a class="canasta-boton-secundario" href="./mercado.html">Explorar el mercado</a>
+                </div>
+            </section>
+
+            <aside class="resumen-pedido" aria-labelledby="tituloResumen">
+                <div class="canasta-subtitulo">
+                    <span class="canasta-linea"></span>
+                    RESUMEN
+                </div>
+
+                <h2 id="tituloResumen">Tu pedido</h2>
+
+                <div class="resumen-fila">
+                    <span>Subtotal</span>
+                    <strong id="subtotalCanasta">$ 0</strong>
+                </div>
+
+                <div class="resumen-fila">
+                    <span>Envío</span>
+                    <strong id="envioCanasta">$ 0</strong>
+                </div>
+
+                <div class="resumen-separador"></div>
+
+                <div class="resumen-fila resumen-total">
+                    <span>Total</span>
+                    <strong id="totalCanasta">$ 0</strong>
+                </div>
+
+                <div class="descuento-form">
+                    <label for="codigoDescuento">Código de descuento</label>
+                    <div class="descuento-campo">
+                        <input id="codigoDescuento" type="text" placeholder="Escribe tu código" autocomplete="off">
+                        <button id="aplicarDescuento" type="button">Aplicar</button>
+                    </div>
+                    <p id="mensajeDescuento" class="mensaje-resumen" role="status" hidden></p>
+                </div>
+                
+                <button id="continuarPago" class="btn-primary canasta-boton" type="button">
+                    Continuar al pago
+                    <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
+                </button>
+
+                <p class="resumen-seguridad">
+                    <i class="bx bx-check" aria-hidden="true"></i>
+                    Pago seguro y protegido
+                </p>
+            </aside>
+        </div>
+    </main>
+
+    <footer id="footer-container"></footer>
+
+    <dialog id="modalFacturacion" class="modal-facturacion" aria-labelledby="tituloModal">
+        <div class="modal-facturacion-contenido">
+            <span class="modal-icono">
+                <i class="bx bx-check" aria-hidden="true"></i>
+            </span>
+            <h2 id="tituloModal">¡Tu canasta está lista!</h2>
+            <p>Tu canasta está lista para ser facturada</p>
+            <button id="cerrarModalFacturacion" class=" btn-primary canasta-boton" type="button">
+                Entendido
+            </button>
+        </div>
+    </dialog>
+
+    <script type="module" src="../js/pages/canasta.js"></script>
+    <script type="module" src="../js/app.js"></script>
+
+    
+</body>
+</html>

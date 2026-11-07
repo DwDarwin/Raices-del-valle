@@ -67,7 +67,8 @@ function normalizarProducto(producto) {
         nombre: producto.name ?? producto.nombre ?? "Producto",
         precio: Number(producto.price ?? producto.precio) || 0,
         unidad: producto.unit ?? producto.unidadVenta ?? "",
-        imagen: producto.image ?? producto.imagen ?? ""
+        imagen: producto.image ?? producto.imagen ?? "",
+        categoria: producto.category ?? producto.categoria ?? ""
     };
 }
 
@@ -129,6 +130,15 @@ export function inicializarCarrito() {
 
         return elemento;
     }
+    
+    document.addEventListener("rdv:carrito-actualizado", evento => {
+        if (evento.detail?.origen === "carrito") {
+            return;
+        }
+
+        carrito = leerCarrito();
+        renderizarCarrito();
+    });
 
     function renderizarCarrito() {
         listaCarrito.replaceChildren();
@@ -276,6 +286,12 @@ export function inicializarCarrito() {
         const panelEstabaAbierto = !panelCarrito.hidden;
 
         const guardado = guardarCarrito(carrito);
+        // Actualizamos la variable carrito con los datos guardados para reflejar cualquier normalización
+        document.dispatchEvent(
+            new CustomEvent("rdv:carrito-actualizado", {
+                detail: { origen: "carrito" }
+            })
+        );
 
         renderizarCarrito();
 
@@ -374,7 +390,7 @@ export function inicializarCarrito() {
         }
 
         actualizarCarrito();
-    });    
+    });
 
     terminarCompra.addEventListener("click", () => {
         mostrarMensaje(
