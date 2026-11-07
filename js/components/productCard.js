@@ -2,6 +2,9 @@ import { formatearMoneda } from "../utils/formato.js";
 
 export function crearTarjetaProducto(producto, esPaginaSecundaria = false) {
   const rutaDetalle = obtenerRutaDetalle(producto.id, esPaginaSecundaria);
+  const rutaImagen = esPaginaSecundaria
+    ? producto.image
+    : producto.image?.replace("../assets/", "./assets/");
 
   return `
     <article class="product-card" data-id="${producto.id}">
@@ -11,7 +14,7 @@ export function crearTarjetaProducto(producto, esPaginaSecundaria = false) {
                     <i class='bx bx-heart bx-sm'></i>                
         </button>
         <a href="${rutaDetalle}" class="card-link-img" aria-label="Ver detalle de ${producto.name}">
-          <img src="${producto.image}" alt="${producto.name}" class="card-img" loading="lazy">
+          <img src="${rutaImagen}" alt="${producto.name}" class="card-img" loading="lazy">
         </a>
       </div>
       <div class="card-meta">
