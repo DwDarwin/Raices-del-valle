@@ -85,7 +85,7 @@ function renderizarProductor(producto) {
   return `
     <div class="producer-card">
       <div class="producer-avatar">
-        <img src="../../../assets/products/productor-finca.png" alt="${producto.producer}">
+        <img src="../assets/products/productor-finca.png" alt="${producto.producer}">
       </div>
       <div class="producer-text">
         <small>CULTIVADO POR</small>
