@@ -10,9 +10,10 @@ export function renderizarRutaNavegacion(producto) {
   const categoriaCodificada = encodeURIComponent(
     categoria.toLowerCase().trim(),
   );
+  const rutaInicio = new URL("../../index.html", import.meta.url).href;
 
   return `
-    <li><a href="../index.html">Inicio</a></li>
+    <li><a href="${rutaInicio}">Inicio</a></li>
     <li><i class='bx bx-chevron-right'></i></li>
     <li><a href="./mercado.html?categoria=${categoriaCodificada}">${categoria}</a></li>
     <li><i class='bx bx-chevron-right'></i></li>

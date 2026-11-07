@@ -19,17 +19,10 @@ async function loadComponent(containerId, fileName) {
 }
 
 function configurarRutasNavegacion(documento) {
-  const rutaActual = window.location.pathname;
-  const posicionPages = rutaActual.indexOf("/pages/");
-  const raizProyecto =
-    posicionPages >= 0
-      ? rutaActual.slice(0, posicionPages + 1)
-      : rutaActual.endsWith("/")
-        ? rutaActual
-        : rutaActual.slice(0, rutaActual.lastIndexOf("/") + 1);
+  const raizProyecto = new URL("../", import.meta.url);
 
   documento.querySelectorAll("[data-ruta]").forEach((enlace) => {
-    enlace.href = `${raizProyecto}${enlace.dataset.ruta}`;
+    enlace.href = new URL(enlace.dataset.ruta, raizProyecto).href;
   });
 }
 
