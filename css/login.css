@@ -1,0 +1,278 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+input, button, textarea, select {
+    font-family: inherit;
+}
+.contenedorlogin {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    height: 100vh;
+    font-family: var(--font-main, 'Poppins', sans-serif); 
+}
+
+.banner-izq {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 60px; 
+    background-image: linear-gradient(
+        0deg,
+        rgba(16, 46, 34, 0.9) 0%,
+        rgba(16, 46, 34, 0.5) 50%,
+        rgba(16, 46, 34, 0.3) 100%
+    ), url("../assets/img/fondo-login.png");
+    background-size: cover;
+    background-position: center;
+    color: var(--color-white);
+}
+
+.banner-imagen blockquote {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+
+.banner-imagen .text-peq {
+    font-size: 11px;
+    letter-spacing: 2px;
+    opacity: 0.8; 
+}
+
+.formulario-der {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 100px; 
+    background-color: var(--color-surface-light, #f6f1e7);
+    color: var(--color-brand-primary, #102e22);
+    position: relative; 
+}
+
+/* Botón 'X' de cierre */
+.btnx {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-brand-primary);
+}
+
+/* Encabezados y Subtítulos */
+.linea {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.linea-text-peq {
+    width: 30px;
+    height: 1px;
+    background-color: var(--color-brand-earth, #a85736);
+    display: inline-block;
+}
+
+.text-peq-der {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    color: var(--color-brand-earth, #a85736);
+}
+
+.formulario-der h1 {
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.text-peq2-der {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.formulario form {
+    margin-bottom: 20px;
+}
+
+.formulario label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.email1, .password-wrapper {
+    width: 100%;
+}
+
+.email1 input, .password-wrapper input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    outline: none;
+    background-color: var(--color-white, #ffffff);
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.email1 input:focus, .password-wrapper input:focus {
+    border-color: var(--color-brand-accent, #e6a73d);
+}
+
+.label-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.forgot-link {
+    font-size: 11px;
+    color: var(--color-brand-earth, #a85736);
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.eye-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: var(--color-brand-accent, #e6a73d);
+    color: var(--color-brand-primary, #102e22);
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    padding: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: #d19430;
+}
+
+.divider {
+    text-align: center;
+    margin: 30px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #d1d1d1;
+    z-index: 1;
+}
+
+.divider span {
+    background-color: var(--color-surface-light, #f6f1e7);
+    padding: 0 12px;
+    position: relative;
+    z-index: 2;
+    font-size: 11px;
+    color: #777;
+}
+
+.btn-google {
+    width: 100%;
+    background-color: var(--color-white, #ffffff);
+    color: var(--color-brand-primary, #102e22);
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    padding: 14px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-google:hover {
+    background-color: #f0f0f0;
+}
+
+.register-prompt {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 13px;
+    color: #555;
+}
+
+.register-prompt a {
+    color: var(--color-brand-earth, #a85736);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-prompt a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 850px) {
+    
+    .contenedorlogin {
+        grid-template-columns: 100%;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .banner-izq {
+        min-height: 300px;
+        padding: 30px 24px;
+        background-image: var(--bg-hero-mobile-overlay, linear-gradient(0deg, rgba(16, 46, 34, 0.9) 0%, rgba(16, 46, 34, 0.3) 100%)), url("../img/fondo-login.png");
+    }
+
+    .formulario-der {
+        padding: 40px 24px;
+    }
+
+    .formulario-der h1 {
+        font-size: 28px;
+    }
+    
+    .banner-imagen blockquote {
+        font-size: 22px;
+    }
+
+    .btnx {
+        top: 20px;
+        right: 20px;
+    }
+}

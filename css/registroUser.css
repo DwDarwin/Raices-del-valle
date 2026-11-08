@@ -1,0 +1,52 @@
+/* Estandarizar la separación entre campos */
+.input-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.input-group label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Estandarizar el diseño de todos los inputs (Nombre, Email, Contraseña) */
+.input-wrapper, .password-wrapper {
+    width: 100%;
+}
+
+.input-wrapper input, .password-wrapper input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    outline: none;
+    background-color: var(--color-white, #ffffff);
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.input-wrapper input:focus, .password-wrapper input:focus {
+    border-color: var(--color-brand-accent, #e6a73d);
+}
+
+/* Estilos para el nuevo Checkbox de términos */
+.terms-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px; /* Espacio antes del botón de submit */
+}
+
+.terms-group input[type="checkbox"] {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.terms-group label {
+    font-size: 11px;
+    color: #555;
+    margin: 0; /* Quita el margen inferior que heredan los labels normales */
+}
