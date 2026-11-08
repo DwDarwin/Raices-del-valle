@@ -14,6 +14,37 @@ if (formRegistro) {
             return; 
         }
 
+        const regexLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+        if (!regexLetras.test(valNombre)) {
+            alert("El nombre no debe contener números ni caracteres especiales.");
+            return;
+        }
+        
+        if (valNombre.split(/\s+/).length < 2) {
+            alert("Por favor, ingresa al menos un nombre y un apellido.");
+            return;
+        }
+
+        const regexNumeros = /^\d{10}$/; 
+        if (!regexNumeros.test(valTelefono)) {
+            alert("El celular debe contener exactamente 10 números, sin letras ni espacios intermedios.");
+            return;
+        }
+
+        if (valPassword.length < 8) {
+            alert("La contraseña debe tener al menos 8 caracteres.");
+            return;
+        }
+
+        let usuarios = JSON.parse(localStorage.getItem('listaUsuarios')) || [];
+
+        const correoExiste = usuarios.some(usuario => usuario.emailUsuario === valEmail);
+        
+        if (correoExiste) {
+            alert("Este correo ya está registrado. Por favor, usa otro o inicia sesión.");
+            return;
+        }
+
         const nuevoUsuario = {
             nombreCompleto: valNombre,
             numeroTelefono: valTelefono,
@@ -21,7 +52,6 @@ if (formRegistro) {
             passwordUsuario: valPassword
         };
 
-        let usuarios = JSON.parse(localStorage.getItem('listaUsuarios')) || [];
         usuarios.push(nuevoUsuario);
         localStorage.setItem('listaUsuarios', JSON.stringify(usuarios));
 
