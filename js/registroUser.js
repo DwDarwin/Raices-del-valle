@@ -8,8 +8,9 @@ if (formRegistro) {
         const valTelefono = document.getElementById('telefono').value.trim();
         const valEmail = document.getElementById('email').value.trim();
         const valPassword = document.getElementById('password').value.trim();
+        const valConfirmPassword = document.getElementById('confirmPassword').value.trim();
 
-        if (valNombre === "" || valTelefono === "" || valEmail === "" || valPassword === "") {
+        if (valNombre === "" || valTelefono === "" || valEmail === "" || valPassword === "" || valConfirmPassword === "") {
             alert("Por favor, completa todos los campos antes de continuar.");
             return; 
         }
@@ -33,6 +34,11 @@ if (formRegistro) {
 
         if (valPassword.length < 8) {
             alert("La contraseña debe tener al menos 8 caracteres.");
+            return;
+        }
+
+        if (valPassword !== valConfirmPassword) {
+            alert("Las contraseñas no coinciden. Por favor, verifícalas.");
             return;
         }
 
