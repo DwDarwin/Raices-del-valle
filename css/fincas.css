@@ -1,0 +1,474 @@
+/* Raíces del Valle — Página de la Finca */
+
+:root {
+  --finca-sand: #efe8da;
+  --finca-cream: #fbf8f1;
+  --finca-muted: #4a4f48;
+}
+
+.finca-eyebrow {
+  color: var(--color-brand-earth);
+  margin-bottom: 20px;
+}
+
+/*  Hero  */
+.finca-hero {
+  position: relative;
+  height: 480px;
+  display: flex;
+  align-items: flex-end;
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+.finca-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--bg-hero-overlay);
+}
+
+/* Fondo desenfocado: rellena los lados cuando la foto se muestra completa */
+.finca-hero::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  z-index: 0;
+  background: url("../assets/home/Familia Chindoy Muchavisoy W.webp") center / cover no-repeat;
+  filter: blur(40px);
+}
+
+/* Foto completa (4:3) pegada a la derecha, con bordes difuminados que se funden con el fondo */
+.finca-hero-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 4 / 2;
+  object-fit: cover;
+  z-index: 1;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+}
+
+.finca-hero-wrapper {
+  position: relative;
+  z-index: 3;
+  width: 75%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-bottom: 56px;
+}
+
+.finca-hero .finca-eyebrow {
+  color: var(--color-brand-accent);
+  font-size: 11px;
+}
+
+.finca-highlight {
+  color: var(--color-brand-accent);
+  font-style: italic;
+}
+
+.finca-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/*  Cita + historia  */
+.finca-story {
+  background: var(--finca-cream);
+  padding: 80px 0;
+}
+
+.finca-story-grid {
+  width: 75%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+}
+
+.finca-quote {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-brand-primary);
+}
+
+.finca-story-text p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--finca-muted);
+}
+
+.finca-story-text p + p {
+  margin-top: 16px;
+}
+
+/*  Estadísticas  */
+.finca-stats {
+  background: var(--finca-sand);
+  padding: 40px 0;
+}
+
+.finca-stats-grid {
+  width: 75%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.finca-stat {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.finca-stat:not(:last-child) {
+  border-right: 1px solid rgba(16, 46, 34, 0.2);
+}
+
+.finca-stat-number {
+  font-size: 44px;
+  font-weight: 600;
+  color: var(--color-brand-earth);
+  line-height: 1;
+}
+
+.finca-stat-text {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--finca-muted);
+}
+
+/*  Galería  */
+.finca-gallery {
+  background: var(--finca-cream);
+  padding: 80px 0;
+}
+
+.finca-gallery-wrapper {
+  width: 75%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.finca-gallery-head {
+  margin-bottom: 40px;
+}
+
+.finca-gallery-title {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-brand-primary);
+}
+
+.finca-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 240px;
+  grid-auto-flow: dense;
+  gap: 16px;
+}
+
+.finca-gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--finca-sand);
+}
+
+.item-wide {
+  grid-column: span 2;
+}
+
+.item-tall {
+  grid-row: span 2;
+}
+
+.finca-gallery-btn {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.finca-gallery-btn:focus-visible {
+  outline: 3px solid var(--color-brand-accent);
+  outline-offset: -3px;
+}
+
+.finca-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.finca-gallery-item:hover img,
+.finca-gallery-btn:focus-visible img {
+  transform: scale(1.06);
+}
+
+/* Ajustes de encuadre por foto */
+.finca-gallery-item:nth-child(1) img { object-position: center 65%; }
+.finca-gallery-item:nth-child(3) img { object-position: 65% 30%; }
+.finca-gallery-item:nth-child(4) img { object-position: center 35%; }
+
+.finca-gallery-item figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 40px 16px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-white);
+  background: linear-gradient(to top, rgba(16, 46, 34, 0.85), transparent);
+  transform: translateY(100%);
+  transition: transform 0.35s ease;
+  pointer-events: none;
+}
+
+.finca-gallery-item:hover figcaption,
+.finca-gallery-item:focus-within figcaption {
+  transform: translateY(0);
+}
+
+/* Respeta a quienes tienen desactivadas las animaciones en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  .finca-gallery-item img,
+  .finca-gallery-item figcaption {
+    transition: none;
+  }
+
+  .finca-gallery-item:hover img,
+  .finca-gallery-btn:focus-visible img {
+    transform: none;
+  }
+}
+
+/* Sin mouse (celular/tablet): el pie de foto siempre visible */
+@media (hover: none) {
+  .finca-gallery-item figcaption {
+    transform: none;
+  }
+}
+
+/* Foto ampliada */
+.finca-lightbox {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  max-width: 92vw;
+  max-height: 92vh;
+  margin: auto;
+  overflow: visible;
+}
+
+.finca-lightbox::backdrop {
+  background: rgba(16, 46, 34, 0.9);
+}
+
+.finca-lightbox img {
+  max-width: 92vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.finca-lightbox-caption {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-white);
+}
+
+.finca-lightbox-close {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--color-brand-primary);
+  background: var(--color-brand-accent);
+  cursor: pointer;
+}
+
+/*  Forma de cultivo  */
+.finca-method {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 480px;
+}
+
+/* La imagen se ajusta al alto de la sección y no la agranda según su proporción */
+.finca-method-img {
+  position: relative;
+}
+
+.finca-method-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+}
+
+.finca-method-content {
+  background: var(--color-brand-primary);
+  color: var(--color-white);
+  padding: 64px 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.finca-method-content .finca-eyebrow {
+  color: var(--color-brand-accent);
+  margin-bottom: 0;
+}
+
+.finca-method-content p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 32rem;
+}
+
+/*  Tablet */
+@media (width < 992px) {
+  /* Tablet y móvil: la foto completa arriba y el texto debajo, sobre fondo verde oscuro */
+  .finca-hero {
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--color-brand-primary);
+  }
+
+  .finca-hero::before,
+  .finca-hero::after {
+    display: none;
+  }
+
+  .finca-hero-bg {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    max-width: none;
+    aspect-ratio: 3 / 2;
+    object-position: center 60%;
+    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
+    mask-image: linear-gradient(to bottom, #000 80%, transparent);
+  }
+
+  .finca-hero-wrapper {
+    padding: 0 0 40px;
+    margin-top: -24px;
+  }
+
+  .finca-story-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    width: 85%;
+  }
+
+  .finca-hero-wrapper,
+  .finca-stats-grid,
+  .finca-gallery-wrapper {
+    width: 85%;
+  }
+
+  .finca-gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 200px;
+  }
+
+  .finca-method {
+    grid-template-columns: 1fr;
+  }
+
+  .finca-method-img {
+    height: 320px;
+  }
+
+  .finca-method-content {
+    padding: 48px 8%;
+  }
+}
+
+/*  Móvil  */
+@media (width < 768px) {
+  /* En móvil la foto se muestra completa (4:3) */
+  .finca-hero-bg {
+    aspect-ratio: 4 / 3;
+    object-position: center;
+  }
+
+  .finca-story,
+  .finca-gallery {
+    padding: 56px 0;
+  }
+
+  .finca-gallery-title {
+    font-size: 26px;
+  }
+
+  .finca-gallery-head {
+    margin-bottom: 28px;
+  }
+
+  .finca-gallery-grid {
+    grid-auto-rows: 150px;
+    gap: 10px;
+  }
+
+  .finca-lightbox-close {
+    top: -42px;
+  }
+
+  .finca-quote {
+    font-size: 26px;
+  }
+
+  .finca-stats-grid {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .finca-stat,
+  .finca-stat:not(:last-child) {
+    justify-content: flex-start;
+    border-right: none;
+  }
+
+  .finca-stat-number {
+    min-width: 110px;
+    font-size: 36px;
+  }
+}

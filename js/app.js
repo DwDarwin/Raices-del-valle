@@ -1,6 +1,6 @@
 import { inicializarCarrito } from "./carrito.js";
-import { renderizarCatalogoHome } from "./pages/home.js";
-import { inicializarMenuMobile } from "./components/menuMobile.js";
+import { inicializarHome } from "./pages/home/index.js";
+import { inicializarMenuMovil } from "./components/menuMobile.js";
 
 async function loadComponent(containerId, fileName) {
   const container = document.getElementById(containerId);
@@ -18,6 +18,22 @@ async function loadComponent(containerId, fileName) {
   }
 }
 
+function configurarRutasNavegacion(documento) {
+  const raizProyecto = obtenerRaizProyecto();
+
+  documento.querySelectorAll("[data-ruta]").forEach((enlace) => {
+    enlace.href = new URL(enlace.dataset.ruta, raizProyecto).href;
+  });
+}
+
+function obtenerRaizProyecto() {
+  if (window.location.hostname.endsWith("github.io")) {
+    return new URL("/Raices-del-valle/", window.location.origin);
+  }
+
+  return new URL("../", import.meta.url);
+}
+
 async function initializeApp() {
   try {
     await Promise.all([
@@ -25,12 +41,10 @@ async function initializeApp() {
       loadComponent("footer-container", "footer.html"),
     ]);
 
-    inicializarMenuMobile();
+    configurarRutasNavegacion(document);
+    inicializarMenuMovil(document);
     inicializarCarrito();
-
-    if (document.getElementById("products-grid-container")) {
-      renderizarCatalogoHome();
-    }
+    inicializarHome(document);
   } catch (error) {
     console.error("Fallo al inicializar", error);
   }

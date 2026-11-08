@@ -160,6 +160,11 @@
 .form-status.exito { padding: 12px 16px; background: #e3efe5; color: var(--contact-success); }
 .form-status.error { padding: 12px 16px; background: #fbe9e7; color: var(--contact-error); }
 
+/* ---------- Laptop pequeña: el título se achica para no pasar sobre el formulario ---------- */
+@media (992px <= width < 1280px) {
+  .contact-title { font-size: clamp(40px, 4.2vw, 64px); }
+}
+
 /* ---------- Tablet ---------- */
 @media (width < 992px) {
   .contact-grid { grid-template-columns: 1fr; gap: 40px;
