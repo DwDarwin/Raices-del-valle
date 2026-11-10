@@ -54,43 +54,41 @@
             <span class="text-peq2-der">Ingresa para seguir tus pedidos y guardar tus productos favoritos</span>
 
             <div class="formulario">
+                <form id="loginForm">
 
-                <form action="email">
-
-                    <label id="email1" for="email">correo electronico</label>
-
-                    <div class="email1">
+                    <label id="email1" for="email">Correo electrónico</label>
+                    <div class="email1" style="position: relative; margin-bottom: 15px;">
                         <input id="email" type="email" placeholder="Tunombre@correo.com">
+                        <span id="errorEmail" class="error-msg"
+                            style="display: none; color: #d32f2f; font-size: 11px; margin-top: 4px; position: absolute;">Por
+                            favor, ingresa tu correo.</span>
                     </div>
 
-                </form>
-                <form action="password">
                     <div class="label-wrapper">
-                        <label id="password1" for="password">Contraseña</label>
+                        <label id="password1" for="Contrasena">Contraseña</label>
                         <a href="#" class="forgot-link">¿La olvidaste?</a>
-                    </div>  
+                    </div>
 
-                    <div class="password1 password-wrapper">
+                    <div class="password1 password-wrapper" style="position: relative; margin-bottom: 25px;">
                         <input type="password" id="Contrasena" placeholder="Mínimo 8 caracteres">
                         <button type="button" id="ojo" class="eye-btn">👁️</button>
+                        <span id="errorPassword" class="error-msg"
+                            style="display: none; color: #d32f2f; font-size: 11px; margin-top: 4px; position: absolute;">Por
+                            favor, ingresa tu contraseña.</span>
                     </div>
+
+                    <button type="submit" class="btn btn-primary btn-submit" id="btnEnviar">
+                        <span class="btn-text">Ingresar a mi cuenta</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                            <path d="M5 12h14m-5-5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+
                 </form>
-
-                <button type="submit" class="btn btn-primary btn-submit" id="btnEnviar">
-                    <span class="btn-text">Ingresar a mi cuenta</span>
-                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                        <path d="M5 12h14m-5-5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </button>
             </div>
-            <div class="divider">
-                <span>o continúa con</span>
+            </form>
             </div>
-
-            <button class="btn btn-google">
-                <i class='bx bxl-google' style='color:#ea4335'></i> Continuar con Google
-            </button>
 
             <p class="register-prompt">
                 ¿Aún no tienes cuenta? <a href="/Raices-del-valle/pages/registroUser.html">Regístrate gratis</a>
