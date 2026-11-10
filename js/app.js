@@ -1,3 +1,4 @@
+import './components/sesion.js';
 import { inicializarCarrito } from "./carrito.js";
 import { inicializarHome } from "./pages/home/index.js";
 import { inicializarMenuMovil } from "./components/menuMobile.js";

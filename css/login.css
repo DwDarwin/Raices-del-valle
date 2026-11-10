@@ -5,6 +5,7 @@ body {
 input, button, textarea, select {
     font-family: inherit;
 }
+
 .contenedorlogin {
     display: grid;
     grid-template-columns: 50% 50%;
@@ -51,7 +52,6 @@ input, button, textarea, select {
     position: relative; 
 }
 
-/* Botón 'X' de cierre */
 .btnx {
     position: absolute;
     top: 30px;
@@ -64,7 +64,6 @@ input, button, textarea, select {
     color: var(--color-brand-primary);
 }
 
-/* Encabezados y Subtítulos */
 .linea {
     display: flex;
     align-items: center;
@@ -243,6 +242,22 @@ input, button, textarea, select {
 
 .register-prompt a:hover {
     text-decoration: underline;
+}
+
+.email1 {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.password-wrapper {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.error-msg {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
 }
 
 @media screen and (max-width: 850px) {
