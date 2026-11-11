@@ -1,9 +1,12 @@
-function inicializarSesion() {
-    const usuarioActivoString = localStorage.getItem('usuarioActivo');
-    
-    if (!usuarioActivoString) return true;
+import {
+    cerrarSesion,
+    obtenerSesionActiva,
+} from "../storage/sesionStorage.js";
 
-    const usuarioActivo = JSON.parse(usuarioActivoString);
+function inicializarSesion() {
+    const usuarioActivo = obtenerSesionActiva();
+
+    if (!usuarioActivo) return true;
     
     const partesNombre = usuarioActivo.nombreCompleto.trim().split(/\s+/);
     const primerNombre = partesNombre[0];
@@ -35,7 +38,7 @@ function inicializarSesion() {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 if(confirm("¿Deseas cerrar sesión?")) {
-                    localStorage.removeItem('usuarioActivo');
+                    cerrarSesion();
                     window.location.reload();
                 }
             });

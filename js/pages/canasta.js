@@ -1,60 +1,15 @@
 
-const CLAVE_CARRITO = "rdv:carrito";
-const EVENTO_CARRITO_ACTUALIZADO = "rdv:carrito-actualizado";
+import {
+    obtenerCarrito,
+    guardarCarrito,
+    CLAVE_CARRITO,
+    EVENTO_CARRITO_ACTUALIZADO,
+} from "../storage/carritoStorage.js";
+import { obtenerSuscripcion } from "../storage/suscripcionStorage.js";
+import { formatearMoneda } from "../utils/formato.js";
 
 let costoEnvio = 0;
-
-const formatoCOP = new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0
-});
-
-function leerCarrito() {
-    try {
-        const datos = JSON.parse(
-            localStorage.getItem(CLAVE_CARRITO) || "[]"
-        );
-
-        if (!Array.isArray(datos)) return [];
-
-        return datos
-            .filter(item =>
-                item &&
-                item.id != null &&
-                Number(item.cantidad) > 0
-            )
-            .map(item => ({
-                ...item,
-                id: String(item.id),
-                cantidad: Math.floor(Number(item.cantidad)),
-                precio: Number(item.precio) || 0
-            }));
-    } catch (error) {
-        console.error("Error leyendo el carrito:", error);
-        return [];
-    }
-}
-
-function guardarCarrito(carrito) {
-    try {
-        localStorage.setItem(
-            CLAVE_CARRITO,
-            JSON.stringify(carrito)
-        );
-
-        document.dispatchEvent(
-            new CustomEvent(EVENTO_CARRITO_ACTUALIZADO, {
-                detail: { carrito }
-            })
-        );
-
-        return true;
-    } catch (error) {
-        console.error("No se pudo guardar el carrito:", error);
-        return false;
-    }
-}
+const PORCENTAJE_DESCUENTO = 0.1;
 
 function crearElemento(tag, clase, texto) {
     const elemento = document.createElement(tag);
@@ -72,6 +27,8 @@ function inicializarCanasta() {
 
     const subtotalElemento = document.getElementById("subtotalCanasta");
     const envioElemento = document.getElementById("envioCanasta");
+    const filaDescuento = document.getElementById("filaDescuento");
+    const descuentoElemento = document.getElementById("descuentoCanasta");
     const totalElemento = document.getElementById("totalCanasta");
 
     const botonContinuar = document.getElementById("continuarPago");
@@ -84,7 +41,8 @@ function inicializarCanasta() {
 
     if (!lista || !estadoVacio) return;
 
-    let carrito = leerCarrito();
+    let carrito = obtenerCarrito();
+    let descuentoAplicado = 0;
 
     function renderizar() {
         lista.replaceChildren();
@@ -99,14 +57,17 @@ function inicializarCanasta() {
             0
         );
 
-        const total = subtotal + costoEnvio;
+        const descuento = subtotal * descuentoAplicado;
+        const total = subtotal - descuento + costoEnvio;
 
         cantidadProductos.textContent =
             `${unidades} ${unidades === 1 ? "producto" : "productos"}`;
 
-        subtotalElemento.textContent = formatoCOP.format(subtotal);
-        envioElemento.textContent = formatoCOP.format(costoEnvio);
-        totalElemento.textContent = formatoCOP.format(total);
+        subtotalElemento.textContent = formatearMoneda(subtotal);
+        envioElemento.textContent = formatearMoneda(costoEnvio);
+        filaDescuento.hidden = descuento === 0;
+        descuentoElemento.textContent = `-${formatearMoneda(descuento)}`;
+        totalElemento.textContent = formatearMoneda(total);
 
         estadoVacio.hidden = carrito.length > 0;
         lista.hidden = carrito.length === 0;
@@ -222,7 +183,7 @@ function inicializarCanasta() {
             const precio = crearElemento(
                 "strong",
                 "canasta-item-subtotal",
-                formatoCOP.format(item.precio * item.cantidad)
+                formatearMoneda(item.precio * item.cantidad)
             );
 
             articulo.append(
@@ -237,7 +198,7 @@ function inicializarCanasta() {
     }
 
     function sincronizarDesdeAlmacenamiento() {
-        carrito = leerCarrito();
+        carrito = obtenerCarrito();
         renderizar();
     }
 
@@ -304,15 +265,26 @@ function inicializarCanasta() {
         }
     });
 
-    // El descuento queda pendiente de implementar.
     botonAplicarDescuento.addEventListener("click", () => {
-        const codigo = codigoDescuento.value.trim();
+        const codigoIngresado = codigoDescuento.value.trim().toUpperCase();
+        const suscripcion = obtenerSuscripcion();
+        const codigoValido = suscripcion?.codigoDescuento?.toUpperCase();
 
-        mensajeDescuento.textContent = codigo
-            ? "Los códigos de descuento estarán disponibles próximamente."
-            : "Escribe un código para continuar.";
+        if (!codigoIngresado) {
+            descuentoAplicado = 0;
+            mensajeDescuento.textContent = "Escribe un código para continuar.";
+        } else if (codigoIngresado !== codigoValido) {
+            descuentoAplicado = 0;
+            mensajeDescuento.textContent = "El código de descuento no es válido.";
+        } else {
+            descuentoAplicado = PORCENTAJE_DESCUENTO;
+            codigoDescuento.value = codigoIngresado;
+            mensajeDescuento.textContent =
+                "Código aplicado. Tienes un 10% de descuento.";
+        }
 
         mensajeDescuento.hidden = false;
+        renderizar();
     });
 
     

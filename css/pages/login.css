@@ -8,7 +8,7 @@ input, button, textarea, select {
 
 .contenedorlogin {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 55% 45%;
     height: 100vh;
     font-family: var(--font-main, 'Poppins', sans-serif); 
 }
@@ -23,7 +23,7 @@ input, button, textarea, select {
         rgba(16, 46, 34, 0.9) 0%,
         rgba(16, 46, 34, 0.5) 50%,
         rgba(16, 46, 34, 0.3) 100%
-    ), url("../assets/img/fondo-login.png");
+    ), url("../../assets/img/fondo-login.png");
     background-size: cover;
     background-position: center;
     color: var(--color-white);
@@ -165,7 +165,6 @@ input, button, textarea, select {
     background-color: var(--color-brand-accent, #e6a73d);
     color: var(--color-brand-primary, #102e22);
     border: none;
-    border-radius: 6px;
     font-weight: 600;
     padding: 14px;
     display: flex;
@@ -271,7 +270,7 @@ input, button, textarea, select {
     .banner-izq {
         min-height: 300px;
         padding: 30px 24px;
-        background-image: var(--bg-hero-mobile-overlay, linear-gradient(0deg, rgba(16, 46, 34, 0.9) 0%, rgba(16, 46, 34, 0.3) 100%)), url("../img/fondo-login.png");
+        background-image: var(--bg-hero-mobile-overlay, linear-gradient(0deg, rgba(16, 46, 34, 0.9) 0%, rgba(16, 46, 34, 0.3) 100%)), url("../../assets/img/fondo-login.png");
     }
 
     .formulario-der {

@@ -5,3 +5,7 @@ export function formatearMoneda(valor) {
     maximumFractionDigits: 0,
   }).format(Number(valor) || 0);
 }
+
+export function formatearValorCompacto(valor) {
+  return "$" + Math.round(Number(valor) || 0).toLocaleString("es-CO") + "K";
+}

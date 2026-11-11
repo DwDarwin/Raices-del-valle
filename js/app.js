@@ -1,7 +1,9 @@
 import './components/sesion.js';
-import { inicializarCarrito } from "./carrito.js";
-import { inicializarHome } from "./pages/home/index.js";
+import { inicializarCarrito } from "./components/carrito.js";
+import { inicializarHome } from "./pages/home.js";
 import { inicializarMenuMovil } from "./components/menuMobile.js";
+import { inicializarSuscripcion } from "./components/suscriptionModal.js";
+import { configurarRutasNavegacion } from "./utils/rutas.js";
 
 async function loadComponent(containerId, fileName) {
   const container = document.getElementById(containerId);
@@ -19,22 +21,6 @@ async function loadComponent(containerId, fileName) {
   }
 }
 
-function configurarRutasNavegacion(documento) {
-  const raizProyecto = obtenerRaizProyecto();
-
-  documento.querySelectorAll("[data-ruta]").forEach((enlace) => {
-    enlace.href = new URL(enlace.dataset.ruta, raizProyecto).href;
-  });
-}
-
-function obtenerRaizProyecto() {
-  if (window.location.hostname.endsWith("github.io")) {
-    return new URL("/Raices-del-valle/", window.location.origin);
-  }
-
-  return new URL("../", import.meta.url);
-}
-
 async function initializeApp() {
   try {
     await Promise.all([
@@ -46,6 +32,7 @@ async function initializeApp() {
     inicializarMenuMovil(document);
     inicializarCarrito();
     inicializarHome(document);
+    inicializarSuscripcion();
   } catch (error) {
     console.error("Fallo al inicializar", error);
   }

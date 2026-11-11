@@ -1,5 +1,16 @@
+import {
+  CATEGORIAS,
+  ESTADOS,
+  guardarProductos,
+  obtenerProductos,
+} from "../storage/productoStorage.js";
+import {
+  formatearMoneda,
+  formatearValorCompacto,
+} from "../utils/formato.js";
+
 // Panel administrativo | Raíces del Valle
-// Crea, edita y elimina productos usando las funciones de store.js.
+// Crea, edita y elimina productos usando el servicio local.
 
 var busqueda = "";
 var filtroCategoria = "";
@@ -9,6 +20,33 @@ var imagenActual = "";   // foto del formulario (ruta o dato de la imagen)
 
 function el(id) { return document.getElementById(id); }
 
+const STOCK_BAJO = 10;
+
+function obtenerSiguienteId(productos) {
+  const mayorId = productos.reduce(
+    (mayor, producto) => Math.max(mayor, Number.parseInt(producto.id, 10) || 0),
+    0,
+  );
+
+  return String(mayorId + 1).padStart(4, "0");
+}
+
+function obtenerEstadoReal(producto) {
+  if (producto.status === "borrador") return "borrador";
+  if (producto.status === "agotado" || Number(producto.stock) <= 0) {
+    return "agotado";
+  }
+  return "publicado";
+}
+
+function limpiarTexto(texto) {
+  return String(texto ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 // Quita tildes y mayúsculas para que la búsqueda sea más flexible.
 function simplificar(texto) {
   return String(texto || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -17,12 +55,12 @@ function simplificar(texto) {
 /* ---------- Tabla y resumen ---------- */
 
 function pintar() {
-  var todos = leerProductos();
+  var todos = obtenerProductos();
 
   // 1. Filtrar según lo que escribió o eligió la persona
   var lista = todos.filter(function (p) {
     if (filtroCategoria && p.category !== filtroCategoria) return false;
-    if (filtroEstado && estadoReal(p) !== filtroEstado) return false;
+    if (filtroEstado && obtenerEstadoReal(p) !== filtroEstado) return false;
     if (busqueda && simplificar(p.name + " " + p.producer).indexOf(simplificar(busqueda)) === -1) return false;
     return true;
   });
@@ -38,7 +76,7 @@ function pintar() {
   // 3. Calcular el resumen (siempre con todos los productos)
   var publicados = 0, bajos = 0, agotados = 0, valor = 0;
   todos.forEach(function (p) {
-    var estado = estadoReal(p);
+    var estado = obtenerEstadoReal(p);
     var stock = Number(p.stock) || 0;
     if (estado === "publicado") publicados++;
     if (estado === "agotado") agotados++;
@@ -51,29 +89,29 @@ function pintar() {
   el("st-total-note").textContent = publicados + " publicados";
   el("st-low").textContent = bajos;
   el("st-out").textContent = agotados;
-  el("st-value").textContent = "$" + Math.round(valor / 1000).toLocaleString("es-CO") + "K";
+  el("st-value").textContent = formatearValorCompacto(valor / 1000);
 }
 
 function fila(p) {
-  var estado = estadoReal(p);
+  var estado = obtenerEstadoReal(p);
   var stock = Number(p.stock) || 0;
   var nota = "Disponible";
   var claseStock = "";
   if (stock <= 0) { nota = "Sin existencias"; claseStock = "low"; }
   else if (stock <= STOCK_BAJO) { nota = "Stock bajo"; claseStock = "low"; }
 
-  var foto = p.image ? '<img src="' + limpiar(p.image) + '" alt="" onerror="this.remove()">' : "";
+  var foto = p.image ? '<img src="' + limpiarTexto(p.image) + '" alt="" onerror="this.remove()">' : "";
 
   return '' +
     '<tr data-id="' + p.id + '">' +
       '<td>' +
         '<div class="cell-product">' +
           '<div class="thumb">' + foto + '</div>' +
-          '<div><strong>' + limpiar(p.name) + '</strong><small>' + limpiar(p.producer) + '</small><small>#' + p.id + '</small></div>' +
+          '<div><strong>' + limpiarTexto(p.name) + '</strong><small>' + limpiarTexto(p.producer) + '</small><small>#' + p.id + '</small></div>' +
         '</div>' +
       '</td>' +
-      '<td>' + limpiar(CATEGORIAS[p.category] || p.category) + '</td>' +
-      '<td><strong>' + formatoPrecio(p.price) + '</strong><small>por ' + limpiar(p.unit) + '</small></td>' +
+      '<td>' + limpiarTexto(CATEGORIAS[p.category] || p.category) + '</td>' +
+      '<td><strong>' + formatearMoneda(p.price) + '</strong><small>por ' + limpiarTexto(p.unit) + '</small></td>' +
       '<td class="' + claseStock + '"><strong>' + stock + ' und.</strong><small>' + nota + '</small></td>' +
       '<td><span class="pill pill--' + estado + '">' + ESTADOS[estado] + '</span></td>' +
       '<td class="actions">' +
@@ -96,7 +134,7 @@ function llenarSelects() {
 
 function mostrarFoto(ruta) {
   imagenActual = ruta || "";
-  el("photo-preview").innerHTML = ruta ? '<img src="' + limpiar(ruta) + '" alt="Vista previa">' : "Sin foto";
+  el("photo-preview").innerHTML = ruta ? '<img src="' + limpiarTexto(ruta) + '" alt="Vista previa">' : "Sin foto";
 }
 
 function limpiarErrores() {
@@ -155,13 +193,13 @@ el("product-form").addEventListener("submit", function (e) {
   if (hayError) return;
 
   // Crear o actualizar en la lista
-  var lista = leerProductos();
+  var lista = obtenerProductos();
   if (idEditando) {
     lista = lista.map(function (p) {
       return p.id === idEditando ? Object.assign({}, p, datos) : p;
     });
   } else {
-    datos.id = siguienteId(lista);
+    datos.id = obtenerSiguienteId(lista);
     lista.push(datos);
   }
 
@@ -226,7 +264,7 @@ el("rows").addEventListener("click", function (e) {
   if (!boton) return;
 
   var id = boton.closest("tr").dataset.id;
-  var lista = leerProductos();
+  var lista = obtenerProductos();
   var producto = lista.find(function (p) { return p.id === id; });
   if (!producto) return;
 

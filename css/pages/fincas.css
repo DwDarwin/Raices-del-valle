@@ -35,7 +35,8 @@
   position: absolute;
   inset: -40px;
   z-index: 0;
-  background: url("../assets/home/Familia Chindoy Muchavisoy W.webp") center / cover no-repeat;
+  background: url("../../assets/home/Familia Chindoy Muchavisoy W.webp")
+    center / cover no-repeat;
   filter: blur(40px);
 }
 
@@ -50,8 +51,20 @@
   aspect-ratio: 4 / 2;
   object-fit: cover;
   z-index: 1;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 18%,
+    #000 82%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 18%,
+    #000 82%,
+    transparent
+  );
 }
 
 .finca-hero-wrapper {
@@ -85,7 +98,7 @@
 /*  Cita + historia  */
 .finca-story {
   background: var(--finca-cream);
-  padding: 80px 0;
+  padding: 120px 0;
 }
 
 .finca-story-grid {
@@ -118,7 +131,7 @@
 /*  Estadísticas  */
 .finca-stats {
   background: var(--finca-sand);
-  padding: 40px 0;
+  padding: 70px 0;
 }
 
 .finca-stats-grid {
@@ -188,7 +201,6 @@
 .finca-gallery-item {
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
   background: var(--finca-sand);
 }
 
@@ -228,9 +240,15 @@
 }
 
 /* Ajustes de encuadre por foto */
-.finca-gallery-item:nth-child(1) img { object-position: center 65%; }
-.finca-gallery-item:nth-child(3) img { object-position: 65% 30%; }
-.finca-gallery-item:nth-child(4) img { object-position: center 35%; }
+.finca-gallery-item:nth-child(1) img {
+  object-position: center 65%;
+}
+.finca-gallery-item:nth-child(3) img {
+  object-position: 65% 30%;
+}
+.finca-gallery-item:nth-child(4) img {
+  object-position: center 35%;
+}
 
 .finca-gallery-item figcaption {
   position: absolute;
@@ -282,7 +300,7 @@
 }
 
 .finca-lightbox::backdrop {
-  background: rgba(16, 46, 34, 0.9);
+  background: rgba(19, 29, 25, 0.884);
 }
 
 .finca-lightbox img {
@@ -291,7 +309,6 @@
   width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: 8px;
 }
 
 .finca-lightbox-caption {
@@ -303,8 +320,8 @@
 
 .finca-lightbox-close {
   position: absolute;
-  top: -44px;
-  right: 0;
+  top: 14px;
+  right: 12px;
   width: 36px;
   height: 36px;
   border: 0;
@@ -312,8 +329,10 @@
   font-size: 24px;
   line-height: 1;
   color: var(--color-brand-primary);
-  background: var(--color-brand-accent);
+  background: var(--color-white);
   cursor: pointer;
+  box-shadow: #000;
+  font-weight: 600;
 }
 
 /*  Forma de cultivo  */
@@ -338,14 +357,14 @@
 }
 
 .finca-method-content {
-  background: var(--color-brand-primary);
+  background: var(--color-brand-dark);
   color: var(--color-white);
-  padding: 64px 8%;
+  padding: 140px 8%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 20px;
+  gap: 35px;
 }
 
 .finca-method-content .finca-eyebrow {
@@ -418,7 +437,7 @@
   }
 
   .finca-method-content {
-    padding: 48px 8%;
+    padding: 80px 8%;
   }
 }
 

@@ -1,6 +1,6 @@
 /*   Raíces del Valle — Validación del formulario de contacto y envío con Formspree*/
 
-import { enviarContacto } from "../../services/contacto.js";
+import { enviarContacto } from "../services/contactoFormspree.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const formulario = document.getElementById("formContacto");

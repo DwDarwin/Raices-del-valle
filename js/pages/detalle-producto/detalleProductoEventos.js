@@ -1,6 +1,6 @@
 import { formatearMoneda } from "../../utils/formato.js";
 
-export function vincularEventosDetalle(producto, documento) {
+export function vincularInteraccionesDetalle(producto, documento) {
   let cantidad = 1;
   const precioUnitario = producto.price;
 

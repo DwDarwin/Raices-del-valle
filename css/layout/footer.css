@@ -82,6 +82,54 @@ footer {
   cursor: pointer;
 }
 
+.subscription-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(480px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  margin: 0;
+  border: 0;
+  padding: 0;
+  color: var(--color-brand-primary);
+  transform: translate(-50%, -50%);
+}
+
+.subscription-modal::backdrop {
+  background: rgba(16, 46, 34, 0.6);
+}
+
+.subscription-modal-content {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  padding: 32px 70px;
+  text-align: center;
+}
+
+.subscription-modal-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-brand-accent);
+  font-size: 24px;
+}
+
+.subscription-modal h2,
+.subscription-modal p {
+  margin: 0;
+}
+
+.discount-code {
+  padding: 10px 18px;
+  border: 1px dashed var(--color-brand-accent);
+  color: var(--color-brand-primary);
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
 .footer-bottom {
   display: flex;
   justify-content: space-between;
