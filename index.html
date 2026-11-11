@@ -16,15 +16,15 @@
     <!-- Conexion boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/header.css">    
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/product-card.css">
-    <link rel="stylesheet" href="css/animaciones.css">
+    <link rel="stylesheet" href="css/base/styles.css">
+    <link rel="stylesheet" href="css/layout/header.css">
+    <link rel="stylesheet" href="css/layout/footer.css">
+    <link rel="stylesheet" href="css/pages/home.css">
+    <link rel="stylesheet" href="css/components/product-card.css">
+    <link rel="stylesheet" href="css/components/animaciones.css">
 
     <script type="module" src="./js/app.js"></script>
-    <script src="./js/animaciones.js" defer></script>
+    <script src="./js/utils/animaciones.js" defer></script>
 </head>
 
 <body>
@@ -47,9 +47,9 @@
                 </p>
 
                 <div class="hero-actions">
-                    <a href="#" class="btn btn-primary"
+                    <a href="#" data-ruta="pages/mercado.html" class="btn btn-primary"
                         title="Ver catálogo de productos disponibles esta semana">Explora la cosecha</a>
-                    <a href="#" class="btn btn-secondary" title="Conoce la historia de nuestra finca en Putumayo">Conoce
+                    <a href="#" data-ruta="pages/finca.html" class="btn btn-secondary" title="Conoce la historia de nuestra finca en Putumayo">Conoce
                         nuestra finca</a>
                 </div>
 
@@ -138,11 +138,11 @@
                     <span class="products-subtitle subtitle">Lo mejor de nuestra tierra</span>
                     <h2 class="products-title title">La cosecha de hoy</h2>
                 </div>
-                <a href="./pages/mercado.html" class="btn btn-tertiary btn-products">Ver todos los productos <i class='bx bx-right-arrow-alt bx-sm' ></i></a>
+                <a href="#" data-ruta="pages/mercado.html" class="btn btn-tertiary btn-products">Ver todos los productos <i class='bx bx-right-arrow-alt bx-sm' ></i></a>
             </div>
 
             <div id="products-grid-container" class="products-grid"></div>
-            <a href="./pages/mercado.html" class="btn btn-tertiary btn-products-mobile">Ver todos los productos &rarr;</a>
+            <a href="#" data-ruta="pages/mercado.html" class="btn btn-tertiary btn-products-mobile">Ver todos los productos &rarr;</a>
 
         </section>
 
@@ -178,7 +178,7 @@
                         respetando los tiempos de la tierra, guardando semillas y compartiendo la cosecha.
                         Cada compra impulsa una forma más justa de conectar el campo con la ciudad.
                     </p>
-                    <a href="./pages/finca.html" class="btn btn-tertiary">Conoce a la familia </a>
+                    <a href="#" data-ruta="pages/finca.html" class="btn btn-tertiary">Conoce a la familia </a>
                 </div>
 
             </div>
@@ -214,7 +214,6 @@
 
     </main>
     <footer id="footer-container"></footer>
-    <script src="./js/components/sesion.js"></script>
 </body>
 
 </html>
