@@ -12,6 +12,16 @@ sin intermediarios innecesarios.
 - CSS3
 - JavaScript ES Modules
 
+## Instalación y ejecución
+
+```bash
+git clone https://github.com/DwDarwin/Raices-del-valle.git
+cd Raices-del-valle
+```
+
+El proyecto no requiere instalación de dependencias. Para ejecutarlo
+localmente, abre `index.html` con un servidor local.
+
 ## Arquitectura
 
 Frontend modular desarrollado con JavaScript vanilla. La aplicación organiza
@@ -22,6 +32,29 @@ sus responsabilidades en:
 - `storage`: persistencia y operaciones CRUD por entidad.
 - `services`: integraciones externas.
 - `utils`: funciones compartidas.
+
+---
+
+```text
+Raices-del-valle/
+├── index.html             # Pagina principal
+├── pages/                 # Paginas HTML y componentes compartidos
+├── css/
+│   ├── base/              # Estilos base
+│   ├── components/        # Estilos de componentes
+│   ├── layout/            # Header, footer y estructura general
+│   └── pages/             # Estilos específicos por pagina
+├── js/
+│   ├── app.js             # Inicializacion general
+│   ├── pages/             # Logica de cada pagina
+│   ├── components/        # Componentes reutilizables
+│   ├── storage/           # Persistencia y CRUD por entidad
+│   ├── services/          # Integraciones externas
+│   ├── utils/             # Utilidades compartidas
+│   └── data/              # Datos iniciales
+└── assets/                # Imágenes y recursos visuales
+
+```
 
 ## Funcionalidades
 
