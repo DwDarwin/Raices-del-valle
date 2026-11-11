@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Conexion boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+    <link rel="stylesheet" href="../css/pages/login.css">
+    <link rel="stylesheet" href="../css/base/styles.css">
+    <link rel="stylesheet" href="../css/pages/registro.css">
+
+    <title>registroUser</title>
+</head>
+
+
+<body>
+    <main class="contenedorlogin">
+        <section class="banner-izq">
+            <div class="brand">
+                <div class="brand-mark light">
+                    <i class='bx bx-leaf bx-sm'></i>
+                </div>
+                <div class="brand-text light">
+                    Raíces
+                    <small>del Valle</small>
+                </div>
+            </div>
+            <div class="banner-imagen">
+                <blockquote>
+                    "Cuando conoces el origen cada alimento sabe mejor."
+                </blockquote>
+                <span class="text-peq">VALLE DE SIBUNDOY - PUTUMAYO</span>
+            </div>
+
+        </section>
+
+
+
+        <section class="formulario-der">
+            <a href="#" data-ruta="" class="btnx" aria-label="cerrar">X</a>
+
+            <div class="linea">
+                <span class="text-peq-der">CREA TU CUENTA</span>
+            </div>
+
+            <h1>Unete a Raices</h1>
+            <span class="text-peq2-der">Compra local y conoce las historias detras de tus alimentos.</span>
+
+            <div class="formulario">
+                <!-- 1. Único formulario para todo -->
+                <form id="registroForm">
+
+                    <div class="input-group">
+                        <label for="telefono">Número de teléfono</label>
+                        <div class="input-wrapper">
+                            <input id="telefono" type="tel" placeholder="Tu número">
+                        </div>
+                    </div>
+
+                    <!-- Bloque del Nombre -->
+                    <div class="input-group">
+                        <label for="nombre">Nombre Completo</label>
+                        <!-- Reutilizamos la clase email1 o creamos input-wrapper para estandarizar -->
+                        <div class="input-wrapper">
+                            <input id="nombre" type="text" placeholder="¿Cómo te llamas?">
+                        </div>
+                    </div>
+
+                    <!-- Bloque del Email -->
+                    <div class="input-group">
+                        <label for="email">Correo electrónico</label>
+                        <div class="input-wrapper">
+                            <input id="email" type="email" placeholder="tunombre@correo.com">
+                        </div>
+                    </div>
+
+                    <!-- Bloque de la Contraseña -->
+                    <div class="input-group">
+                        <div class="label-wrapper">
+                            <label for="password">Contraseña</label>
+                            <a href="#" class="forgot-link">¿La olvidaste?</a>
+                        </div>
+                        <div class="password-wrapper">
+                            <input id="password" type="password" placeholder="Mínimo 8 caracteres">
+                            <button type="button" id="togglePasswordBtn" class="eye-btn">👁️</button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="confirmPassword">Confirmar Contraseña</label>
+                        <div class="password-wrapper">
+                            <input id="confirmPassword" type="password" placeholder="Repite tu contraseña">
+                        </div>
+                    </div>
+                    <!-- Nuevo bloque: Checkbox de términos (basado en la imagen objetivo) -->
+                    <div class="terms-group">
+                        <input type="checkbox" id="terminos" required>
+                        <label for="terminos">Acepto la política de tratamiento de datos y los términos de uso.</label>
+                    </div>
+
+                    <!-- Botón de Envío -->
+                    <button type="submit" class="btn btn-primary btn-submit" id="btnEnviarRegistro">
+                        <span class="btn-text">Crear mi cuenta</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                            <path d="M5 12h14m-5-5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+
+                </form>
+            </div>
+            <p class="register-prompt">
+                ¿ya tienes una cuenta? <a href="#" data-ruta="pages/login.html">Ingresa aqui</a>
+            </p>
+        </section>
+
+
+
+
+    </main>
+
+
+
+    <script type="module" src="../js/pages/registro.js"></script>
+</body>
+
+</html>

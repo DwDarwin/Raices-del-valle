@@ -1,3 +1,9 @@
+import {
+  obtenerProductos,
+  CLAVE_PRODUCTOS,
+} from "../storage/productoStorage.js";
+import { formatearMoneda } from "../utils/formato.js";
+
 function adaptarProducto(producto) {
     return {
         ...producto,
@@ -15,7 +21,7 @@ function adaptarProducto(producto) {
     };
 }
 
-let productos = window.leerProductos().map(adaptarProducto);
+let productos = obtenerProductos().map(adaptarProducto);
 
 let categoriaActiva = "todos";
 let ordenActivo = "recomendados";
@@ -25,16 +31,6 @@ const sortSelect = document.getElementById("sortSelect");
 const productsGrid = document.getElementById("productsGrid");
 const productCounter = document.getElementById("productCounter");
 const emptyMessage = document.getElementById("emptyMessage");
-
-
-
-function formatearPrecio(precio) {
-    return new Intl.NumberFormat("es-CO", {
-        style: "currency",
-        currency: "COP",
-        maximumFractionDigits: 0
-    }).format(Number(precio) || 0);
-}
 
 
 
@@ -197,7 +193,7 @@ function crearTarjeta(producto) {
 
     const precio = document.createElement("span");
     precio.className = "product-price";
-    precio.textContent = formatearPrecio(producto.precio);
+    precio.textContent = formatearMoneda(producto.precio);
 
 
 
@@ -290,8 +286,8 @@ window.actualizarProductosCatalogo = function (nuevosProductos) {
 
 //espera productos
 window.addEventListener("storage", event => {
-    if (event.key === "rdv:productos") {
-        productos = window.leerProductos().map(adaptarProducto);
+    if (event.key === CLAVE_PRODUCTOS) {
+        productos = obtenerProductos().map(adaptarProducto);
         renderizarProductos();
     }
 });

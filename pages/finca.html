@@ -13,21 +13,22 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&display=swap"
         rel="stylesheet">
 
     <!-- Conexion boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/fincas.css">
-    <link rel="stylesheet" href="../css/animaciones.css">
+    <link rel="stylesheet" href="../css/base/styles.css">
+    <link rel="stylesheet" href="../css/layout/header.css">
+    <link rel="stylesheet" href="../css/layout/footer.css">
+    <link rel="stylesheet" href="../css/pages/fincas.css">
+    <link rel="stylesheet" href="../css/components/animaciones.css">
 
     <script type="module" src="../js/app.js"></script>
-    <script src="../js/animaciones.js" defer></script>
-    <script src="../js/finca-galeria.js" defer></script>
+    <script src="../js/utils/animaciones.js" defer></script>
+    <script src="../js/pages/finca.js" defer></script>
 </head>
 
 <body>
@@ -55,7 +56,8 @@
             <div class="finca-story-grid">
                 <div class="finca-quote-wrap">
                     <h4 class="subtitle finca-eyebrow">Guardianes de la tierra</h4>
-                    <blockquote class="finca-quote">“La tierra no nos pertenece; nosotros pertenecemos a ella.”</blockquote>
+                    <blockquote class="finca-quote">“La tierra no nos pertenece; nosotros pertenecemos a ella.”
+                    </blockquote>
                 </div>
                 <div class="finca-story-text">
                     <p>Desde hace tres generaciones, nuestra familia despierta con la neblina del valle para cuidar
@@ -95,7 +97,8 @@
 
                 <div class="finca-gallery-grid">
                     <figure class="finca-gallery-item item-wide">
-                        <button type="button" class="finca-gallery-btn" aria-label="Ampliar foto: Los cultivos de la finca y las montañas del Valle">
+                        <button type="button" class="finca-gallery-btn"
+                            aria-label="Ampliar foto: Los cultivos de la finca y las montañas del Valle">
                             <img src="../assets/family/Fin 4.webp" loading="lazy"
                                 alt="Cultivo con las montañas del Valle de Sibundoy y nubes al fondo">
                         </button>
@@ -103,7 +106,8 @@
                     </figure>
 
                     <figure class="finca-gallery-item item-tall">
-                        <button type="button" class="finca-gallery-btn" aria-label="Ampliar foto: Lulo cargado de frutos">
+                        <button type="button" class="finca-gallery-btn"
+                            aria-label="Ampliar foto: Lulo cargado de frutos">
                             <img src="../assets/family/Fin-5.webp" loading="lazy"
                                 alt="Planta de lulo cargada de frutos entre el pasto">
                         </button>
@@ -111,7 +115,8 @@
                     </figure>
 
                     <figure class="finca-gallery-item">
-                        <button type="button" class="finca-gallery-btn" aria-label="Ampliar foto: Cuidando la huerta a mano">
+                        <button type="button" class="finca-gallery-btn"
+                            aria-label="Ampliar foto: Cuidando la huerta a mano">
                             <img src="../assets/family/Fam1.webp" loading="lazy"
                                 alt="Integrante de la familia cuidando la huerta con un machete">
                         </button>
@@ -119,7 +124,8 @@
                     </figure>
 
                     <figure class="finca-gallery-item item-wide">
-                        <button type="button" class="finca-gallery-btn" aria-label="Ampliar foto: Desgranando maíz en familia">
+                        <button type="button" class="finca-gallery-btn"
+                            aria-label="Ampliar foto: Desgranando maíz en familia">
                             <img src="../assets/family/Fam2.webp" loading="lazy"
                                 alt="Tres integrantes de la familia con mazorcas de maíz en un canasto">
                         </button>
@@ -127,7 +133,8 @@
                     </figure>
 
                     <figure class="finca-gallery-item">
-                        <button type="button" class="finca-gallery-btn" aria-label="Ampliar foto: Cuyes criados en la finca">
+                        <button type="button" class="finca-gallery-btn"
+                            aria-label="Ampliar foto: Cuyes criados en la finca">
                             <img src="../assets/family/Fin-6.webp" loading="lazy"
                                 alt="Cuyes dentro de su corral con paja">
                         </button>
@@ -155,7 +162,7 @@
                 <h2 class="title">Sembramos despacio, cosechamos con orgullo.</h2>
                 <p>Rotamos los cultivos, usamos abonos orgánicos y respetamos el agua que baja de la montaña. Cada
                     decisión busca que esta finca siga alimentando a las próximas generaciones.</p>
-                <a href="mercado.html" class="btn btn-primary">Comprar su cosecha
+                <a href="#" data-ruta="pages/mercado.html" class="btn btn-primary">Comprar su cosecha
                     <i class='bx bx-right-arrow-alt'></i></a>
             </div>
         </section>

@@ -32,11 +32,11 @@
             </ul>
         </nav>
         <div class="footer-col">
-            <h4>Recibe noticias de la cosecha</h4>
-            <p>Novedades, recetas y productos de temporada.</p>
-            <form class="newsletter" action="#" onsubmit="return false;">
-                <input type="email" id="newsletterCorreo" name="newsletter" placeholder="Tu correo electrónico"
-                    autocomplete="email">
+            <h4>Recibe un beneficio de la cosecha</h4>
+            <p>Suscríbete y recibe un cupón de descuento para tu próxima compra.</p>
+            <form class="newsletter" id="subscriptionForm">
+                <input type="email" id="newsletterEmail" name="newsletter" placeholder="Tu correo electrónico"
+                    autocomplete="email" required>
                 <button type="submit" aria-label="Suscribirme">
                     <i class='bx bx-right-arrow-alt bx-sm'></i>
                 </button>
@@ -48,3 +48,15 @@
         <span><a href="#">Política de privacidad</a> · <a href="#">Términos y condiciones</a></span>
     </div>
 </div>
+
+<dialog id="subscriptionModal" class="subscription-modal" aria-labelledby="subscriptionModalTitle">
+    <div class="subscription-modal-content">
+        <span class="subscription-modal-icon" aria-hidden="true">
+            <i class="bx bx-check"></i>
+        </span>
+        <h2 id="subscriptionModalTitle">¡Gracias por suscribirte!</h2>
+        <p>Recibirás novedades de la cosecha y puedes usar este cupón en tu próxima compra:</p>
+        <strong class="discount-code" id="subscriptionDiscountCode"></strong>
+        <button id="closeSubscriptionModal" class="btn btn-primary" type="button">Entendido</button>
+    </div>
+</dialog>

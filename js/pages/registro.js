@@ -1,3 +1,11 @@
+import {
+    existeUsuario,
+    guardarUsuario,
+} from "../storage/usuariosStorage.js";
+import { configurarRutasNavegacion } from "../utils/rutas.js";
+
+configurarRutasNavegacion(document);
+
 const formRegistro = document.getElementById('registroForm'); 
 
 if (formRegistro) {
@@ -42,11 +50,7 @@ if (formRegistro) {
             return;
         }
 
-        let usuarios = JSON.parse(localStorage.getItem('listaUsuarios')) || [];
-
-        const correoExiste = usuarios.some(usuario => usuario.emailUsuario === valEmail);
-        
-        if (correoExiste) {
+        if (existeUsuario(valEmail)) {
             alert("Este correo ya está registrado. Por favor, usa otro o inicia sesión.");
             return;
         }
@@ -58,11 +62,12 @@ if (formRegistro) {
             passwordUsuario: valPassword
         };
 
-        usuarios.push(nuevoUsuario);
-        localStorage.setItem('listaUsuarios', JSON.stringify(usuarios));
+        if (!guardarUsuario(nuevoUsuario)) {
+            alert("No se pudo crear la cuenta. Inténtalo nuevamente.");
+            return;
+        }
 
-        alert("¡Cuenta creada con éxito! Revisa la consola y tu Local Storage.");
-        console.log("Usuarios registrados:", usuarios);
+        alert("¡Cuenta creada con éxito!");
         
         formRegistro.reset(); 
     });

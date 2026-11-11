@@ -1,7 +1,5 @@
-import { crearTarjetaProducto, vincularEventosTarjetas } from "../../components/productCard.js";
-import { obtenerListaProductos } from "../../utils/productos.js";
-
-const LIMITE_PRODUCTOS_DESTACADOS = 4;
+import { crearTarjetaProducto, vincularEventosTarjetas } from "../components/productCard.js";
+import { obtenerProductos } from "../storage/productoStorage.js";
 
 export function inicializarHome(documento) {
   const cuadriculaProductos = documento.getElementById(
@@ -9,10 +7,7 @@ export function inicializarHome(documento) {
   );
   if (!cuadriculaProductos) return;
 
-  const productosDestacados = obtenerListaProductos().slice(
-    0,
-    LIMITE_PRODUCTOS_DESTACADOS,
-  );
+  const productosDestacados = obtenerProductos().slice(0, 4);
 
   if (productosDestacados.length === 0) {
     cuadriculaProductos.innerHTML = "<p>No hay productos disponibles</p>";

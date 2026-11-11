@@ -1,3 +1,12 @@
+import { buscarUsuario } from "../storage/usuariosStorage.js";
+import { guardarSesionActiva } from "../storage/sesionStorage.js";
+import {
+    configurarRutasNavegacion,
+    obtenerRutaProyecto,
+} from "../utils/rutas.js";
+
+configurarRutasNavegacion(document);
+
 const formLogin = document.getElementById('loginForm');
 
 if (formLogin) {
@@ -30,13 +39,12 @@ if (formLogin) {
             return;
         }
 
-        const usuarios = JSON.parse(localStorage.getItem('listaUsuarios')) || [];
-        const usuarioValido = usuarios.find(usuario => usuario.emailUsuario === valEmail && usuario.passwordUsuario === valPassword);
+        const usuarioValido = buscarUsuario(valEmail, valPassword);
 
         if (usuarioValido) {
-            localStorage.setItem('usuarioActivo', JSON.stringify(usuarioValido));
+            guardarSesionActiva(usuarioValido);
             alert("¡Inicio de sesión exitoso!");
-            window.location.href = "../index.html";
+            window.location.href = obtenerRutaProyecto().href;
         } else {
             alert("Usuario o contraseña inválidos. Por favor, verifica tus datos.");
         }
