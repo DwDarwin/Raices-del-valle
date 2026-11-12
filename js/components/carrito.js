@@ -11,23 +11,13 @@ import {
   EVENTO_CARRITO_ACTUALIZADO,
 } from "../storage/carritoStorage.js";
 import { formatearMoneda } from "../utils/formato.js";
+import {
+  obtenerRutaImagenDesdeRaiz,
+  obtenerRutaProyecto,
+} from "../utils/rutas.js";
 
 function obtenerProductosCatalogo() {
   return obtenerProductos();
-}
-
-function obtenerRutaImagenCarrito(rutaImagen) {
-  if (!rutaImagen) {
-    return "";
-  }
-
-  const paginaActual = window.location.pathname;
-  const esPaginaInicio =
-    paginaActual.endsWith("/") || paginaActual.endsWith("/index.html");
-
-  return esPaginaInicio
-    ? rutaImagen.replace("../assets/", "./assets/")
-    : rutaImagen;
 }
 
 export function inicializarCarrito() {
@@ -122,7 +112,7 @@ export function inicializarCarrito() {
       imagen.alt = item.nombre;
 
       if (item.imagen) {
-        imagen.src = obtenerRutaImagenCarrito(item.imagen);
+        imagen.src = obtenerRutaImagenDesdeRaiz(item.imagen);
       } else {
         imagen.hidden = true;
       }
@@ -151,7 +141,7 @@ export function inicializarCarrito() {
       );
       botonEliminar.title = "Eliminar producto";
 
-      const iconoEliminar = crearElemento("i", "bx bx-trash");
+      const iconoEliminar = crearElemento("i", "bx bx-trash bx-sm");
       iconoEliminar.setAttribute("aria-hidden", "true");
 
       botonEliminar.append(iconoEliminar);
@@ -296,7 +286,10 @@ export function inicializarCarrito() {
   });
 
   terminarCompra.addEventListener("click", () => {
-    window.location.href = "pages/canasta.html";
+    window.location.href = new URL(
+      "pages/canasta.html",
+      obtenerRutaProyecto(),
+    ).href;
   });
 
   document.addEventListener("raices:agregar-carrito", (evento) => {

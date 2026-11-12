@@ -57,7 +57,6 @@
                 <div class="carrito-encabezado">
                     <div class="carrito-titulo">
                         <span class="sec-subtitle">
-                            <span class="subtitle-line"></span>
                             TU SELECCIÓN
                         </span>
 
@@ -82,38 +81,35 @@
 
                 <div class="carrito-pie" id="pieCarrito" hidden>
                     <div class="carrito-entrega">
-                        <i class="bx bxs-truck" aria-hidden="true"></i>
+                        <i class="bx bxs-truck bx-md" aria-hidden="true"></i>
 
                         <div class="carrito-entrega-texto">
-                            <span>Entrega este viernes</span>
-                            <small>Pedidos hasta el miércoles, 6 pm</small>
+                            <p>Productos disponibles para entrega</p>
+                            <p class="carrito-info-envios">Ver información de envíos <a href="#"
+                                    data-ruta="pages/envios.html">
+                                    aquí
+                                </a></p>
                         </div>
                     </div>
-                    <div class="carrito-total">
-                        <div class="carrito-total-info">
-                            <span>Subtotal</span>
-                            <small>Envío calculado al finalizar</small>
+                    <div class="carrito-total-container">
+                        <div class="carrito-total">
+                            <div class="carrito-total-info">
+                                <span>Subtotal</span>
+                                <small>Envío calculado al finalizar</small>
+                            </div>
+
+                            <strong id="totalCarrito">$ 0</strong>
                         </div>
 
-                        <strong id="totalCarrito">$ 0</strong>
-                    </div>
-
-                    <button class="btn btn-primary carrito-comprar" id="terminarCompra" type="button">
-                        Continuar compra
-                        <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
-                    </button>
-
-
-                    <div class="carrito-ver-completo">
-                        <a href="#" data-ruta="pages/envios.html">
-                             Información de envíos
+                        <button class="btn btn-primary carrito-comprar" id="terminarCompra" type="button">
+                            Continuar compra
                             <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
-                        </a>
-                    </div>
+                        </button>
 
-                    <div class="carrito-seguridad">
-                        <i class="bx bx-check" aria-hidden="true"></i>
-                        <span>Compra segura · Directo de la finca</span>
+                        <div class="carrito-seguridad">
+                            <i class="bx bx-check" aria-hidden="true"></i>
+                            <span>Compra segura · Directo de la finca</span>
+                        </div>
                     </div>
                 </div>
             </section>
