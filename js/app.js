@@ -4,6 +4,8 @@ import { inicializarHome } from "./pages/home.js";
 import { inicializarMenuMovil } from "./components/menuMobile.js";
 import { inicializarSuscripcion } from "./components/suscriptionModal.js";
 import { configurarRutasNavegacion } from "./utils/rutas.js";
+import { inicializarBuscador } from "./components/buscador.js";
+
 
 async function loadComponent(containerId, fileName) {
   const container = document.getElementById(containerId);
@@ -32,6 +34,7 @@ async function initializeApp() {
     inicializarMenuMovil(document);
     inicializarCarrito();
     inicializarHome(document);
+    inicializarBuscador();
     inicializarSuscripcion();
   } catch (error) {
     console.error("Fallo al inicializar", error);
