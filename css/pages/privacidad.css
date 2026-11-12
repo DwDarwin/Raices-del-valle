@@ -1,0 +1,74 @@
+/* Raíces del Valle — Estilos complementarios de Política de Privacidad */
+
+.privacy-rights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.privacy-right-card {
+  background-color: var(--color-surface-light);
+  border: 1px solid var(--legal-border);
+  padding: 20px;
+}
+
+.privacy-right-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  margin-bottom: 6px;
+}
+
+.privacy-right-card h3 i {
+  color: var(--color-brand-earth);
+  font-size: 18px;
+}
+
+.privacy-right-card p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--legal-muted);
+  margin-bottom: 0;
+}
+
+.privacy-storage-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.privacy-storage-table th,
+.privacy-storage-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--legal-border);
+}
+
+.privacy-storage-table th {
+  background-color: var(--color-surface-light);
+  color: var(--color-brand-primary);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.privacy-storage-table td {
+  color: var(--legal-text);
+  line-height: 1.55;
+}
+
+.privacy-storage-wrap {
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .privacy-rights-grid {
+    grid-template-columns: 1fr;
+  }
+}

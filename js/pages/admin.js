@@ -1,13 +1,24 @@
 import {
   CATEGORIAS,
   ESTADOS,
+} from "../data/productosMock.js";
+import {
   guardarProductos,
   obtenerProductos,
 } from "../storage/productoStorage.js";
 import {
+  cerrarSesion,
+  obtenerSesionActiva,
+} from "../storage/sesionStorage.js";
+import {
   formatearMoneda,
   formatearValorCompacto,
 } from "../utils/formato.js";
+import {
+  configurarRutasNavegacion,
+  obtenerRutaImagenDesdeRaiz,
+  obtenerRutaProyecto,
+} from "../utils/rutas.js";
 
 // Panel administrativo | Raíces del Valle
 // Crea, edita y elimina productos usando el servicio local.
@@ -100,7 +111,8 @@ function fila(p) {
   if (stock <= 0) { nota = "Sin existencias"; claseStock = "low"; }
   else if (stock <= STOCK_BAJO) { nota = "Stock bajo"; claseStock = "low"; }
 
-  var foto = p.image ? '<img src="' + limpiarTexto(p.image) + '" alt="" onerror="this.remove()">' : "";
+  var rutaFoto = p.image ? obtenerRutaImagenDesdeRaiz(p.image) : "";
+  var foto = rutaFoto ? '<img src="' + limpiarTexto(rutaFoto) + '" alt="" onerror="this.remove()">' : "";
 
   return '' +
     '<tr data-id="' + p.id + '">' +
@@ -134,7 +146,8 @@ function llenarSelects() {
 
 function mostrarFoto(ruta) {
   imagenActual = ruta || "";
-  el("photo-preview").innerHTML = ruta ? '<img src="' + limpiarTexto(ruta) + '" alt="Vista previa">' : "Sin foto";
+  var rutaVistaPrevia = ruta ? obtenerRutaImagenDesdeRaiz(ruta) : "";
+  el("photo-preview").innerHTML = rutaVistaPrevia ? '<img src="' + limpiarTexto(rutaVistaPrevia) + '" alt="Vista previa">' : "Sin foto";
 }
 
 function limpiarErrores() {
@@ -280,5 +293,40 @@ el("rows").addEventListener("click", function (e) {
   }
 });
 
+// Cerrar modal al hacer clic fuera del cuadro
+el("modal").addEventListener("click", function (e) {
+  if (e.target === el("modal")) {
+    cerrarFormulario();
+  }
+});
+
+// Mostrar datos de sesión activa y permitir cerrar sesión
+function inicializarSesionAdmin() {
+  var usuario = obtenerSesionActiva();
+  if (usuario && usuario.nombreCompleto) {
+    var nombreEl = el("admin-user-name");
+    var avatarEl = el("admin-avatar");
+    if (nombreEl) nombreEl.textContent = usuario.nombreCompleto;
+    if (avatarEl) {
+      var partes = usuario.nombreCompleto.trim().split(/\s+/);
+      var iniciales = (partes[0] ? partes[0].charAt(0) : "A") + (partes[1] ? partes[1].charAt(0) : "");
+      avatarEl.textContent = iniciales.toUpperCase();
+    }
+  }
+
+  var botonSalir = el("logout-btn");
+  if (botonSalir) {
+    botonSalir.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (confirm("¿Deseas cerrar sesión?")) {
+        cerrarSesion();
+        window.location.href = new URL("pages/login.html", obtenerRutaProyecto()).href;
+      }
+    });
+  }
+}
+
+configurarRutasNavegacion(document);
+inicializarSesionAdmin();
 llenarSelects();
 pintar();
