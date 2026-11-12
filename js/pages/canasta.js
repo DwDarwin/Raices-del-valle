@@ -7,6 +7,7 @@ import {
 import { obtenerSuscripcion } from "../storage/suscripcionStorage.js";
 import { formatearMoneda } from "../utils/formato.js";
 
+const COSTO_ENVIO = 14000;
 let costoEnvio = 0;
 const PORCENTAJE_DESCUENTO = 0.05;
 

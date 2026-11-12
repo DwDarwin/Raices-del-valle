@@ -8,9 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Conexion boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
 
     <link rel="stylesheet" href="../css/pages/login.css">
     <link rel="stylesheet" href="../css/base/styles.css">
@@ -18,7 +16,6 @@
 
     <title>registroUser</title>
 </head>
-
 
 <body>
     <main class="contenedorlogin">
@@ -38,10 +35,7 @@
                 </blockquote>
                 <span class="text-peq">VALLE DE SIBUNDOY - PUTUMAYO</span>
             </div>
-
         </section>
-
-
 
         <section class="formulario-der">
             <a href="#" data-ruta="" class="btnx" aria-label="cerrar">X</a>
@@ -54,57 +48,57 @@
             <span class="text-peq2-der">Compra local y conoce las historias detras de tus alimentos.</span>
 
             <div class="formulario">
-                <!-- 1. Único formulario para todo -->
                 <form id="registroForm">
 
                     <div class="input-group">
                         <label for="telefono">Número de teléfono</label>
-                        <div class="input-wrapper">
+                        <div class="input-wrapper" style="position: relative; margin-bottom: 25px;">
                             <input id="telefono" type="tel" placeholder="Tu número">
+                            <span id="errorTelefono" class="error-msg" style="display: none; color: #d32f2f; font-size: 11px; position: absolute; bottom: -20px; left: 0;">Por favor, ingresa tu número de teléfono.</span>
                         </div>
                     </div>
 
-                    <!-- Bloque del Nombre -->
                     <div class="input-group">
                         <label for="nombre">Nombre Completo</label>
-                        <!-- Reutilizamos la clase email1 o creamos input-wrapper para estandarizar -->
-                        <div class="input-wrapper">
+                        <div class="input-wrapper" style="position: relative; margin-bottom: 25px;">
                             <input id="nombre" type="text" placeholder="¿Cómo te llamas?">
+                            <span id="errorNombre" class="error-msg" style="display: none; color: #d32f2f; font-size: 11px; position: absolute; bottom: -20px; left: 0;">Por favor, ingresa tu nombre completo.</span>
                         </div>
                     </div>
 
-                    <!-- Bloque del Email -->
                     <div class="input-group">
                         <label for="email">Correo electrónico</label>
-                        <div class="input-wrapper">
+                        <div class="input-wrapper" style="position: relative; margin-bottom: 25px;">
                             <input id="email" type="email" placeholder="tunombre@correo.com">
+                            <span id="errorEmail" class="error-msg" style="display: none; color: #d32f2f; font-size: 11px; position: absolute; bottom: -20px; left: 0;">Por favor, ingresa tu correo.</span>
                         </div>
                     </div>
 
-                    <!-- Bloque de la Contraseña -->
                     <div class="input-group">
                         <div class="label-wrapper">
                             <label for="password">Contraseña</label>
                             <a href="#" class="forgot-link">¿La olvidaste?</a>
                         </div>
-                        <div class="password-wrapper">
+                        <div class="password-wrapper" style="position: relative; margin-bottom: 25px;">
                             <input id="password" type="password" placeholder="Mínimo 8 caracteres">
                             <button type="button" id="togglePasswordBtn" class="eye-btn">👁️</button>
+                            <span id="errorPassword" class="error-msg" style="display: none; color: #d32f2f; font-size: 11px; position: absolute; bottom: -20px; left: 0;">Por favor, ingresa tu contraseña.</span>
                         </div>
                     </div>
+
                     <div class="input-group">
                         <label for="confirmPassword">Confirmar Contraseña</label>
-                        <div class="password-wrapper">
+                        <div class="password-wrapper" style="position: relative; margin-bottom: 25px;">
                             <input id="confirmPassword" type="password" placeholder="Repite tu contraseña">
+                            <span id="errorConfirmPassword" class="error-msg" style="display: none; color: #d32f2f; font-size: 11px; position: absolute; bottom: -20px; left: 0;">Por favor, confirma tu contraseña.</span>
                         </div>
                     </div>
-                    <!-- Nuevo bloque: Checkbox de términos (basado en la imagen objetivo) -->
+
                     <div class="terms-group">
                         <input type="checkbox" id="terminos" required>
                         <label for="terminos">Acepto la política de tratamiento de datos y los términos de uso.</label>
                     </div>
 
-                    <!-- Botón de Envío -->
                     <button type="submit" class="btn btn-primary btn-submit" id="btnEnviarRegistro">
                         <span class="btn-text">Crear mi cuenta</span>
                         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
@@ -120,12 +114,7 @@
             </p>
         </section>
 
-
-
-
     </main>
-
-
 
     <script type="module" src="../js/pages/registro.js"></script>
 </body>
