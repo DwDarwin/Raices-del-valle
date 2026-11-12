@@ -9,7 +9,7 @@ import { formatearMoneda } from "../utils/formato.js";
 
 const COSTO_ENVIO = 14000;
 let costoEnvio = 0;
-const PORCENTAJE_DESCUENTO = 0.05;
+const PORCENTAJE_DESCUENTO = 0.1;
 
 function crearElemento(tag, clase, texto) {
   const elemento = document.createElement(tag);
