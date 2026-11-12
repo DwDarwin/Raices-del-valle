@@ -73,7 +73,7 @@ function renderizarInformacionProducto(producto) {
         <i class="bx bx-car icon-delivery"></i>
         <div>
           <p class="delivery-highlight">Entrega estimada: viernes 20 de Noviembre</p>
-          <p class="delivery-sub">Compra antes del miércoles a las 8 p.m.</p>
+          <p class="delivery-sub">Compra antes del miércoles a las 6 p.m.</p>
         </div>
       </div>
       ${renderizarAcordeones()}

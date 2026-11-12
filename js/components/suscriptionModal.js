@@ -3,7 +3,7 @@ import {
   obtenerSuscripcion,
 } from "../storage/suscripcionStorage.js";
 
-const CODIGO_DESCUENTO = "RAICES10";
+const CODIGO_DESCUENTO = "RAICES5";
 
 export function inicializarSuscripcion() {
   const formulario = document.getElementById("subscriptionForm");
