@@ -10,8 +10,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="../css/pages/admin.css">
   <link rel="stylesheet" href="../css/base/styles.css">
+  <link rel="stylesheet" href="../css/pages/admin.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
@@ -20,7 +20,7 @@
 
     <!-- Menú lateral -->
     <aside class="sidebar">
-      <a class="brand" href="mercado.html">
+      <a class="brand" href="mercado.html" data-ruta="pages/mercado.html">
         <span class="brand__mark">
           <i class='bx bx-leaf bx-sm'></i>
         </span>
@@ -30,24 +30,24 @@
 
       <p class="sidebar__label">Administración</p>
       <nav class="nav">
-        <a href="#">Resumen</a>
-        <a href="admin.html" class="is-active">Productos <span class="badge" id="nav-count">0</span></a>
-        <a href="#">Pedidos <span class="badge badge--gray">12</span></a>
-        <a href="#">Productores</a>
-        <a href="#">Inventario</a>
+        <a href="#resumen" data-seccion="resumen">Resumen</a>
+        <a href="admin.html" data-ruta="pages/admin.html" class="is-active">Productos <span class="badge" id="nav-count">0</span></a>
+        <a href="#tabla-productos" data-seccion="pedidos">Pedidos <span class="badge badge--gray">12</span></a>
+        <a href="#tabla-productos" data-seccion="productores">Productores</a>
+        <a href="#tabla-productos" data-seccion="inventario">Inventario</a>
       </nav>
 
       <div class="sidebar__bottom">
-        <a href="mercado.html">Ver el mercado</a>
-        <a href="#">Cerrar sesión</a>
-        <p class="user"><strong>Ana Martínez</strong><small>Administradora</small></p>
+        <a href="mercado.html" data-ruta="pages/mercado.html">Ver el mercado</a>
+        <a href="#" id="logout-btn">Cerrar sesión</a>
+        <p class="user"><strong id="admin-user-name">Ana Martínez</strong><small>Administradora</small></p>
       </div>
     </aside>
 
     <div class="main">
       <header class="topbar">
         <p>Panel administrativo &rsaquo; <strong>Productos</strong></p>
-        <span class="avatar">AM</span>
+        <span class="avatar" id="admin-avatar">AM</span>
       </header>
 
       <main class="content">
@@ -61,7 +61,7 @@
         </div>
 
         <!-- Resumen -->
-        <section class="stats">
+        <section class="stats" id="resumen">
           <article class="stat">
             <p class="stat__label">Productos totales</p>
             <p class="stat__value" id="st-total">0</p>
@@ -85,7 +85,7 @@
         </section>
 
         <!-- Tabla -->
-        <section class="panel">
+        <section class="panel" id="tabla-productos">
           <div class="panel__head">
             <h2>Todos los productos</h2>
             <p id="results"></p>
