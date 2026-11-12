@@ -659,8 +659,8 @@
     position: fixed;
     top: 72px;
     right: 12px;
-    max-height: calc(100vh - 90px);
-    max-height: calc(100dvh - 90px);
+    max-height: calc(100vh - 85px);
+    max-height: calc(100dvh - 85px);
   }
 }
 
@@ -668,19 +668,56 @@
   .carrito-panel {
     right: 8px;
     max-width: calc(100vw - 16px);
+    height: 100dvh;
   }
 
-  .carrito-encabezado,
+  .carrito-encabezado {
+    padding: 14px;
+  }
+
+  .carrito-titulo {
+    margin: 0;
+  }
+  .carrito-titulo .sec-subtitle {
+    margin: 0;
+  }
+
+  .carrito-encabezado h2 {
+    font-size: 18px;
+  }
+
+  .carrito-entrega {
+    padding: 14px 14px;
+  }
+  .carrito-entrega p {
+    font-size: 12px;
+  }
+
+  .carrito-total-container {
+    padding: 8px 18px;
+  }
+
+  .carrito-seguridad {
+    padding: 8px;
+  }
+  .carrito-info-envios {
+    font-size: 8px;
+  }
   .carrito-pie {
-    padding-left: 14px;
-    padding-right: 14px;
+    padding: 0;
+    max-height: 250px;
   }
-
   .carrito-lista {
-    padding-left: 14px;
-    padding-right: 14px;
+    padding: 0 18px;
   }
 
+  .bx-trash {
+    font-size: 18px !important;
+  }
+
+  .carrito-total strong {
+    font-size: 16px;
+  }
   .carrito-item {
     grid-template-columns: 58px minmax(0, 1fr);
     gap: 9px;
