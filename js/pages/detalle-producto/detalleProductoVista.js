@@ -55,7 +55,7 @@ function renderizarGaleria(producto) {
 function renderizarInformacionProducto(producto) {
   return `
     <div class="product-info">
-      <span class="product-origin">— ${producto.category.toUpperCase()} · SIBUNDOY</span>
+      <span class="product-origin">${producto.category.toUpperCase()} · SIBUNDOY</span>
       <h1 class="product-title">${producto.name}</h1>
       <div class="product-rating">
         <i class="bx bxs-star"></i>
@@ -72,7 +72,7 @@ function renderizarInformacionProducto(producto) {
       <div class="delivery-notice">
         <i class="bx bx-car icon-delivery"></i>
         <div>
-          <p class="delivery-highlight">Entrega estimada: viernes 24 de mayo</p>
+          <p class="delivery-highlight">Entrega estimada: viernes 20 de Noviembre</p>
           <p class="delivery-sub">Compra antes del miércoles a las 8 p.m.</p>
         </div>
       </div>
@@ -90,7 +90,7 @@ function renderizarProductor(producto) {
       <div class="producer-text">
         <small>CULTIVADO POR</small>
         <h3>${producto.producer}</h3>
-        <a href="./nosotros.html" class="producer-link">Conoce la historia <i class="bx bx-right-arrow-alt"></i></a>
+        <a href="./finca.html" class="producer-link">Conoce la historia <i class="bx bx-right-arrow-alt"></i></a>
       </div>
     </div>
   `;
