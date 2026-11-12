@@ -18,8 +18,50 @@ if (formRegistro) {
         const valPassword = document.getElementById('password').value.trim();
         const valConfirmPassword = document.getElementById('confirmPassword').value.trim();
 
-        if (valNombre === "" || valTelefono === "" || valEmail === "" || valPassword === "" || valConfirmPassword === "") {
-            alert("Por favor, completa todos los campos antes de continuar.");
+        const errorNombre = document.getElementById('errorNombre');
+        const errorTelefono = document.getElementById('errorTelefono');
+        const errorEmail = document.getElementById('errorEmail');
+        const errorPassword = document.getElementById('errorPassword');
+        const errorConfirmPassword = document.getElementById('errorConfirmPassword');
+
+        let formularioValido = true;
+
+        if (valNombre === "") {
+            if (errorNombre) errorNombre.style.display = "block";
+            formularioValido = false;
+        } else {
+            if (errorNombre) errorNombre.style.display = "none";
+        }
+
+        if (valTelefono === "") {
+            if (errorTelefono) errorTelefono.style.display = "block";
+            formularioValido = false;
+        } else {
+            if (errorTelefono) errorTelefono.style.display = "none";
+        }
+
+        if (valEmail === "") {
+            if (errorEmail) errorEmail.style.display = "block";
+            formularioValido = false;
+        } else {
+            if (errorEmail) errorEmail.style.display = "none";
+        }
+
+        if (valPassword === "") {
+            if (errorPassword) errorPassword.style.display = "block";
+            formularioValido = false;
+        } else {
+            if (errorPassword) errorPassword.style.display = "none";
+        }
+
+        if (valConfirmPassword === "") {
+            if (errorConfirmPassword) errorConfirmPassword.style.display = "block";
+            formularioValido = false;
+        } else {
+            if (errorConfirmPassword) errorConfirmPassword.style.display = "none";
+        }
+
+        if (!formularioValido) {
             return; 
         }
 
