@@ -1,8 +1,16 @@
 import {
-  obtenerProductos,
-  CLAVE_PRODUCTOS,
+    obtenerProductos,
+    CLAVE_PRODUCTOS,
 } from "../storage/productoStorage.js";
 import { formatearMoneda } from "../utils/formato.js";
+
+function normalizarTexto(texto) {
+    return String(texto ?? "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+}
 
 function adaptarProducto(producto) {
     return {
@@ -25,6 +33,8 @@ let productos = obtenerProductos().map(adaptarProducto);
 
 let categoriaActiva = "todos";
 let ordenActivo = "recomendados";
+const parametrosURL = new URLSearchParams(window.location.search);
+let terminoBusqueda = normalizarTexto(parametrosURL.get("buscar") || "");
 
 const categoryTabs = document.getElementById("categoryTabs");
 const sortSelect = document.getElementById("sortSelect");
@@ -63,7 +73,15 @@ function obtenerProductosVisibles() {
             categoriaActiva === "todos" ||
             normalizarCategoria(producto.categoria) === categoriaActiva;
 
-        return producto.disponible && coincideCategoria;
+        const nombreNormalizado = normalizarTexto(producto.nombre);
+
+        const coincideBusqueda =
+            !terminoBusqueda ||
+            nombreNormalizado.includes(terminoBusqueda);
+
+        return producto.disponible &&
+            coincideCategoria &&
+            coincideBusqueda;
     });
 
     if (ordenActivo === "menor-precio") {
@@ -136,7 +154,7 @@ function crearTarjeta(producto) {
         const activo =
             favorito.getAttribute("aria-pressed") !== "true";
 
-            favorito.setAttribute("aria-pressed", String(activo));
+        favorito.setAttribute("aria-pressed", String(activo));
         favorito.textContent = activo ? "♥" : "♡";
         favorito.style.color = activo ? "#eb0e0e" : "";
     });
@@ -254,7 +272,22 @@ categoryTabs.addEventListener("click", event => {
         return;
     }
 
+    // Actualizar categoría
     categoriaActiva = normalizarCategoria(boton.dataset.category);
+
+    // Limpiar búsqueda anterior
+    terminoBusqueda = "";
+
+    const campoBusqueda = document.getElementById("busquedaProducto");
+
+    if (campoBusqueda) {
+        campoBusqueda.value = "";
+    }
+
+    
+    const url = new URL(window.location.href);
+    url.searchParams.delete("buscar");
+    window.history.replaceState({}, "", url);
 
     categoryTabs.querySelectorAll(".tab-btn").forEach(tab => {
         const activo = tab === boton;
@@ -265,7 +298,6 @@ categoryTabs.addEventListener("click", event => {
 
     renderizarProductos();
 });
-
 
 sortSelect.addEventListener("change", () => {
     ordenActivo = sortSelect.value;

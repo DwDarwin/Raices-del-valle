@@ -8,8 +8,11 @@ import {
 import { obtenerSuscripcion } from "../storage/suscripcionStorage.js";
 import { formatearMoneda } from "../utils/formato.js";
 
+const COSTO_ENVIO = 14000;
 let costoEnvio = 0;
+
 const PORCENTAJE_DESCUENTO = 0.1;
+
 
 function crearElemento(tag, clase, texto) {
     const elemento = document.createElement(tag);
@@ -55,7 +58,9 @@ function inicializarCanasta() {
         const subtotal = carrito.reduce(
             (suma, item) => suma + item.precio * item.cantidad,
             0
+            
         );
+        costoEnvio = carrito.length > 0 ? COSTO_ENVIO : 0;
 
         const descuento = subtotal * descuentoAplicado;
         const total = subtotal - descuento + costoEnvio;

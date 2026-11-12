@@ -88,7 +88,7 @@ export function inicializarCarrito() {
 
         return elemento;
     }
-    
+
     document.addEventListener(EVENTO_CARRITO_ACTUALIZADO, evento => {
         if (evento.detail?.origen === "carrito") {
             return;
@@ -316,10 +316,7 @@ export function inicializarCarrito() {
     });
 
     terminarCompra.addEventListener("click", () => {
-        mostrarMensaje(
-            "El proceso de compra todavía no está habilitado. " +
-            "Tus productos permanecen en el carrito."
-        );
+        window.location.href = "canasta.html";
     });
 
     document.addEventListener("raices:agregar-carrito", evento => {
