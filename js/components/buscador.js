@@ -1,3 +1,5 @@
+import { obtenerRutaProyecto } from "../utils/rutas.js";
+
 export function inicializarBuscador() {
     const botonBuscar = document.getElementById("buscarProducto");
     const campoBusqueda = document.getElementById("busquedaProducto");
@@ -14,8 +16,12 @@ export function inicializarBuscador() {
             return;
         }
 
-        window.location.href =
-            `./mercado.html?buscar=${encodeURIComponent(termino)}`;
+        const rutaMercado = new URL(
+            `pages/mercado.html?buscar=${encodeURIComponent(termino)}`,
+            obtenerRutaProyecto()
+        );
+
+        window.location.href = rutaMercado.href;
     }
 
     botonBuscar.addEventListener("click", buscarProducto);
