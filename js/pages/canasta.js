@@ -1,15 +1,19 @@
 import {
   obtenerCarrito,
   guardarCarrito,
+  eliminarCarrito,
   CLAVE_CARRITO,
   EVENTO_CARRITO_ACTUALIZADO,
 } from "../storage/carritoStorage.js";
-import { obtenerSuscripcion } from "../storage/suscripcionStorage.js";
+import {
+  CODIGO_DESCUENTO,
+  PORCENTAJE_DESCUENTO,
+  obtenerSuscripcion,
+} from "../storage/suscripcionStorage.js";
 import { formatearMoneda } from "../utils/formato.js";
+import { obtenerRutaImagenDesdeRaiz } from "../utils/rutas.js";
 
 const COSTO_ENVIO = 14000;
-let costoEnvio = 0;
-const PORCENTAJE_DESCUENTO = 0.1;
 
 function crearElemento(tag, clase, texto) {
   const elemento = document.createElement(tag);
@@ -18,6 +22,18 @@ function crearElemento(tag, clase, texto) {
   if (texto !== undefined) elemento.textContent = texto;
 
   return elemento;
+}
+
+function generarNumeroPedido() {
+  const sufijo = String(Date.now()).slice(-6);
+  return `RDV-${sufijo}`;
+}
+
+function formatearFechaPedido(fecha = new Date()) {
+  return new Intl.DateTimeFormat("es-CO", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(fecha);
 }
 
 function inicializarCanasta() {
@@ -35,6 +51,15 @@ function inicializarCanasta() {
   const modal = document.getElementById("modalFacturacion");
   const botonCerrarModal = document.getElementById("cerrarModalFacturacion");
 
+  const ordenNumero = document.getElementById("ordenNumero");
+  const ordenFecha = document.getElementById("ordenFecha");
+  const ordenListaProductos = document.getElementById("ordenListaProductos");
+  const ordenSubtotal = document.getElementById("ordenSubtotal");
+  const ordenFilaDescuento = document.getElementById("ordenFilaDescuento");
+  const ordenDescuento = document.getElementById("ordenDescuento");
+  const ordenEnvio = document.getElementById("ordenEnvio");
+  const ordenTotal = document.getElementById("ordenTotal");
+
   const botonAplicarDescuento = document.getElementById("aplicarDescuento");
   const codigoDescuento = document.getElementById("codigoDescuento");
   const mensajeDescuento = document.getElementById("mensajeDescuento");
@@ -44,18 +69,24 @@ function inicializarCanasta() {
   let carrito = obtenerCarrito();
   let descuentoAplicado = 0;
 
-  function renderizar() {
-    lista.replaceChildren();
-
-    const unidades = carrito.reduce((suma, item) => suma + item.cantidad, 0);
-
-    const subtotal = carrito.reduce(
+  function calcularTotales(items, porcentajeDescuento) {
+    const unidades = items.reduce((suma, item) => suma + item.cantidad, 0);
+    const subtotal = items.reduce(
       (suma, item) => suma + item.precio * item.cantidad,
       0,
     );
+    const costoEnvio = items.length > 0 ? COSTO_ENVIO : 0;
+    const descuento = subtotal * porcentajeDescuento;
+    const total = Math.max(0, subtotal - descuento) + costoEnvio;
 
-    const descuento = subtotal * descuentoAplicado;
-    const total = subtotal - descuento + costoEnvio;
+    return { unidades, subtotal, costoEnvio, descuento, total };
+  }
+
+  function renderizar() {
+    lista.replaceChildren();
+
+    const { unidades, subtotal, costoEnvio, descuento, total } =
+      calcularTotales(carrito, descuentoAplicado);
 
     cantidadProductos.textContent = `${unidades} ${unidades === 1 ? "producto" : "productos"}`;
 
@@ -76,7 +107,7 @@ function inicializarCanasta() {
       imagen.alt = item.nombre || "Producto del mercado";
 
       if (item.imagen) {
-        imagen.src = item.imagen;
+        imagen.src = obtenerRutaImagenDesdeRaiz(item.imagen);
 
         imagen.addEventListener(
           "error",
@@ -162,6 +193,61 @@ function inicializarCanasta() {
     });
   }
 
+  function renderizarDetallePedido(itemsPedido, totalesPedido) {
+    if (ordenNumero) {
+      ordenNumero.textContent = generarNumeroPedido();
+    }
+
+    if (ordenFecha) {
+      ordenFecha.textContent = formatearFechaPedido();
+    }
+
+    if (ordenListaProductos) {
+      ordenListaProductos.replaceChildren();
+
+      itemsPedido.forEach((item) => {
+        const li = crearElemento("li", "orden-item");
+        const info = crearElemento("div", "orden-item-info");
+        const nombre = crearElemento(
+          "span",
+          "orden-item-nombre",
+          item.nombre || "Producto",
+        );
+        const detalleCantidad = crearElemento(
+          "span",
+          "orden-item-cantidad",
+          `${item.cantidad} x ${formatearMoneda(item.precio)}${item.unidad ? ` (${item.unidad})` : ""}`,
+        );
+        const subtotalItem = crearElemento(
+          "span",
+          "orden-item-subtotal",
+          formatearMoneda(item.precio * item.cantidad),
+        );
+
+        info.append(nombre, detalleCantidad);
+        li.append(info, subtotalItem);
+        ordenListaProductos.append(li);
+      });
+    }
+
+    if (ordenSubtotal) {
+      ordenSubtotal.textContent = formatearMoneda(totalesPedido.subtotal);
+    }
+
+    if (ordenFilaDescuento && ordenDescuento) {
+      ordenFilaDescuento.hidden = totalesPedido.descuento === 0;
+      ordenDescuento.textContent = `-${formatearMoneda(totalesPedido.descuento)}`;
+    }
+
+    if (ordenEnvio) {
+      ordenEnvio.textContent = formatearMoneda(totalesPedido.costoEnvio);
+    }
+
+    if (ordenTotal) {
+      ordenTotal.textContent = formatearMoneda(totalesPedido.total);
+    }
+  }
+
   function sincronizarDesdeAlmacenamiento() {
     carrito = obtenerCarrito();
     renderizar();
@@ -205,10 +291,31 @@ function inicializarCanasta() {
   botonContinuar.addEventListener("click", () => {
     if (carrito.length === 0) return;
 
+    const copiaItems = carrito.map((item) => ({ ...item }));
+    const totalesPedido = calcularTotales(copiaItems, descuentoAplicado);
+
+    renderizarDetallePedido(copiaItems, totalesPedido);
+
+    eliminarCarrito();
+    carrito = [];
+    descuentoAplicado = 0;
+
+    if (codigoDescuento) {
+      codigoDescuento.value = "";
+    }
+    if (mensajeDescuento) {
+      mensajeDescuento.hidden = true;
+      mensajeDescuento.textContent = "";
+    }
+
+    renderizar();
+
     if (typeof modal.showModal === "function") {
       modal.showModal();
     } else {
-      alert("Tu canasta está lista para ser facturada");
+      alert(
+        `¡Compra realizada con éxito! Total pagado: ${formatearMoneda(totalesPedido.total)}`,
+      );
     }
   });
 
@@ -225,19 +332,24 @@ function inicializarCanasta() {
   botonAplicarDescuento.addEventListener("click", () => {
     const codigoIngresado = codigoDescuento.value.trim().toUpperCase();
     const suscripcion = obtenerSuscripcion();
-    const codigoValido = suscripcion?.codigoDescuento?.toUpperCase();
+    const codigoValido = (
+      suscripcion?.codigoDescuento || CODIGO_DESCUENTO
+    ).toUpperCase();
 
     if (!codigoIngresado) {
       descuentoAplicado = 0;
       mensajeDescuento.textContent = "Escribe un código para continuar.";
-    } else if (codigoIngresado !== codigoValido) {
+    } else if (
+      codigoIngresado !== codigoValido &&
+      codigoIngresado !== CODIGO_DESCUENTO
+    ) {
       descuentoAplicado = 0;
       mensajeDescuento.textContent = "El código de descuento no es válido.";
     } else {
       descuentoAplicado = PORCENTAJE_DESCUENTO;
       codigoDescuento.value = codigoIngresado;
       mensajeDescuento.textContent =
-        "Código aplicado. Tienes un 10% de descuento.";
+        "Código aplicado. Tienes un 5% de descuento.";
     }
 
     mensajeDescuento.hidden = false;

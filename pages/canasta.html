@@ -30,7 +30,6 @@
                 </a>
 
                 <div class="canasta-subtitulo">
-                    <span class="canasta-linea"></span>
                     TU SELECCIÓN
                 </div>
 
@@ -88,8 +87,8 @@
                 </div>
 
                 <button id="continuarPago" class="btn btn-primary canasta-boton" type="button">
-                    Continuar al pago
-                    <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
+                    Realizar compra
+                    <i class="bx bx-check-shield" aria-hidden="true"></i>
                 </button>
 
                 <p class="resumen-seguridad">
@@ -107,11 +106,65 @@
             <span class="modal-icono">
                 <i class="bx bx-check" aria-hidden="true"></i>
             </span>
-            <h2 id="tituloModal">¡Tu canasta está lista!</h2>
-            <p>Continua a facturar tu pedido</p>
+            <span class="orden-etiqueta">PEDIDO CONFIRMADO</span>
+            <h2 id="tituloModal">¡Gracias por tu compra!</h2>
+
+            <div class="orden-resumen">
+                <div class="orden-meta">
+                    <div>
+                        <span class="orden-meta-label">N.° de pedido</span>
+                        <strong id="ordenNumero">RDV-000000</strong>
+                    </div>
+                    <div>
+                        <span class="orden-meta-label">Fecha</span>
+                        <strong id="ordenFecha">-</strong>
+                    </div>
+                    <div class="orden-meta-cliente">
+                        <span class="orden-meta-label">Cliente</span>
+                        <strong id="ordenCliente">-</strong>
+                    </div>
+                </div>
+
+                <div class="orden-seccion-titulo">Detalle de productos</div>
+                <ul id="ordenListaProductos" class="orden-lista"></ul>
+
+                <div class="orden-totales">
+                    <div class="orden-fila orden-fila-total">
+                        <span>Total pagado</span>
+                        <strong id="ordenTotal">$ 0</strong>
+                    </div>
+                </div>
+            </div>
+
             <button id="cerrarModalFacturacion" class="btn btn-primary canasta-boton" type="button">
-                Continuar
+                Aceptar y finalizar
             </button>
+        </div>
+    </dialog>
+
+    <dialog id="modalSesionRequerida" class="modal-facturacion modal-sesion" aria-labelledby="tituloModalSesion">
+        <div class="modal-facturacion-contenido">
+            <span class="modal-icono modal-icono-sesion">
+                <i class="bx bx-user-check" aria-hidden="true"></i>
+            </span>
+            <span class="orden-etiqueta">PASO PREVIO</span>
+            <h2 id="tituloModalSesion">Inicia sesión para comprar</h2>
+            <p class="modal-descripcion">
+                Tus productos seguirán guardados en tu canasta. Inicia sesión con tu cuenta para confirmar tu pedido y coordinar la entrega.
+            </p>
+
+            <div class="modal-sesion-acciones">
+                <button id="irALogin" class="btn btn-primary canasta-boton" type="button">
+                    Iniciar sesión
+                    <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
+                </button>
+                <a class="modal-sesion-registro" href="#" data-ruta="pages/registro.html">
+                    ¿No tienes cuenta? Regístrate aquí
+                </a>
+                <button id="cerrarModalSesion" class="modal-sesion-cancelar" type="button">
+                    Seguir revisando mi canasta
+                </button>
+            </div>
         </div>
     </dialog>
 
