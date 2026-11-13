@@ -1,9 +1,17 @@
 export const CLAVE_SUSCRIPCION = "rdv:suscripcion";
+export const CODIGO_DESCUENTO = "RAICES5";
+export const PORCENTAJE_DESCUENTO = 0.05;
 
 export function obtenerSuscripcion() {
   try {
     const datos = localStorage.getItem(CLAVE_SUSCRIPCION);
-    return datos === null ? null : JSON.parse(datos);
+    if (datos === null) return null;
+    const suscripcion = JSON.parse(datos);
+    if (suscripcion && suscripcion.codigoDescuento === "RAICES5") {
+      suscripcion.codigoDescuento = CODIGO_DESCUENTO;
+      localStorage.setItem(CLAVE_SUSCRIPCION, JSON.stringify(suscripcion));
+    }
+    return suscripcion;
   } catch (error) {
     console.error("No se pudo leer la suscripción:", error);
     return null;
