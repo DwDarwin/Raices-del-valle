@@ -1,7 +1,3 @@
-import {
-    obtenerProductos,
-    CLAVE_PRODUCTOS,
-} from "../storage/productoStorage.js";
 import { formatearMoneda } from "../utils/formato.js";
 
 function normalizarTexto(texto) {
@@ -12,6 +8,25 @@ function normalizarTexto(texto) {
         .trim();
 }
 
+
+function adaptarProducto(producto) {
+    return {
+        ...producto,
+        nombre: producto.nombre,
+        categoria: producto.categoria,
+        precio: Number(producto.precio),
+        presentacion: producto.unidadVenta,
+        unidadVenta: producto.unidadVenta,
+        inventario: Number(producto.stock) || 0,
+        imagen: producto.imagen,
+        recomendado: Number(producto.id) || 999,
+
+        disponible:
+            normalizarTexto(producto.estado) === "publicado" &&
+            Number(producto.stock) > 0
+    };
+}
+/*
 function adaptarProducto(producto) {
     return {
         ...producto,
@@ -28,8 +43,9 @@ function adaptarProducto(producto) {
             Number(producto.stock) > 0
     };
 }
+*/
 
-let productos = obtenerProductos().map(adaptarProducto);
+let productos = [];
 
 let categoriaActiva = "todos";
 let ordenActivo = "recomendados";
@@ -41,6 +57,35 @@ const sortSelect = document.getElementById("sortSelect");
 const productsGrid = document.getElementById("productsGrid");
 const productCounter = document.getElementById("productCounter");
 const emptyMessage = document.getElementById("emptyMessage");
+
+async function cargarProductos() {
+    try {
+        const respuesta = await fetch(
+            "http://localhost:8080/api/productos"
+        );
+
+        if (!respuesta.ok) {
+            throw new Error(
+                `Error al consultar productos: ${respuesta.status}`
+            );
+        }
+
+        const datos = await respuesta.json();
+
+        productos = datos.map(adaptarProducto);
+
+        renderizarProductos();
+
+        console.log("Productos cargados desde la base de datos:", productos);
+
+    } catch (error) {
+        console.error("Error al cargar el catálogo:", error);
+
+        productsGrid.replaceChildren();
+        productCounter.textContent = "No se pudieron cargar los productos";
+        emptyMessage.hidden = false;
+    }
+}
 
 
 
@@ -315,16 +360,4 @@ window.actualizarProductosCatalogo = function (nuevosProductos) {
     renderizarProductos();
 };
 
-
-//espera productos
-window.addEventListener("storage", event => {
-    if (event.key === CLAVE_PRODUCTOS) {
-        productos = obtenerProductos().map(adaptarProducto);
-        renderizarProductos();
-    }
-});
-
-
-
-
-renderizarProductos();
+cargarProductos();

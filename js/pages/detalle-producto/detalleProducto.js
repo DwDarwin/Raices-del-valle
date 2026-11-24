@@ -1,4 +1,3 @@
-import { obtenerProductos } from "../../storage/productoStorage.js";
 import {
   renderizarDetalle,
   renderizarRutaNavegacion,
@@ -10,42 +9,86 @@ document.addEventListener("DOMContentLoaded", () =>
   inicializarDetalleProducto(document),
 );
 
-export function inicializarDetalleProducto(documento) {
-  const productosSinNormalizar = obtenerProductos();
-  if (productosSinNormalizar.length === 0) return;
+export async function inicializarDetalleProducto(documento) {
+  try {
+    // Consultar los productos desde el backend
+    const respuesta = await fetch(
+      "http://localhost:8080/api/productos"
+    );
 
-  const productos = productosSinNormalizar.map(normalizarProductoDetalle);
-  const parametrosURL = new URLSearchParams(window.location.search);
-  const idProductoEnURL = parametrosURL.get("id");
+    if (!respuesta.ok) {
+      throw new Error(
+        `Error al consultar productos: ${respuesta.status}`
+      );
+    }
 
-  const productoSeleccionado =
-    productos.find(
-      (producto) => String(producto.id) === String(idProductoEnURL),
-    ) || productos[0];
+    const productosSinNormalizar = await respuesta.json();
 
-  documento.title = `${productoSeleccionado.name} | Raíces del Valle`;
+    if (productosSinNormalizar.length === 0) {
+      console.warn("No hay productos disponibles.");
+      return;
+    }
 
-  const listaRutaNavegacion = documento.getElementById("breadcrumb-list");
-  if (listaRutaNavegacion) {
-    listaRutaNavegacion.innerHTML =
-      renderizarRutaNavegacion(productoSeleccionado);
+    // Normalizar los productos recibidos
+    const productos = productosSinNormalizar.map(
+      normalizarProductoDetalle
+    );
+
+    // Obtener el ID desde la URL
+    const parametrosURL = new URLSearchParams(window.location.search);
+    const idProductoEnURL = parametrosURL.get("id");
+
+    // Buscar el producto solicitado
+    const productoSeleccionado = productos.find(
+      producto => String(producto.id) === String(idProductoEnURL)
+    );
+
+    if (!productoSeleccionado) {
+      console.error("No se encontró el producto solicitado.");
+      return;
+    }
+
+    // Actualizar título de la página
+    documento.title = `${productoSeleccionado.name} | Raíces del Valle`;
+
+    // Renderizar ruta de navegación
+    const listaRutaNavegacion = documento.getElementById(
+      "breadcrumb-list"
+    );
+
+    if (listaRutaNavegacion) {
+      listaRutaNavegacion.innerHTML =
+        renderizarRutaNavegacion(productoSeleccionado);
+    }
+
+    // Renderizar detalle del producto
+    const contenedorDetalle = documento.getElementById(
+      "product-detail-container"
+    );
+
+    if (contenedorDetalle) {
+      contenedorDetalle.innerHTML =
+        renderizarDetalle(productoSeleccionado);
+    }
+
+    // Renderizar productos relacionados
+    renderizarProductosRelacionados(
+      documento,
+      productos,
+      productoSeleccionado.id
+    );
+
+    // Vincular eventos e interacciones
+    vincularInteraccionesDetalle(productoSeleccionado, documento);
+
+  } catch (error) {
+    console.error(
+      "Error al cargar el detalle del producto:",
+      error
+    );
   }
-
-  const contenedorDetalle = documento.getElementById(
-    "product-detail-container",
-  );
-  if (contenedorDetalle) {
-    contenedorDetalle.innerHTML = renderizarDetalle(productoSeleccionado);
-  }
-
-  renderizarProductosRelacionados(
-    documento,
-    productos,
-    productoSeleccionado.id,
-  );
-
-  vincularInteraccionesDetalle(productoSeleccionado, documento);
 }
+
 
 function normalizarProductoDetalle(productoOriginal) {
   const producto = productoOriginal || {};
@@ -64,7 +107,7 @@ function normalizarProductoDetalle(productoOriginal) {
     description:
       producto.description ||
       producto.descripcion ||
-      "Pequeña, dorada y de textura cremosa. Recolectada a mano en su punto justo para conservar todo el sabor de nuestra tierra.",
+      "Recolectada a mano en su punto justo para conservar todo el sabor de nuestra tierra.",
     producer: "Finca Familia Chindoy",
     tag: producto.tag || producto.etiqueta || "COSECHA FRESCA",
     gallery:
@@ -72,7 +115,7 @@ function normalizarProductoDetalle(productoOriginal) {
         ? producto.gallery
         : [
             producto.image || producto.imagen || "",
-            "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&w=800&q=80",
+            
           ],
   };
 }
