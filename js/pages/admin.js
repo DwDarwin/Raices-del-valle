@@ -12,7 +12,6 @@ import {
 } from "../storage/sesionStorage.js";
 import {
   formatearMoneda,
-  formatearValorCompacto,
 } from "../utils/formato.js";
 import {
   configurarRutasNavegacion,
@@ -20,14 +19,11 @@ import {
   obtenerRutaProyecto,
 } from "../utils/rutas.js";
 
-// Panel administrativo | Raíces del Valle
-// Crea, edita y elimina productos usando el servicio local.
-
 var busqueda = "";
 var filtroCategoria = "";
 var filtroEstado = "";
-var idEditando = null;   // null = estamos creando uno nuevo
-var imagenActual = "";   // foto del formulario (ruta o dato de la imagen)
+var idEditando = null;
+var imagenActual = "";
 
 function el(id) { return document.getElementById(id); }
 
@@ -58,17 +54,13 @@ function limpiarTexto(texto) {
     .replace(/"/g, "&quot;");
 }
 
-// Quita tildes y mayúsculas para que la búsqueda sea más flexible.
 function simplificar(texto) {
-  return String(texto || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  return String(texto || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
-
-/* ---------- Tabla y resumen ---------- */
 
 function pintar() {
   var todos = obtenerProductos();
 
-  // 1. Filtrar según lo que escribió o eligió la persona
   var lista = todos.filter(function (p) {
     if (filtroCategoria && p.category !== filtroCategoria) return false;
     if (filtroEstado && obtenerEstadoReal(p) !== filtroEstado) return false;
@@ -76,31 +68,12 @@ function pintar() {
     return true;
   });
 
-  // 2. Dibujar las filas
   if (lista.length === 0) {
     el("rows").innerHTML = '<tr><td colspan="6" class="empty">No hay productos que coincidan.</td></tr>';
   } else {
     el("rows").innerHTML = lista.map(fila).join("");
   }
   el("results").textContent = "Mostrando " + lista.length + " de " + todos.length + " productos";
-
-  // 3. Calcular el resumen (siempre con todos los productos)
-  var publicados = 0, bajos = 0, agotados = 0, valor = 0;
-  todos.forEach(function (p) {
-    var estado = obtenerEstadoReal(p);
-    var stock = Number(p.stock) || 0;
-    if (estado === "publicado") publicados++;
-    if (estado === "agotado") agotados++;
-    if (estado !== "borrador" && stock > 0 && stock <= STOCK_BAJO) bajos++;
-    valor += (Number(p.price) || 0) * stock;
-  });
-
-  el("nav-count").textContent = todos.length;
-  el("st-total").textContent = todos.length;
-  el("st-total-note").textContent = publicados + " publicados";
-  el("st-low").textContent = bajos;
-  el("st-out").textContent = agotados;
-  el("st-value").textContent = formatearValorCompacto(valor / 1000);
 }
 
 function fila(p) {
@@ -132,8 +105,6 @@ function fila(p) {
       '</td>' +
     '</tr>';
 }
-
-/* ---------- Formulario ---------- */
 
 function llenarSelects() {
   var opciones = "";
@@ -180,7 +151,6 @@ function cerrarFormulario() {
   el("modal").close();
 }
 
-// Guardar (crear o editar)
 el("product-form").addEventListener("submit", function (e) {
   e.preventDefault();
   limpiarErrores();
@@ -197,7 +167,6 @@ el("product-form").addEventListener("submit", function (e) {
     image: imagenActual
   };
 
-  // Validar
   var hayError = false;
   if (datos.name === "") { el("err-name").textContent = "Escribe el nombre del producto."; hayError = true; }
   if (datos.producer === "") { el("err-producer").textContent = "Escribe el nombre del productor."; hayError = true; }
@@ -205,7 +174,6 @@ el("product-form").addEventListener("submit", function (e) {
   if (isNaN(datos.stock) || datos.stock < 0 || datos.stock % 1 !== 0) { el("err-stock").textContent = "Ingresa un número entero."; hayError = true; }
   if (hayError) return;
 
-  // Crear o actualizar en la lista
   var lista = obtenerProductos();
   if (idEditando) {
     lista = lista.map(function (p) {
@@ -225,7 +193,6 @@ el("product-form").addEventListener("submit", function (e) {
   pintar();
 });
 
-// Foto: se convierte en texto para poder guardarla en localStorage.
 el("photo-input").addEventListener("change", function () {
   var archivo = el("photo-input").files[0];
   el("err-image").textContent = "";
@@ -235,8 +202,7 @@ el("photo-input").addEventListener("change", function () {
     el("err-image").textContent = "Selecciona un archivo de imagen.";
     return;
   }
-  // La foto se reduce a un máximo de 900 px y se guarda como JPG liviano
-  // (así no se llena el almacenamiento del navegador).
+
   var lector = new FileReader();
   lector.onload = function () {
     var imagen = new Image();
@@ -247,7 +213,7 @@ el("photo-input").addEventListener("change", function () {
       lienzo.height = Math.round(imagen.height * escala);
 
       var ctx = lienzo.getContext("2d");
-      ctx.fillStyle = "#fff"; // fondo blanco por si la imagen es transparente
+      ctx.fillStyle = "#fff";
       ctx.fillRect(0, 0, lienzo.width, lienzo.height);
       ctx.drawImage(imagen, 0, 0, lienzo.width, lienzo.height);
 
@@ -261,8 +227,6 @@ el("photo-input").addEventListener("change", function () {
   lector.readAsDataURL(archivo);
 });
 
-/* ---------- Eventos ---------- */
-
 el("new-btn").addEventListener("click", function () { abrirFormulario(null); });
 el("modal-close").addEventListener("click", cerrarFormulario);
 el("cancel-btn").addEventListener("click", cerrarFormulario);
@@ -271,7 +235,6 @@ el("q").addEventListener("input", function () { busqueda = el("q").value; pintar
 el("f-cat").addEventListener("change", function () { filtroCategoria = el("f-cat").value; pintar(); });
 el("f-status").addEventListener("change", function () { filtroEstado = el("f-status").value; pintar(); });
 
-// Botones Editar / Eliminar de cada fila
 el("rows").addEventListener("click", function (e) {
   var boton = e.target.closest("button[data-accion]");
   if (!boton) return;
@@ -293,14 +256,12 @@ el("rows").addEventListener("click", function (e) {
   }
 });
 
-// Cerrar modal al hacer clic fuera del cuadro
 el("modal").addEventListener("click", function (e) {
   if (e.target === el("modal")) {
     cerrarFormulario();
   }
 });
 
-// Mostrar datos de sesión activa y permitir cerrar sesión
 function inicializarSesionAdmin() {
   var usuario = obtenerSesionActiva();
   if (usuario && usuario.nombreCompleto) {
