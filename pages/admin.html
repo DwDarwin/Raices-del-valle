@@ -17,75 +17,80 @@
 
 <body>
   <div class="app">
-    <header class="topbar">
-      <div class="topbar__left">
-        <a class="brand" href="mercado.html" data-ruta="pages/mercado.html">
-          <span class="brand__mark">
-            <i class='bx bx-leaf bx-sm'></i>
-          </span>
-          <span><strong>Raíces</strong><small>Del valle</small></span>
-        </a>
-        <span class="topbar__divider" aria-hidden="true">/</span>
-        <p class="topbar__crumb">Panel administrativo &rsaquo; <strong>Productos</strong></p>
-      </div>
 
-      <div class="topbar__right">
-        <a class="topbar__link" href="mercado.html" data-ruta="pages/mercado.html">Ver el mercado</a>
-        <button class="topbar__link topbar__btn" type="button" id="logout-btn">Cerrar sesión</button>
-        <div class="user-chip">
-          <span class="avatar" id="admin-avatar">AM</span>
-          <div class="user-chip__info">
-            <strong id="admin-user-name">Ana Martínez</strong>
-            <small>Administradora</small>
+    <aside class="sidebar">
+      <a class="brand" href="mercado.html" data-ruta="pages/mercado.html">
+        <span class="brand__mark">
+          <i class='bx bx-leaf bx-sm'></i>
+        </span>
+
+        <span><strong>Raíces</strong><small>Del valle</small></span>
+      </a>
+
+      <p class="sidebar__label">Administración</p>
+      <nav class="nav">
+        <a href="admin.html" data-ruta="pages/admin.html" class="is-active">Inventario <span class="badge" id="nav-count">0</span></a>
+        <a href="#tabla-productos" data-seccion="pedidos">Pedidos <span class="badge badge--gray" id="nav-orders">12</span></a>
+      </nav>
+
+      <div class="sidebar__bottom">
+        <a href="mercado.html" data-ruta="pages/mercado.html">Ver el mercado</a>
+        <a href="#" id="logout-btn">Cerrar sesión</a>
+        <p class="user"><strong id="admin-user-name">Ana Martínez</strong><small>Administradora</small></p>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <p>Panel administrativo &rsaquo; <strong>Inventario</strong></p>
+        <span class="avatar" id="admin-avatar">AM</span>
+      </header>
+
+      <main class="content">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow">Catálogo campesino</p>
+            <h1>Gestión de productos</h1>
+            <p class="lede">Administra los productos que se muestran en el mercado.</p>
           </div>
-        </div>
-      </div>
-    </header>
-
-    <main class="content">
-      <div class="page-head">
-        <div>
-          <p class="eyebrow">Catálogo campesino</p>
-          <h1>Gestión de productos</h1>
-          <p class="lede">Administra los productos que se muestran en el mercado.</p>
-        </div>
-        <button class="btn btn--primary" id="new-btn" type="button">+ Nuevo producto</button>
-      </div>
-
-      <section class="panel" id="tabla-productos">
-        <div class="panel__head">
-          <h2>Todos los productos</h2>
-          <p id="results"></p>
+          <button class="btn btn--primary" id="new-btn" type="button">+ Nuevo producto</button>
         </div>
 
-        <div class="filters">
-          <input id="q" type="search" placeholder="Buscar por producto o productor…" aria-label="Buscar">
-          <select id="f-cat" aria-label="Filtrar por categoría"></select>
-          <select id="f-status" aria-label="Filtrar por estado">
-            <option value="">Todos los estados</option>
-            <option value="publicado">Publicado</option>
-            <option value="borrador">Borrador</option>
-            <option value="agotado">Agotado</option>
-          </select>
-        </div>
+        <section class="panel" id="tabla-productos">
+          <div class="panel__head">
+            <h2>Todos los productos</h2>
+            <p id="results"></p>
+          </div>
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Producto</th>
-                <th>Categoría</th>
-                <th>Precio</th>
-                <th>Inventario</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="rows"></tbody>
-          </table>
-        </div>
-      </section>
-    </main>
+          <div class="filters">
+            <input id="q" type="search" placeholder="Buscar por producto o productor…" aria-label="Buscar">
+            <select id="f-cat" aria-label="Filtrar por categoría"></select>
+            <select id="f-status" aria-label="Filtrar por estado">
+              <option value="">Todos los estados</option>
+              <option value="publicado">Publicado</option>
+              <option value="borrador">Borrador</option>
+              <option value="agotado">Agotado</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Categoría</th>
+                  <th>Precio</th>
+                  <th>Inventario</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
   </div>
 
   <dialog class="modal" id="modal">

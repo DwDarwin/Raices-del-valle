@@ -58,6 +58,13 @@ function simplificar(texto) {
   return String(texto || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
+function actualizarContadorPedidos(cantidad) {
+  var contadorPedidos = el("nav-orders");
+  if (!contadorPedidos) return;
+  var total = Number(cantidad);
+  contadorPedidos.textContent = Number.isFinite(total) && total >= 0 ? total : 0;
+}
+
 function pintar() {
   var todos = obtenerProductos();
 
@@ -74,6 +81,7 @@ function pintar() {
     el("rows").innerHTML = lista.map(fila).join("");
   }
   el("results").textContent = "Mostrando " + lista.length + " de " + todos.length + " productos";
+  el("nav-count").textContent = todos.length;
 }
 
 function fila(p) {
@@ -290,4 +298,5 @@ function inicializarSesionAdmin() {
 configurarRutasNavegacion(document);
 inicializarSesionAdmin();
 llenarSelects();
+actualizarContadorPedidos(12);
 pintar();
