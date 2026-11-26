@@ -1,4 +1,4 @@
-import { obtenerProductos } from "../storage/productoStorage.js";
+import { API_ENDPOINTS } from "../services/api.js";
 import {
   agregarProducto,
   actualizarCantidadProducto,
@@ -16,8 +16,35 @@ import {
   obtenerRutaProyecto,
 } from "../utils/rutas.js";
 
+let productosCatalogo = [];
+
+async function cargarProductosCatalogo() {
+  try {
+    const respuesta = await fetch(API_ENDPOINTS.productos);
+
+    if (!respuesta.ok) {
+      throw new Error(
+        `Error al consultar productos: ${respuesta.status}`
+      );
+    }
+
+    productosCatalogo = await respuesta.json();
+
+    console.log(
+      "Catálogo cargado para el carrito:",
+      productosCatalogo
+    );
+
+    return true;
+
+  } catch (error) {
+    console.error("Error al cargar el catálogo del carrito:", error);
+    return false;
+  }
+}
+
 function obtenerProductosCatalogo() {
-  return obtenerProductos();
+  return productosCatalogo;
 }
 
 export function inicializarCarrito() {
@@ -38,6 +65,8 @@ export function inicializarCarrito() {
   }
 
   let carrito = obtenerCarrito();
+
+  const cargaCatalogo = cargarProductosCatalogo();
 
   function mostrarMensaje(mensaje) {
     mensajeCarrito.textContent = mensaje;
@@ -292,10 +321,19 @@ export function inicializarCarrito() {
     ).href;
   });
 
-  document.addEventListener("raices:agregar-carrito", (evento) => {
+document.addEventListener("raices:agregar-carrito", async (evento) => {
     const detalle = evento.detail;
 
     if (!detalle || detalle.productoId == null) {
+      return;
+    }
+
+    const catalogoDisponible = await cargaCatalogo;
+
+    if (!catalogoDisponible) {
+      mostrarMensaje(
+        "No fue posible consultar el catálogo. Inténtalo nuevamente."
+      );
       return;
     }
 
@@ -303,7 +341,7 @@ export function inicializarCarrito() {
       detalle.productoId,
       Math.max(1, Math.floor(Number(detalle.cantidad) || 1)),
     );
-  });
+});
 
   document.addEventListener(
     "click",
