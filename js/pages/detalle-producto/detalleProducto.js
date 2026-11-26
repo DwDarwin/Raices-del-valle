@@ -4,6 +4,7 @@ import {
   renderizarProductosRelacionados,
 } from "./detalleProductoVista.js";
 import { vincularInteraccionesDetalle } from "./detalleProductoEventos.js";
+import { API_ENDPOINTS } from "../../services/api.js";
 
 document.addEventListener("DOMContentLoaded", () =>
   inicializarDetalleProducto(document),
@@ -12,9 +13,7 @@ document.addEventListener("DOMContentLoaded", () =>
 export async function inicializarDetalleProducto(documento) {
   try {
     // Consultar los productos desde el backend
-    const respuesta = await fetch(
-      "http://localhost:8080/api/productos"
-    );
+    const respuesta = await fetch(API_ENDPOINTS.productos);
 
     if (!respuesta.ok) {
       throw new Error(

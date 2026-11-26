@@ -1,4 +1,5 @@
 import { formatearMoneda } from "../utils/formato.js";
+import { API_ENDPOINTS } from "../services/api.js";
 
 function normalizarTexto(texto) {
     return String(texto ?? "")
@@ -26,24 +27,7 @@ function adaptarProducto(producto) {
             Number(producto.stock) > 0
     };
 }
-/*
-function adaptarProducto(producto) {
-    return {
-        ...producto,
-        nombre: producto.name,
-        categoria: producto.category,
-        precio: producto.price,
-        presentacion: producto.unit,
-        unidadVenta: producto.unit,
-        inventario: Number(producto.stock) || 0,
-        imagen: producto.image,
-        recomendado: Number(producto.id) || 999,
-        disponible:
-            producto.status === "publicado" &&
-            Number(producto.stock) > 0
-    };
-}
-*/
+
 
 let productos = [];
 
@@ -60,9 +44,7 @@ const emptyMessage = document.getElementById("emptyMessage");
 
 async function cargarProductos() {
     try {
-        const respuesta = await fetch(
-            "http://localhost:8080/api/productos"
-        );
+        const respuesta = await fetch(API_ENDPOINTS.productos);
 
         if (!respuesta.ok) {
             throw new Error(

@@ -12,8 +12,9 @@ import {
 } from "../storage/suscripcionStorage.js";
 import { formatearMoneda } from "../utils/formato.js";
 import { obtenerRutaImagenDesdeRaiz } from "../utils/rutas.js";
+import { API_ENDPOINTS } from "../services/api.js";
 
-const COSTO_ENVIO = 14000;
+const ENVIO_BASE = 14000;
 
 function crearElemento(tag, clase, texto) {
   const elemento = document.createElement(tag);
@@ -24,10 +25,6 @@ function crearElemento(tag, clase, texto) {
   return elemento;
 }
 
-function generarNumeroPedido() {
-  const sufijo = String(Date.now()).slice(-6);
-  return `RDV-${sufijo}`;
-}
 
 function formatearFechaPedido(fecha = new Date()) {
   return new Intl.DateTimeFormat("es-CO", {
@@ -64,10 +61,83 @@ function inicializarCanasta() {
   const codigoDescuento = document.getElementById("codigoDescuento");
   const mensajeDescuento = document.getElementById("mensajeDescuento");
 
+  const modalSesion = document.getElementById("modalSesionRequerida");
+  const botonIrALogin = document.getElementById("irALogin");
+  const botonCerrarModalSesion = document.getElementById("cerrarModalSesion");
+
   if (!lista || !estadoVacio) return;
 
   let carrito = obtenerCarrito();
   let descuentoAplicado = 0;
+
+  function obtenerSesionUsuario() {
+    try {
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+      const token = localStorage.getItem("token");
+
+      if (!usuario || !usuario.id || !token) {
+        return null;
+      }
+
+      return { usuario, token };
+
+    } catch (error) {
+      console.error("Error al recuperar la sesión:", error);
+      return null;
+    }
+  }
+
+
+  async function registrarPedido(usuario, token) {
+    const totales = calcularTotales(carrito, descuentoAplicado);
+
+    const pedido = {
+      idUsuario: usuario.id,
+      descuento: Number(totales.descuento.toFixed(2)),
+      items: carrito.map(item => ({
+        idProducto: Number(item.id),
+        cantidad: Number(item.cantidad)
+      }))
+    };
+
+    try {
+      const respuesta = await fetch(API_ENDPOINTS.pedidos, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(pedido)
+      });
+
+      const textoRespuesta = await respuesta.text();
+
+      let resultado = {};
+
+      try {
+        resultado = textoRespuesta
+          ? JSON.parse(textoRespuesta)
+          : {};
+      } catch {
+        resultado = { message: textoRespuesta };
+      }
+
+      if (!respuesta.ok) {
+        throw new Error(
+          resultado.message ||
+          resultado.error ||
+          `Error al registrar el pedido. Código HTTP: ${respuesta.status}`
+        );
+      }
+
+      return resultado;
+
+    } catch (error) {
+      console.error("Error al registrar el pedido:", error);
+      throw error;
+    }
+  }
+
 
   function calcularTotales(items, porcentajeDescuento) {
     const unidades = items.reduce((suma, item) => suma + item.cantidad, 0);
@@ -75,7 +145,7 @@ function inicializarCanasta() {
       (suma, item) => suma + item.precio * item.cantidad,
       0,
     );
-    const costoEnvio = items.length > 0 ? COSTO_ENVIO : 0;
+    const costoEnvio = items.length > 0 ? ENVIO_BASE : 0;
     const descuento = subtotal * porcentajeDescuento;
     const total = Math.max(0, subtotal - descuento) + costoEnvio;
 
@@ -193,35 +263,41 @@ function inicializarCanasta() {
     });
   }
 
-  function renderizarDetallePedido(itemsPedido, totalesPedido) {
+
+  function renderizarDetallePedido(pedidoResponse) {
     if (ordenNumero) {
-      ordenNumero.textContent = generarNumeroPedido();
+      ordenNumero.textContent = pedidoResponse.codigoPedido;
     }
 
     if (ordenFecha) {
-      ordenFecha.textContent = formatearFechaPedido();
+      ordenFecha.textContent = formatearFechaPedido(
+        new Date(pedidoResponse.fechaPedido)
+      );
     }
 
     if (ordenListaProductos) {
       ordenListaProductos.replaceChildren();
 
-      itemsPedido.forEach((item) => {
+      (pedidoResponse.detalles || []).forEach((detalle) => {
         const li = crearElemento("li", "orden-item");
         const info = crearElemento("div", "orden-item-info");
+
         const nombre = crearElemento(
           "span",
           "orden-item-nombre",
-          item.nombre || "Producto",
+          detalle.nombreProducto || "Producto"
         );
+
         const detalleCantidad = crearElemento(
           "span",
           "orden-item-cantidad",
-          `${item.cantidad} x ${formatearMoneda(item.precio)}${item.unidad ? ` (${item.unidad})` : ""}`,
+          `${detalle.cantidad} x ${formatearMoneda(Number(detalle.precioUnitario))}`
         );
+
         const subtotalItem = crearElemento(
           "span",
           "orden-item-subtotal",
-          formatearMoneda(item.precio * item.cantidad),
+          formatearMoneda(Number(detalle.subtotal))
         );
 
         info.append(nombre, detalleCantidad);
@@ -231,22 +307,32 @@ function inicializarCanasta() {
     }
 
     if (ordenSubtotal) {
-      ordenSubtotal.textContent = formatearMoneda(totalesPedido.subtotal);
+      ordenSubtotal.textContent = formatearMoneda(
+        Number(pedidoResponse.subtotal)
+      );
     }
 
     if (ordenFilaDescuento && ordenDescuento) {
-      ordenFilaDescuento.hidden = totalesPedido.descuento === 0;
-      ordenDescuento.textContent = `-${formatearMoneda(totalesPedido.descuento)}`;
+      ordenFilaDescuento.hidden =
+        Number(pedidoResponse.descuento) === 0;
+
+      ordenDescuento.textContent =
+        `-${formatearMoneda(Number(pedidoResponse.descuento))}`;
     }
 
     if (ordenEnvio) {
-      ordenEnvio.textContent = formatearMoneda(totalesPedido.costoEnvio);
+      ordenEnvio.textContent = formatearMoneda(
+        Number(pedidoResponse.costoEnvio)
+      );
     }
 
     if (ordenTotal) {
-      ordenTotal.textContent = formatearMoneda(totalesPedido.total);
+      ordenTotal.textContent = formatearMoneda(
+        Number(pedidoResponse.total)
+      );
     }
   }
+
 
   function sincronizarDesdeAlmacenamiento() {
     carrito = obtenerCarrito();
@@ -288,34 +374,61 @@ function inicializarCanasta() {
     actualizar();
   });
 
-  botonContinuar.addEventListener("click", () => {
+  botonContinuar.addEventListener("click", async () => {
     if (carrito.length === 0) return;
 
-    const copiaItems = carrito.map((item) => ({ ...item }));
-    const totalesPedido = calcularTotales(copiaItems, descuentoAplicado);
+    const sesion = obtenerSesionUsuario();
 
-    renderizarDetallePedido(copiaItems, totalesPedido);
+    if (!sesion) {
+      if (modalSesion && !modalSesion.open) {
+        modalSesion.showModal();
+      }
 
-    eliminarCarrito();
-    carrito = [];
-    descuentoAplicado = 0;
-
-    if (codigoDescuento) {
-      codigoDescuento.value = "";
-    }
-    if (mensajeDescuento) {
-      mensajeDescuento.hidden = true;
-      mensajeDescuento.textContent = "";
+      return;
     }
 
-    renderizar();
+    botonContinuar.disabled = true;
+    botonContinuar.textContent = "Registrando pedido...";
 
-    if (typeof modal.showModal === "function") {
-      modal.showModal();
-    } else {
-      alert(
-        `¡Compra realizada con éxito! Total pagado: ${formatearMoneda(totalesPedido.total)}`,
+    try {
+      const pedidoResponse = await registrarPedido(
+        sesion.usuario,
+        sesion.token
       );
+
+      renderizarDetallePedido(pedidoResponse);
+
+      eliminarCarrito();
+      carrito = [];
+      descuentoAplicado = 0;
+
+      if (codigoDescuento) {
+        codigoDescuento.value = "";
+      }
+
+      if (mensajeDescuento) {
+        mensajeDescuento.hidden = true;
+        mensajeDescuento.textContent = "";
+      }
+
+      renderizar();
+
+      if (typeof modal.showModal === "function") {
+        modal.showModal();
+      }
+
+    } catch (error) {
+      console.error("Error al finalizar la compra:", error);
+
+      alert(
+        error.message || "No fue posible registrar tu compra. Inténtalo nuevamente."
+      );
+    } finally {
+      botonContinuar.disabled = carrito.length === 0;
+      botonContinuar.innerHTML = `
+            Realizar compra
+            <i class="bx bx-check-shield" aria-hidden="true"></i>
+        `;
     }
   });
 
@@ -327,6 +440,18 @@ function inicializarCanasta() {
     if (evento.target === modal) {
       modal.close();
     }
+  });
+
+  // Cerrar el modal cuando el usuario decide seguir revisando su canasta.
+  botonCerrarModalSesion.addEventListener("click", () => {
+    modalSesion.close();
+  });
+
+  botonIrALogin.addEventListener("click", () => {
+    window.location.href = new URL(
+      "login.html",
+      window.location.href
+    ).href;
   });
 
   botonAplicarDescuento.addEventListener("click", () => {
