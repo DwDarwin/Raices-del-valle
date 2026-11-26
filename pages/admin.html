@@ -18,7 +18,6 @@
 <body>
   <div class="app">
 
-    <!-- Menú lateral -->
     <aside class="sidebar">
       <a class="brand" href="mercado.html" data-ruta="pages/mercado.html">
         <span class="brand__mark">
@@ -30,11 +29,8 @@
 
       <p class="sidebar__label">Administración</p>
       <nav class="nav">
-        <a href="#resumen" data-seccion="resumen">Resumen</a>
-        <a href="admin.html" data-ruta="pages/admin.html" class="is-active">Productos <span class="badge" id="nav-count">0</span></a>
-        <a href="#tabla-productos" data-seccion="pedidos">Pedidos <span class="badge badge--gray">12</span></a>
-        <a href="#tabla-productos" data-seccion="productores">Productores</a>
-        <a href="#tabla-productos" data-seccion="inventario">Inventario</a>
+        <a href="admin.html" data-ruta="pages/admin.html" class="is-active">Inventario <span class="badge" id="nav-count">0</span></a>
+        <a href="#tabla-productos" data-seccion="pedidos">Pedidos <span class="badge badge--gray" id="nav-orders">12</span></a>
       </nav>
 
       <div class="sidebar__bottom">
@@ -46,7 +42,7 @@
 
     <div class="main">
       <header class="topbar">
-        <p>Panel administrativo &rsaquo; <strong>Productos</strong></p>
+        <p>Panel administrativo &rsaquo; <strong>Inventario</strong></p>
         <span class="avatar" id="admin-avatar">AM</span>
       </header>
 
@@ -60,31 +56,6 @@
           <button class="btn btn--primary" id="new-btn" type="button">+ Nuevo producto</button>
         </div>
 
-        <!-- Resumen -->
-        <section class="stats" id="resumen">
-          <article class="stat">
-            <p class="stat__label">Productos totales</p>
-            <p class="stat__value" id="st-total">0</p>
-            <p class="stat__note" id="st-total-note"></p>
-          </article>
-          <article class="stat">
-            <p class="stat__label">Stock bajo</p>
-            <p class="stat__value" id="st-low">0</p>
-            <p class="stat__note">Requieren atención</p>
-          </article>
-          <article class="stat">
-            <p class="stat__label">Agotados</p>
-            <p class="stat__value" id="st-out">0</p>
-            <p class="stat__note">No visibles en tienda</p>
-          </article>
-          <article class="stat">
-            <p class="stat__label">Valor inventario</p>
-            <p class="stat__value" id="st-value">$0</p>
-            <p class="stat__note">Valor aproximado</p>
-          </article>
-        </section>
-
-        <!-- Tabla -->
         <section class="panel" id="tabla-productos">
           <div class="panel__head">
             <h2>Todos los productos</h2>
@@ -122,7 +93,6 @@
     </div>
   </div>
 
-  <!-- Formulario para crear o editar -->
   <dialog class="modal" id="modal">
     <form id="product-form" novalidate>
       <div class="modal__head">
