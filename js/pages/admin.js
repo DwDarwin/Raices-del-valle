@@ -1,11 +1,13 @@
 import {
+  apiRequest,
+  API_ENDPOINTS,
+} from "../services/api.js";
+
+import {
   CATEGORIAS,
   ESTADOS,
 } from "../data/productosMock.js";
-import {
-  guardarProductos,
-  obtenerProductos,
-} from "../storage/productoStorage.js";
+
 import {
   cerrarSesion,
   obtenerSesionActiva,
@@ -25,18 +27,13 @@ var filtroEstado = "";
 var idEditando = null;
 var imagenActual = "";
 
+var productos = [];
+
+
 function el(id) { return document.getElementById(id); }
 
 const STOCK_BAJO = 10;
 
-function obtenerSiguienteId(productos) {
-  const mayorId = productos.reduce(
-    (mayor, producto) => Math.max(mayor, Number.parseInt(producto.id, 10) || 0),
-    0,
-  );
-
-  return String(mayorId + 1).padStart(4, "0");
-}
 
 function obtenerEstadoReal(producto) {
   if (producto.status === "borrador") return "borrador";
@@ -66,7 +63,7 @@ function actualizarContadorPedidos(cantidad) {
 }
 
 function pintar() {
-  var todos = obtenerProductos();
+  var todos = productos;
 
   var lista = todos.filter(function (p) {
     if (filtroCategoria && p.category !== filtroCategoria) return false;
@@ -84,6 +81,51 @@ function pintar() {
   el("nav-count").textContent = todos.length;
 }
 
+async function cargarProductos() {
+  try {
+    const respuesta = await apiRequest(API_ENDPOINTS.productos);
+
+    console.log("Respuesta recibida del backend:", respuesta);
+
+    if (!Array.isArray(respuesta)) {
+      throw new Error(
+        "La respuesta del backend no es una lista de productos."
+      );
+    }
+
+    productos = respuesta.map(function (producto) {
+      return {
+        id: String(producto.id),
+        name: producto.nombre,
+        category: producto.categoria,
+        producer: producto.productor,
+        price: Number(producto.precio),
+        unit: producto.unidadVenta,
+        stock: Number(producto.stock) || 0,
+        status: String(producto.estado || "")
+          .trim()
+          .toLowerCase(),
+        description: producto.descripcion || "",
+        image: producto.imagen || "",
+        activo: producto.activo
+      };
+    });
+
+    console.log("Productos adaptados:", productos);
+
+    pintar();
+
+  } catch (error) {
+    console.error("Error al cargar el inventario:", error);
+
+    el("rows").innerHTML =
+      `<tr><td colspan="6" class="empty">${error.message}</td></tr>`;
+
+    el("results").textContent = "No se pudo consultar el inventario";
+    el("nav-count").textContent = "0";
+  }
+}
+
 function fila(p) {
   var estado = obtenerEstadoReal(p);
   var stock = Number(p.stock) || 0;
@@ -97,20 +139,20 @@ function fila(p) {
 
   return '' +
     '<tr data-id="' + p.id + '">' +
-      '<td>' +
-        '<div class="cell-product">' +
-          '<div class="thumb">' + foto + '</div>' +
-          '<div><strong>' + limpiarTexto(p.name) + '</strong><small>' + limpiarTexto(p.producer) + '</small><small>#' + p.id + '</small></div>' +
-        '</div>' +
-      '</td>' +
-      '<td>' + limpiarTexto(CATEGORIAS[p.category] || p.category) + '</td>' +
-      '<td><strong>' + formatearMoneda(p.price) + '</strong><small>por ' + limpiarTexto(p.unit) + '</small></td>' +
-      '<td class="' + claseStock + '"><strong>' + stock + ' und.</strong><small>' + nota + '</small></td>' +
-      '<td><span class="pill pill--' + estado + '">' + ESTADOS[estado] + '</span></td>' +
-      '<td class="actions">' +
-        '<button type="button" data-accion="editar">Editar</button>' +
-        '<button type="button" data-accion="eliminar" class="danger">Eliminar</button>' +
-      '</td>' +
+    '<td>' +
+    '<div class="cell-product">' +
+    '<div class="thumb">' + foto + '</div>' +
+    '<div><strong>' + limpiarTexto(p.name) + '</strong><small>' + limpiarTexto(p.producer) + '</small><small>#' + p.id + '</small></div>' +
+    '</div>' +
+    '</td>' +
+    '<td>' + limpiarTexto(CATEGORIAS[p.category] || p.category) + '</td>' +
+    '<td><strong>' + formatearMoneda(p.price) + '</strong><small>por ' + limpiarTexto(p.unit) + '</small></td>' +
+    '<td class="' + claseStock + '"><strong>' + stock + ' und.</strong><small>' + nota + '</small></td>' +
+    '<td><span class="pill pill--' + estado + '">' + ESTADOS[estado] + '</span></td>' +
+    '<td class="actions">' +
+    '<button type="button" data-accion="editar">Editar</button>' +
+    '<button type="button" data-accion="eliminar" class="danger">Eliminar</button>' +
+    '</td>' +
     '</tr>';
 }
 
@@ -159,46 +201,66 @@ function cerrarFormulario() {
   el("modal").close();
 }
 
-el("product-form").addEventListener("submit", function (e) {
+
+el("product-form").addEventListener("submit", async function (e) {
   e.preventDefault();
   limpiarErrores();
 
-  var datos = {
-    name: el("f-name").value.trim(),
-    category: el("f-category").value,
-    producer: el("f-producer").value.trim(),
-    price: Number(el("f-price").value),
-    unit: el("f-unit").value.trim() || "unidad",
+  const datos = {
+    nombre: el("f-name").value.trim(),
+    categoria: el("f-category").value,
+    productor: el("f-producer").value.trim(),
+    precio: Number(el("f-price").value),
+    unidadVenta: el("f-unit").value.trim() || "unidad",
     stock: Number(el("f-stock").value),
-    status: el("f-status-form").value,
-    description: el("f-desc").value.trim(),
-    image: imagenActual
+    estado: el("f-status-form").value,
+    descripcion: el("f-desc").value.trim(),
+    imagen: imagenActual
   };
 
-  var hayError = false;
-  if (datos.name === "") { el("err-name").textContent = "Escribe el nombre del producto."; hayError = true; }
-  if (datos.producer === "") { el("err-producer").textContent = "Escribe el nombre del productor."; hayError = true; }
-  if (isNaN(datos.price) || datos.price < 0) { el("err-price").textContent = "Ingresa un precio válido."; hayError = true; }
-  if (isNaN(datos.stock) || datos.stock < 0 || datos.stock % 1 !== 0) { el("err-stock").textContent = "Ingresa un número entero."; hayError = true; }
+  let hayError = false;
+
+  if (datos.nombre === "") {
+    el("err-name").textContent = "Escribe el nombre del producto.";
+    hayError = true;
+  }
+
+  if (datos.productor === "") {
+    el("err-producer").textContent = "Escribe el nombre del productor.";
+    hayError = true;
+  }
+
+  if (isNaN(datos.precio) || datos.precio < 0) {
+    el("err-price").textContent = "Ingresa un precio válido.";
+    hayError = true;
+  }
+
+  if (isNaN(datos.stock) || datos.stock < 0 || datos.stock % 1 !== 0) {
+    el("err-stock").textContent = "Ingresa un número entero.";
+    hayError = true;
+  }
+
   if (hayError) return;
 
-  var lista = obtenerProductos();
-  if (idEditando) {
-    lista = lista.map(function (p) {
-      return p.id === idEditando ? Object.assign({}, p, datos) : p;
+  try {
+    const url = idEditando
+      ? `${API_ENDPOINTS.productos}/${idEditando}`
+      : API_ENDPOINTS.productos;
+
+    await apiRequest(url, {
+      method: idEditando ? "PUT" : "POST",
+      body: JSON.stringify(datos)
     });
-  } else {
-    datos.id = obtenerSiguienteId(lista);
-    lista.push(datos);
-  }
 
-  if (!guardarProductos(lista)) {
-    el("err-form").textContent = "No se pudo guardar: el navegador está lleno. Prueba con una imagen más pequeña.";
-    return;
-  }
+    cerrarFormulario();
 
-  cerrarFormulario();
-  pintar();
+    await cargarProductos();
+
+  } catch (error) {
+    console.error("Error al registrar producto:", error);
+    el("err-form").textContent =
+      error.message || "No fue posible guardar el producto.";
+  }
 });
 
 el("photo-input").addEventListener("change", function () {
@@ -243,23 +305,42 @@ el("q").addEventListener("input", function () { busqueda = el("q").value; pintar
 el("f-cat").addEventListener("change", function () { filtroCategoria = el("f-cat").value; pintar(); });
 el("f-status").addEventListener("change", function () { filtroEstado = el("f-status").value; pintar(); });
 
-el("rows").addEventListener("click", function (e) {
+el("rows").addEventListener("click", async function (e) {
   var boton = e.target.closest("button[data-accion]");
   if (!boton) return;
 
   var id = boton.closest("tr").dataset.id;
-  var lista = obtenerProductos();
-  var producto = lista.find(function (p) { return p.id === id; });
+
+  // Buscar el producto en los datos cargados desde el backend.
+  var producto = productos.find(function (p) {
+    return String(p.id) === String(id);
+  });
+
   if (!producto) return;
 
+  // EDITAR PRODUCTO
   if (boton.dataset.accion === "editar") {
     abrirFormulario(producto);
+    return;
   }
 
+  // ELIMINAR PRODUCTO
   if (boton.dataset.accion === "eliminar") {
-    if (confirm('¿Eliminar "' + producto.name + '"? Dejará de aparecer en el mercado.')) {
-      guardarProductos(lista.filter(function (p) { return p.id !== id; }));
-      pintar();
+
+    if (!confirm('¿Eliminar "' + producto.name + '"? Dejará de aparecer en el mercado.')) {
+      return;
+    }
+
+    try {
+      await apiRequest(`${API_ENDPOINTS.productos}/${id}`, {
+        method: "DELETE"
+      });
+
+      await cargarProductos();
+
+    } catch (error) {
+      console.error("Error al eliminar producto:", error);
+      alert(error.message || "No fue posible eliminar el producto.");
     }
   }
 });
@@ -299,4 +380,4 @@ configurarRutasNavegacion(document);
 inicializarSesionAdmin();
 llenarSelects();
 actualizarContadorPedidos(12);
-pintar();
+cargarProductos();
