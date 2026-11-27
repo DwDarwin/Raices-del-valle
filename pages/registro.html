@@ -70,6 +70,20 @@
                         </div>
                     </div>
 
+
+                    <div class="input-group">
+                        <label for="documento">Documento de identidad</label>
+                        <div class="input-wrapper" style="position: relative; margin-bottom: 25px;">
+                            <input id="documento" type="text" placeholder="Número de documento" minlength="8"
+                                maxlength="45" required>
+                            <span id="errorDocumento" class="error-msg"
+                                style="display: none; color: #d32f2f; font-size: 11px; position: absolute; bottom: -20px; left: 0;">
+                                Por favor, ingresa tu documento de identidad.
+                            </span>
+                        </div>
+                    </div>
+
+
                     <div class="input-group">
                         <label for="email">Correo electrónico</label>
                         <div class="input-wrapper" style="position: relative; margin-bottom: 25px;">
@@ -126,7 +140,7 @@
         </section>
 
     </main>
-    
+
     <script type="module" src="../js/pages/registro.js"></script>
 </body>
 

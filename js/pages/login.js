@@ -1,5 +1,7 @@
-import { buscarUsuario } from "../storage/usuariosStorage.js";
-import { guardarSesionActiva } from "../storage/sesionStorage.js";
+
+import { apiRequest, API_ENDPOINTS } from "../services/api.js";
+import { guardarSesion } from "../services/auth.js";
+
 import {
     configurarRutasNavegacion,
     obtenerRutaProyecto,
@@ -7,17 +9,17 @@ import {
 
 configurarRutasNavegacion(document);
 
-const formLogin = document.getElementById('loginForm');
+const formLogin = document.getElementById("loginForm");
 
 if (formLogin) {
-    formLogin.addEventListener('submit', function(evento) {
+    formLogin.addEventListener("submit", async function (evento) {
         evento.preventDefault();
 
-        const valEmail = document.getElementById('email').value.trim();
-        const valPassword = document.getElementById('Contrasena').value.trim();
-        
-        const errorEmail = document.getElementById('errorEmail');
-        const errorPassword = document.getElementById('errorPassword');
+        const valEmail = document.getElementById("email").value.trim();
+        const valPassword = document.getElementById("Contrasena").value.trim();
+
+        const errorEmail = document.getElementById("errorEmail");
+        const errorPassword = document.getElementById("errorPassword");
 
         let formularioValido = true;
 
@@ -35,31 +37,44 @@ if (formLogin) {
             errorPassword.style.display = "none";
         }
 
-        if (!formularioValido) {
-            return;
-        }
+        if (!formularioValido) return;
 
-        const usuarioValido = buscarUsuario(valEmail, valPassword);
+        try {
+            const respuesta = await apiRequest(API_ENDPOINTS.login, {
+                method: "POST",
+                body: JSON.stringify({
+                    correo: valEmail,
+                    contrasena: valPassword
+                })
+            });
 
-        if (usuarioValido) {
-            guardarSesionActiva(usuarioValido);
+            guardarSesion(respuesta.token, respuesta.usuario);
+
             alert("¡Inicio de sesión exitoso!");
-            window.location.href = obtenerRutaProyecto().href;
-        } else {
-            alert("Usuario o contraseña inválidos. Por favor, verifica tus datos.");
+
+            const destino = new URLSearchParams(window.location.search).get("redirect");
+
+            if (destino === "canasta.html") {
+                window.location.href = new URL(
+                    "canasta.html",
+                    window.location.href
+                ).href;
+            } else {
+                window.location.href = obtenerRutaProyecto().href;
+            }
+
+        } catch (error) {
+            alert(error.message);
         }
     });
 }
 
-const btnOjo = document.getElementById('ojo');
-const inputPassword = document.getElementById('Contrasena');
+const btnOjo = document.getElementById("ojo");
+const inputPassword = document.getElementById("Contrasena");
 
 if (btnOjo && inputPassword) {
-    btnOjo.addEventListener('click', function() {
-        if (inputPassword.type === 'password') {
-            inputPassword.type = 'text';
-        } else {
-            inputPassword.type = 'password';
-        }
+    btnOjo.addEventListener("click", function () {
+        inputPassword.type =
+            inputPassword.type === "password" ? "text" : "password";
     });
 }
