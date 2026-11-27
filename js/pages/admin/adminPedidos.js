@@ -1,4 +1,7 @@
-import { API_ENDPOINTS } from "../../services/api.js";
+import {
+  apiRequest,
+  API_ENDPOINTS,
+} from "../../services/api.js";
 import { obtenerTokenSesion } from "../../storage/sesionStorage.js";
 import {
   formatearFecha,
@@ -26,15 +29,9 @@ let filtroEstadoPedidos = "";
 let filtroDescuentoPedidos = "";
 let idPedidoActivoEnModal = null;
 
-function construirHeadersApi() {
-  const headers = { "Content-Type": "application/json" };
+function construirHeadersAuth() {
   const token = obtenerTokenSesion();
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return headers;
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 function adaptarEstadoPedido(estadoRaw) {
@@ -155,18 +152,13 @@ function adaptarPedidoBackend(pedido, indice = 0) {
  * }]
  */
 async function consultarPedidosApi() {
-  const respuesta = await fetch(API_ENDPOINTS.pedidos, {
+  const datos = await apiRequest(API_ENDPOINTS.pedidos, {
     method: "GET",
-    headers: construirHeadersApi(),
+    headers: construirHeadersAuth(),
   });
 
-  if (!respuesta.ok) {
-    throw new Error(`Error al consultar pedidos: HTTP ${respuesta.status}`);
-  }
-
-  const datos = await respuesta.json();
   if (!Array.isArray(datos)) {
-    throw new Error("El formato de pedidos recibido no es una lista");
+    throw new Error("La respuesta del backend no es una lista de pedidos.");
   }
 
   return datos.map(adaptarPedidoBackend);
@@ -177,19 +169,11 @@ async function consultarPedidosApi() {
  * Envía: { estado: "pendiente" | "preparacion" | "enviado" | "entregado" | "cancelado" }
  */
 async function actualizarEstadoPedidoApi(idPedido, nuevoEstado) {
-  const respuesta = await fetch(`${API_ENDPOINTS.pedidos}/${idPedido}/estado`, {
+  return apiRequest(`${API_ENDPOINTS.pedidos}/${idPedido}/estado`, {
     method: "PATCH",
-    headers: construirHeadersApi(),
+    headers: construirHeadersAuth(),
     body: JSON.stringify({ estado: nuevoEstado }),
   });
-
-  if (!respuesta.ok) {
-    throw new Error(
-      `Error al actualizar estado del pedido: HTTP ${respuesta.status}`,
-    );
-  }
-
-  return true;
 }
 
 /* ---------- Carga y Gestión de Estado ---------- */

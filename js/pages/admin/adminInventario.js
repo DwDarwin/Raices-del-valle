@@ -1,4 +1,7 @@
-import { API_ENDPOINTS } from "../../services/api.js";
+import {
+  apiRequest,
+  API_ENDPOINTS,
+} from "../../services/api.js";
 import { obtenerTokenSesion } from "../../storage/sesionStorage.js";
 import { formatearMoneda } from "../../utils/formato.js";
 import { obtenerRutaImagenDesdeRaiz } from "../../utils/rutas.js";
@@ -33,20 +36,14 @@ let filtroEstado = "";
 let idProductoEditando = null;
 let imagenActual = "";
 
-function construirHeadersApi() {
-  const headers = { "Content-Type": "application/json" };
+function construirHeadersAuth() {
   const token = obtenerTokenSesion();
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return headers;
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 function adaptarProductoBackend(producto) {
   return {
-    id: producto.id,
+    id: String(producto.id),
     nombre: producto.nombre || "",
     descripcion: producto.descripcion || "",
     categoria: String(producto.categoria || "tuberculos").toLowerCase(),
@@ -54,8 +51,11 @@ function adaptarProductoBackend(producto) {
     precio: Number(producto.precio) || 0,
     unidadVenta: producto.unidadVenta || "unidad",
     stock: Number(producto.stock) || 0,
-    estado: String(producto.estado || "publicado").toLowerCase(),
+    estado: String(producto.estado || "publicado")
+      .trim()
+      .toLowerCase(),
     imagen: producto.imagen || "",
+    activo: producto.activo,
   };
 }
 
@@ -67,18 +67,13 @@ function adaptarProductoBackend(producto) {
  * [{ id, nombre, descripcion, categoria, productor, precio, unidadVenta, stock, estado, imagen }]
  */
 async function consultarProductosApi() {
-  const respuesta = await fetch(API_ENDPOINTS.productos, {
+  const datos = await apiRequest(API_ENDPOINTS.productos, {
     method: "GET",
-    headers: construirHeadersApi(),
+    headers: construirHeadersAuth(),
   });
 
-  if (!respuesta.ok) {
-    throw new Error(`Error al consultar productos: HTTP ${respuesta.status}`);
-  }
-
-  const datos = await respuesta.json();
   if (!Array.isArray(datos)) {
-    throw new Error("El formato de productos recibido no es una lista");
+    throw new Error("La respuesta del backend no es una lista de productos.");
   }
 
   return datos.map(adaptarProductoBackend);
@@ -90,54 +85,34 @@ async function consultarProductosApi() {
  * { nombre, descripcion, categoria, productor, precio, unidadVenta, stock, estado, imagen }
  */
 async function crearProductoApi(productoDTO) {
-  const respuesta = await fetch(API_ENDPOINTS.productos, {
+  return apiRequest(API_ENDPOINTS.productos, {
     method: "POST",
-    headers: construirHeadersApi(),
+    headers: construirHeadersAuth(),
     body: JSON.stringify(productoDTO),
   });
-
-  if (!respuesta.ok) {
-    throw new Error(`Error al crear producto: HTTP ${respuesta.status}`);
-  }
-
-  const creado = await respuesta.json();
-  return adaptarProductoBackend(creado);
 }
 
 /**
  * PUT /api/productos/{id}
  * Envía ProductoDTO en español:
- * { id, nombre, descripcion, categoria, productor, precio, unidadVenta, stock, estado, imagen }
+ * { nombre, descripcion, categoria, productor, precio, unidadVenta, stock, estado, imagen }
  */
 async function actualizarProductoApi(id, productoDTO) {
-  const respuesta = await fetch(`${API_ENDPOINTS.productos}/${id}`, {
+  return apiRequest(`${API_ENDPOINTS.productos}/${id}`, {
     method: "PUT",
-    headers: construirHeadersApi(),
-    body: JSON.stringify({ id, ...productoDTO }),
+    headers: construirHeadersAuth(),
+    body: JSON.stringify(productoDTO),
   });
-
-  if (!respuesta.ok) {
-    throw new Error(`Error al actualizar producto: HTTP ${respuesta.status}`);
-  }
-
-  const actualizado = await respuesta.json();
-  return adaptarProductoBackend(actualizado);
 }
 
 /**
  * DELETE /api/productos/{id}
  */
 async function eliminarProductoApi(id) {
-  const respuesta = await fetch(`${API_ENDPOINTS.productos}/${id}`, {
+  return apiRequest(`${API_ENDPOINTS.productos}/${id}`, {
     method: "DELETE",
-    headers: construirHeadersApi(),
+    headers: construirHeadersAuth(),
   });
-
-  if (!respuesta.ok) {
-    throw new Error(`Error al eliminar producto: HTTP ${respuesta.status}`);
-  }
-
-  return true;
 }
 
 /* ---------- Carga y Estado de Inventario ---------- */
@@ -168,14 +143,15 @@ export async function cargarProductosInventario() {
     listaProductos = await consultarProductosApi();
     renderizarInventario();
   } catch (error) {
-    console.error("Error al cargar productos desde el backend:", error);
+    console.error("Error al cargar el inventario:", error);
     listaProductos = [];
     if (el("nav-count")) el("nav-count").textContent = "0";
     if (el("results")) {
-      el("results").textContent = "No se pudo conectar con el servidor";
+      el("results").textContent = "No se pudo consultar el inventario";
     }
     renderizarMensajeTablaProductos(
-      "No fue posible cargar los productos desde el servidor.",
+      error.message ||
+        "No fue posible cargar los productos desde el servidor.",
     );
   }
 }
@@ -471,24 +447,17 @@ async function guardarProductoDesdeFormulario(evento) {
 
   try {
     if (idProductoEditando !== null) {
-      const actualizado = await actualizarProductoApi(
-        idProductoEditando,
-        productoDTO,
-      );
-      listaProductos = listaProductos.map((item) =>
-        String(item.id) === String(idProductoEditando) ? actualizado : item,
-      );
+      await actualizarProductoApi(idProductoEditando, productoDTO);
     } else {
-      const creado = await crearProductoApi(productoDTO);
-      listaProductos.push(creado);
+      await crearProductoApi(productoDTO);
     }
 
     cerrarFormularioProducto();
-    renderizarInventario();
+    await cargarProductosInventario();
   } catch (error) {
-    console.error("Error al guardar el producto en el backend:", error);
+    console.error("Error al registrar producto:", error);
     el("err-formulario").textContent =
-      "No fue posible guardar el producto en el servidor.";
+      error.message || "No fue posible guardar el producto.";
   } finally {
     if (botonGuardar) botonGuardar.disabled = false;
   }
@@ -506,6 +475,7 @@ async function manejarAccionFilaProducto(evento) {
 
   if (boton.dataset.accion === "editar") {
     abrirFormularioProducto(producto);
+    return;
   }
 
   if (boton.dataset.accion === "eliminar") {
@@ -519,13 +489,10 @@ async function manejarAccionFilaProducto(evento) {
 
     try {
       await eliminarProductoApi(producto.id);
-      listaProductos = listaProductos.filter(
-        (item) => String(item.id) !== String(id),
-      );
-      renderizarInventario();
+      await cargarProductosInventario();
     } catch (error) {
-      console.error("Error al eliminar el producto en el backend:", error);
-      alert("No fue posible eliminar el producto en el servidor.");
+      console.error("Error al eliminar producto:", error);
+      alert(error.message || "No fue posible eliminar el producto.");
     }
   }
 }
