@@ -1,0 +1,43 @@
+
+<dialog
+    id="modalNotificacion"
+    class="modal-facturacion modal-notificacion"
+    aria-labelledby="notificacionTitulo"
+>
+    <div class="modal-facturacion-contenido">
+
+        <span id="notificacionIcono" class="modal-icono">
+            <i class="bx bx-check" aria-hidden="true"></i>
+        </span>
+
+        <span id="notificacionEtiqueta" class="orden-etiqueta">
+            NOTIFICACIÓN
+        </span>
+
+        <h2 id="notificacionTitulo">Operación exitosa</h2>
+
+        <p id="notificacionMensaje" class="modal-descripcion">
+            La operación se realizó correctamente.
+        </p>
+
+        <div class="notificacion-acciones">
+            <button
+                id="notificacionAceptar"
+                class="btn btn-primary canasta-boton"
+                type="button"
+            >
+                Aceptar
+            </button>
+
+            <button
+                id="notificacionCancelar"
+                class="modal-sesion-cancelar"
+                type="button"
+                hidden
+            >
+                Cancelar
+            </button>
+        </div>
+
+    </div>
+</dialog>
