@@ -2,7 +2,7 @@ import {
   apiRequest,
   API_ENDPOINTS,
 } from "../../services/api.js";
-import { obtenerTokenSesion } from "../../storage/sesionStorage.js";
+import { obtenerToken } from "../../services/auth.js";
 import {
   formatearFecha,
   formatearMoneda,
@@ -30,7 +30,7 @@ let filtroDescuentoPedidos = "";
 let idPedidoActivoEnModal = null;
 
 function construirHeadersAuth() {
-  const token = obtenerTokenSesion();
+  const token = obtenerToken();
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
@@ -245,6 +245,11 @@ async function cambiarEstadoDePedido(idPedido, nuevoEstado) {
       "Error al actualizar el estado del pedido en el backend:",
       error,
     );
+
+    alert("No fue posible actualizar el estado del pedido.");
+
+    await cargarPedidos();
+    return;
   }
 
   listaPedidos = listaPedidos.map((pedido) =>
@@ -252,6 +257,7 @@ async function cambiarEstadoDePedido(idPedido, nuevoEstado) {
       ? { ...pedido, estado: nuevoEstado }
       : pedido,
   );
+
   renderizarVistaPedidos();
 
   if (

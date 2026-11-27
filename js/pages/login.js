@@ -50,8 +50,21 @@ if (formLogin) {
 
             guardarSesion(respuesta.token, respuesta.usuario);
 
+            const usuario = respuesta.usuario;
+
             alert("¡Inicio de sesión exitoso!");
 
+            // Si es administrador, ir directamente al dashboard
+            if (usuario.rol === "ADMIN") {
+                window.location.href = new URL(
+                    "pages/admin.html",
+                    obtenerRutaProyecto()
+                ).href;
+
+                return;
+            }
+
+            // Si es cliente y viene desde la canasta, regresar a ella
             const destino = new URLSearchParams(window.location.search).get("redirect");
 
             if (destino === "canasta.html") {

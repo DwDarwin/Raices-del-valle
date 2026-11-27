@@ -1,7 +1,7 @@
 import {
   cerrarSesion,
-  obtenerSesionActiva,
-} from "../../storage/sesionStorage.js";
+  obtenerUsuario,
+} from "../../services/auth.js";
 import { obtenerRutaProyecto } from "../../utils/rutas.js";
 import { el } from "./adminDomUtils.js";
 
@@ -71,29 +71,59 @@ export function inicializarNavegacionAdmin() {
 }
 
 export function inicializarSesionAdmin() {
-  const usuario = obtenerSesionActiva();
-  const nombreCompleto = usuario && (usuario.nombreCompleto || usuario.nombre);
+  const usuario = obtenerUsuario();
+
+  
+  if (!usuario) {
+    window.location.href = new URL(
+      "pages/login.html",
+      obtenerRutaProyecto(),
+    ).href;
+
+    return false;
+  }
+
+  // Existe una sesión, pero no pertenece a un administrador.
+  if (usuario.rol !== "ADMIN") {
+    alert("No tienes permisos para acceder a esta página.");
+
+    window.location.href = obtenerRutaProyecto().href;
+
+    return false;
+  }
+
+  // información del administrador
+  const nombreCompleto = usuario.nombreCompleto || usuario.nombre;
 
   if (nombreCompleto) {
     const nombreEl = el("admin-user-name");
     const avatarEl = el("admin-avatar");
-    if (nombreEl) nombreEl.textContent = nombreCompleto;
+
+    if (nombreEl) {
+      nombreEl.textContent = nombreCompleto;
+    }
 
     if (avatarEl) {
       const partes = nombreCompleto.trim().split(/\s+/);
+
       const iniciales =
         (partes[0] ? partes[0].charAt(0) : "A") +
         (partes[1] ? partes[1].charAt(0) : "");
+
       avatarEl.textContent = iniciales.toUpperCase();
     }
   }
 
+ 
   const botonSalir = el("logout-btn");
+
   if (botonSalir) {
     botonSalir.addEventListener("click", (evento) => {
       evento.preventDefault();
+
       if (confirm("¿Deseas cerrar sesión?")) {
         cerrarSesion();
+
         window.location.href = new URL(
           "pages/login.html",
           obtenerRutaProyecto(),
@@ -101,4 +131,6 @@ export function inicializarSesionAdmin() {
       }
     });
   }
+
+  return true;
 }
