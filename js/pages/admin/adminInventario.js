@@ -11,6 +11,28 @@ import {
   limpiarTexto,
   simplificar,
 } from "./adminDomUtils.js";
+import { mostrarNotificacion } from "../../services/notificaciones.js";
+
+async function cargarModalNotificaciones() {
+  const contenedor = document.getElementById("notificaciones-container");
+
+  if (!contenedor) {
+    throw new Error("No existe el contenedor de notificaciones.");
+  }
+
+  if (document.getElementById("modalNotificacion")) {
+    return;
+  }
+
+  const url = new URL("../../../pages/notificaciones.html", import.meta.url);
+  const respuesta = await fetch(url);
+
+  if (!respuesta.ok) {
+    throw new Error("No fue posible cargar el modal de notificaciones.");
+  }
+
+  contenedor.innerHTML = await respuesta.text();
+}
 
 export const CATEGORIAS_PRODUCTO = {
   tuberculos: "Tubérculos",
@@ -151,7 +173,7 @@ export async function cargarProductosInventario() {
     }
     renderizarMensajeTablaProductos(
       error.message ||
-        "No fue posible cargar los productos desde el servidor.",
+      "No fue posible cargar los productos desde el servidor.",
     );
   }
 }
@@ -446,14 +468,26 @@ async function guardarProductoDesdeFormulario(evento) {
   if (botonGuardar) botonGuardar.disabled = true;
 
   try {
-    if (idProductoEditando !== null) {
-      await actualizarProductoApi(idProductoEditando, productoDTO);
-    } else {
+    const esNuevoProducto = idProductoEditando === null;
+
+    if (esNuevoProducto) {
       await crearProductoApi(productoDTO);
+    } else {
+      await actualizarProductoApi(idProductoEditando, productoDTO);
     }
 
     cerrarFormularioProducto();
     await cargarProductosInventario();
+
+    if (esNuevoProducto) {
+      await cargarModalNotificaciones();
+
+      await mostrarNotificacion({
+        tipo: "exito",
+        titulo: "¡Producto creado exitosamente!",
+        mensaje: "El producto ya está disponible en tu inventario."
+      });
+    }
   } catch (error) {
     console.error("Error al registrar producto:", error);
     el("err-formulario").textContent =

@@ -1,0 +1,204 @@
+/* Modal general de notificaciones — Estilo tarjeta de confirmación */
+
+.modal-notificacion {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(92vw, 440px);
+    max-width: 440px;
+    max-height: fit-content;
+    padding: 0;
+    border: none;
+    background: transparent;
+    overflow: visible;
+    box-sizing: border-box;
+    color: #1F2924;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Fondo con desenfoque */
+.modal-notificacion::backdrop {
+    background: rgba(18, 24, 21, 0.72);
+    backdrop-filter: blur(4px);
+}
+
+/* Contenedor principal tipo tarjeta */
+.modal-notificacion .modal-facturacion-contenido {
+    background-color: #FDF6E8;
+    color: #1F2924;
+    padding: 32px 28px 28px;
+    border-radius: 2px;
+    border: 1px solid rgba(180, 130, 80, 0.16);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    box-sizing: border-box;
+}
+
+/* Icono circular superior */
+.modal-notificacion .modal-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 50%;
+    margin: 0 auto 14px;
+    flex-shrink: 0;
+    font-size: 1.35rem;
+}
+
+/* Tipos de notificación */
+.modal-notificacion .modal-icono:has(.bx-check) {
+    background: rgba(22, 163, 74, 0.16);
+    color: #15803D;
+}
+
+.modal-notificacion .modal-icono:has(.bx-x) {
+    background: rgba(220, 38, 38, 0.14);
+    color: #B91C1C;
+}
+
+.modal-notificacion .modal-icono:has(.bx-error-circle) {
+    background: rgba(217, 119, 6, 0.16);
+    color: #B45309;
+}
+
+.modal-notificacion .modal-icono:has(.bx-info-circle),
+.modal-notificacion .modal-icono:has(.bx-help-circle) {
+    background: rgba(37, 99, 235, 0.14);
+    color: #1D4ED8;
+}
+
+/* Etiqueta superior  */
+.modal-notificacion .orden-etiqueta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #C86D3B;
+    margin-bottom: 6px;
+}
+
+
+.modal-notificacion h2 {
+    width: 100%;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #18201C;
+    margin: 0 0 8px;
+}
+
+.modal-notificacion .modal-descripcion {
+    width: 100%;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #525B56;
+    margin: 0 0 20px;
+}
+
+.modal-notificacion .notificacion-detalle,
+.modal-notificacion .modal-resumen {
+    border-top: 1px solid #EAE0CE;
+    border-bottom: 1px solid #EAE0CE;
+    padding: 16px 0;
+    margin: 16px 0 22px;
+    font-size: 0.85rem;
+}
+
+.modal-notificacion .notificacion-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 0;
+}
+
+.modal-notificacion .notificacion-etiqueta-dato {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6B726E;
+}
+
+.modal-notificacion .notificacion-valor-dato {
+    font-weight: 700;
+    color: #18201C;
+    text-align: right;
+}
+
+/* Acciones y botones rectangulares  */
+.notificacion-acciones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 18px;
+}
+
+.notificacion-acciones button {
+    min-width: 115px;
+    padding: 12px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+}
+
+.notificacion-acciones [hidden] {
+    display: none;
+}
+
+/* Botón principal rectangular */
+.modal-notificacion .notificacion-acciones .canasta-boton {
+    flex: 1;
+    border-radius: 0;
+    border: none;
+    background-color: #E39E2B;
+    color: #18201C;
+}
+
+.modal-notificacion .notificacion-acciones .canasta-boton:hover {
+    background-color: #D28E1E;
+}
+
+.modal-notificacion .notificacion-acciones .canasta-boton:active {
+    transform: translateY(1px);
+}
+
+/* Botón secundario */
+.modal-notificacion .notificacion-acciones button:not(.canasta-boton) {
+    border-radius: 0;
+    background-color: transparent;
+    color: #37413C;
+    border: 1px solid #D8CCB8;
+}
+
+.modal-notificacion .notificacion-acciones button:not(.canasta-boton):hover {
+    background-color: #F4E9D4;
+}
+
+
+@media (max-width: 480px) {
+    .modal-notificacion .modal-facturacion-contenido {
+        padding: 26px 20px 22px;
+    }
+
+    .notificacion-acciones {
+        flex-direction: column;
+    }
+
+    .notificacion-acciones button {
+        width: 100%;
+    }
+}

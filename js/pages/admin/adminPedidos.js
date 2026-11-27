@@ -16,7 +16,7 @@ import {
 export const ESTADOS_PEDIDO = {
   pendiente: "Pendiente",
   preparacion: "En preparación",
-  enviado: "En camino",
+  enviado: "Enviado",
   entregado: "Entregado",
   cancelado: "Cancelado",
 };
@@ -171,7 +171,10 @@ async function consultarPedidosApi() {
 async function actualizarEstadoPedidoApi(idPedido, nuevoEstado) {
   return apiRequest(`${API_ENDPOINTS.pedidos}/${idPedido}/estado`, {
     method: "PATCH",
-    headers: construirHeadersAuth(),
+    headers: {
+      ...construirHeadersAuth(),
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ estado: nuevoEstado }),
   });
 }
@@ -241,16 +244,16 @@ async function cambiarEstadoDePedido(idPedido, nuevoEstado) {
   try {
     await actualizarEstadoPedidoApi(idPedido, nuevoEstado);
   } catch (error) {
-    console.error(
-      "Error al actualizar el estado del pedido en el backend:",
-      error,
-    );
+  console.error("Error al actualizar el estado del pedido:", error);
 
-    alert("No fue posible actualizar el estado del pedido.");
+  alert(
+    error.message ||
+    "No fue posible actualizar el estado del pedido."
+  );
 
-    await cargarPedidos();
-    return;
-  }
+  await cargarPedidos();
+  return;
+}
 
   listaPedidos = listaPedidos.map((pedido) =>
     String(pedido.id) === String(idPedido)

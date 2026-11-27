@@ -1,7 +1,7 @@
 
 import { apiRequest, API_ENDPOINTS } from "../services/api.js";
 import { guardarSesion } from "../services/auth.js";
-
+import { mostrarNotificacion } from "../services/notificaciones.js";
 import {
     configurarRutasNavegacion,
     obtenerRutaProyecto,
@@ -11,15 +11,18 @@ configurarRutasNavegacion(document);
 
 const formLogin = document.getElementById("loginForm");
 
+const errorEmail = document.getElementById("errorEmail");
+const errorPassword = document.getElementById("errorPassword");
+
+const inputEmail = document.getElementById("email");
+const inputPassword = document.getElementById("Contrasena");
+
 if (formLogin) {
     formLogin.addEventListener("submit", async function (evento) {
         evento.preventDefault();
 
-        const valEmail = document.getElementById("email").value.trim();
-        const valPassword = document.getElementById("Contrasena").value.trim();
-
-        const errorEmail = document.getElementById("errorEmail");
-        const errorPassword = document.getElementById("errorPassword");
+        const valEmail = inputEmail.value.trim();
+        const valPassword = inputPassword.value.trim();
 
         let formularioValido = true;
 
@@ -52,7 +55,6 @@ if (formLogin) {
 
             const usuario = respuesta.usuario;
 
-            alert("¡Inicio de sesión exitoso!");
 
             // Si es administrador, ir directamente al dashboard
             if (usuario.rol === "ADMIN") {
@@ -77,13 +79,41 @@ if (formLogin) {
             }
 
         } catch (error) {
-            alert(error.message);
+
+            if (error.status === 401) {
+                errorPassword.textContent =
+                    "El correo o la contraseña son incorrectos.";
+
+                errorPassword.style.display = "block";
+                return;
+            }
+
+            await mostrarNotificacion({
+                tipo: "error",
+                titulo: "No fue posible iniciar sesión",
+                mensaje: error.message
+            });
         }
     });
 }
 
+// Limpiar errores cuando el usuario modifica el correo.
+if (inputEmail) {
+    inputEmail.addEventListener("input", () => {
+        if (errorEmail) errorEmail.style.display = "none";
+        if (errorPassword) errorPassword.style.display = "none";
+    });
+}
+
+// Limpiar error cuando el usuario modifica la contraseña.
+if (inputPassword) {
+    inputPassword.addEventListener("input", () => {
+        if (errorPassword) errorPassword.style.display = "none";
+    });
+}
+
 const btnOjo = document.getElementById("ojo");
-const inputPassword = document.getElementById("Contrasena");
+
 
 if (btnOjo && inputPassword) {
     btnOjo.addEventListener("click", function () {

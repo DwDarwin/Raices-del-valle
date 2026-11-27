@@ -28,7 +28,9 @@ async function initializeApp() {
     await Promise.all([
       loadComponent("header-container", "header.html"),
       loadComponent("footer-container", "footer.html"),
+      loadComponent("notificaciones-container", "notificaciones.html"),
     ]);
+    
 
     configurarRutasNavegacion(document);
     inicializarMenuMovil(document);
@@ -36,6 +38,7 @@ async function initializeApp() {
     inicializarHome(document);
     inicializarBuscador();
     inicializarSuscripcion();
+
   } catch (error) {
     console.error("Fallo al inicializar", error);
   }
