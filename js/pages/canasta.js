@@ -1,3 +1,4 @@
+import { obtenerSesion } from "../services/auth.js";
 import {
   obtenerCarrito,
   guardarCarrito,
@@ -70,24 +71,7 @@ function inicializarCanasta() {
   let carrito = obtenerCarrito();
   let descuentoAplicado = 0;
 
-  function obtenerSesionUsuario() {
-    try {
-      const usuario = JSON.parse(localStorage.getItem("usuario"));
-      const token = localStorage.getItem("token");
-
-      if (!usuario || !usuario.id || !token) {
-        return null;
-      }
-
-      return { usuario, token };
-
-    } catch (error) {
-      console.error("Error al recuperar la sesión:", error);
-      return null;
-    }
-  }
-
-
+  
   async function registrarPedido(usuario, token) {
     const totales = calcularTotales(carrito, descuentoAplicado);
 
@@ -377,7 +361,7 @@ function inicializarCanasta() {
   botonContinuar.addEventListener("click", async () => {
     if (carrito.length === 0) return;
 
-    const sesion = obtenerSesionUsuario();
+    const sesion = obtenerSesion();
 
     if (!sesion) {
       if (modalSesion && !modalSesion.open) {
@@ -448,11 +432,15 @@ function inicializarCanasta() {
   });
 
   botonIrALogin.addEventListener("click", () => {
-    window.location.href = new URL(
-      "login.html",
-      window.location.href
-    ).href;
-  });
+    const urlLogin = new URL(
+        "login.html",
+        window.location.href
+    );
+
+    urlLogin.searchParams.set("redirect", "canasta.html");
+
+    window.location.href = urlLogin.href;
+});
 
   botonAplicarDescuento.addEventListener("click", () => {
     const codigoIngresado = codigoDescuento.value.trim().toUpperCase();

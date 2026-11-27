@@ -10,8 +10,9 @@ import {
 
 import {
   cerrarSesion,
-  obtenerSesionActiva,
-} from "../storage/sesionStorage.js";
+  obtenerUsuario,
+} from "../services/auth.js";
+
 import {
   formatearMoneda,
 } from "../utils/formato.js";
@@ -351,33 +352,73 @@ el("modal").addEventListener("click", function (e) {
   }
 });
 
+
 function inicializarSesionAdmin() {
-  var usuario = obtenerSesionActiva();
-  if (usuario && usuario.nombreCompleto) {
-    var nombreEl = el("admin-user-name");
-    var avatarEl = el("admin-avatar");
-    if (nombreEl) nombreEl.textContent = usuario.nombreCompleto;
-    if (avatarEl) {
-      var partes = usuario.nombreCompleto.trim().split(/\s+/);
-      var iniciales = (partes[0] ? partes[0].charAt(0) : "A") + (partes[1] ? partes[1].charAt(0) : "");
-      avatarEl.textContent = iniciales.toUpperCase();
-    }
+  const usuario = obtenerUsuario();
+
+  // Verificar que exista una sesión.
+  if (!usuario) {
+    window.location.href = new URL(
+      "pages/login.html",
+      obtenerRutaProyecto()
+    ).href;
+
+    return false;
   }
 
+  // Verificar que el usuario sea administrador.
+  if (usuario.rol !== "ADMIN") {
+    alert("No tienes permisos para acceder al panel administrativo.");
+
+    window.location.href = obtenerRutaProyecto().href;
+
+    return false;
+  }
+
+  // Mostrar información del administrador.
+  var nombreEl = el("admin-user-name");
+  var avatarEl = el("admin-avatar");
+
+  if (nombreEl) {
+    nombreEl.textContent = usuario.nombre;
+  }
+
+  if (avatarEl) {
+    var partes = usuario.nombre.trim().split(/\s+/);
+
+    var iniciales =
+      (partes[0] ? partes[0].charAt(0) : "A") +
+      (partes[1] ? partes[1].charAt(0) : "");
+
+    avatarEl.textContent = iniciales.toUpperCase();
+  }
+
+  // Cerrar sesión.
   var botonSalir = el("logout-btn");
+
   if (botonSalir) {
     botonSalir.addEventListener("click", function (e) {
       e.preventDefault();
+
       if (confirm("¿Deseas cerrar sesión?")) {
         cerrarSesion();
-        window.location.href = new URL("pages/login.html", obtenerRutaProyecto()).href;
+
+        window.location.href = new URL(
+          "pages/login.html",
+          obtenerRutaProyecto()
+        ).href;
       }
     });
   }
+
+  return true;
 }
 
+
 configurarRutasNavegacion(document);
-inicializarSesionAdmin();
-llenarSelects();
-actualizarContadorPedidos(12);
-cargarProductos();
+
+if (inicializarSesionAdmin()) {
+  llenarSelects();
+  actualizarContadorPedidos(12);
+  cargarProductos();
+}
