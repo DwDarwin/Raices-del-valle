@@ -2,7 +2,7 @@ import {
   apiRequest,
   API_ENDPOINTS,
 } from "../../services/api.js";
-import { obtenerTokenSesion } from "../../storage/sesionStorage.js";
+import { obtenerToken } from "../../services/auth.js";
 import { formatearMoneda } from "../../utils/formato.js";
 import { obtenerRutaImagenDesdeRaiz } from "../../utils/rutas.js";
 import {
@@ -37,7 +37,7 @@ let idProductoEditando = null;
 let imagenActual = "";
 
 function construirHeadersAuth() {
-  const token = obtenerTokenSesion();
+  const token = obtenerToken();
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 

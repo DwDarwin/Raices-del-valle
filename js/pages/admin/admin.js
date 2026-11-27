@@ -7,11 +7,19 @@ import {
 import { inicializarModuloPedidos } from "./adminPedidos.js";
 
 function inicializarPanelAdmin() {
+
+  // Primero comprobar que el usuario sea administrador
+  if (!inicializarSesionAdmin()) {
+    return;
+  }
+
   configurarRutasNavegacion(document);
-  inicializarSesionAdmin();
+
   inicializarNavegacionAdmin();
   inicializarModuloInventario();
   inicializarModuloPedidos();
 }
+
+
 
 inicializarPanelAdmin();
